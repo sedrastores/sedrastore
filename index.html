@@ -4048,13 +4048,24 @@
             }
 
             const params = {
-                to_email: order.email,
-                to_name: order.name,
-                order_id: order.id,
-                order_status: newStatus,
-                product_name: order.product,
-                ...extra
-            };
+    to_email:       order.email,
+    customer_name:  order.name,
+    customer_phone: order.phone,
+    order_id:       order.id,
+    product_name:   order.product,
+    product_price:  order.price || 370,
+    shipping_price: 'مجاني',
+    total_price:    order.price || 370,
+    governorate:    order.gov,
+    city:           order.city,
+    address:        order.address,
+    payment_method: order.payment,
+    notes:          order.notes || 'لا يوجد',
+    order_date:     order.date,
+    product_image:  '',
+    order_status:   newStatus,
+    ...extra
+};
 
             const account =
                 newStatus === 'تم الشحن'
