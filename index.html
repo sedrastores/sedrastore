@@ -3340,6 +3340,149 @@
         </div>
     </div>
 
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // ===== Firebase Config =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyDdNmWIFS_GomYF2ODJifqWwg1sgQFjoNo",
+            authDomain: "sedra-store.firebaseapp.com",
+            projectId: "sedra-store",
+            storageBucket: "sedra-store.firebasestorage.app",
+            messagingSenderId: "1026526536859",
+            appId: "1:1026526536859:web:c883e3235574e33f35923e",
+            measurementId: "G-Y44YH8DX5W"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ===== PRODUCTS =====
+        async function fbGetProducts() {
+            try {
+                const snap = await getDocs(collection(db, "products"));
+                if (snap.empty) return null;
+                const products = [];
+                snap.forEach(d => products.push({ id: d.id, ...d.data() }));
+                // sort by createdAt or id
+                products.sort((a, b) => (a.createdAt || '') < (b.createdAt || '') ? -1 : 1);
+                return products;
+            } catch(e) { console.error("fbGetProducts error:", e); return null; }
+        }
+
+        async function fbSaveProduct(product) {
+            try {
+                const docId = String(product.id);
+                await setDoc(doc(db, "products", docId), product);
+            } catch(e) { console.error("fbSaveProduct error:", e); }
+        }
+
+        async function fbDeleteProduct(productId) {
+            try {
+                await deleteDoc(doc(db, "products", String(productId)));
+            } catch(e) { console.error("fbDeleteProduct error:", e); }
+        }
+
+        async function fbSaveAllProducts(products) {
+            for (const p of products) {
+                await fbSaveProduct(p);
+            }
+        }
+
+        // ===== ORDERS =====
+        async function fbSaveOrder(order) {
+            try {
+                await setDoc(doc(db, "orders", order.id), order);
+            } catch(e) { console.error("fbSaveOrder error:", e); }
+        }
+
+        async function fbGetOrders() {
+            try {
+                const snap = await getDocs(collection(db, "orders"));
+                const orders = [];
+                snap.forEach(d => orders.push(d.data()));
+                orders.sort((a,b) => (b.ts||0) - (a.ts||0));
+                return orders;
+            } catch(e) { console.error("fbGetOrders error:", e); return []; }
+        }
+
+        async function fbUpdateOrderStatus(orderId, newStatus) {
+            try {
+                await updateDoc(doc(db, "orders", orderId), { status: newStatus });
+            } catch(e) { console.error("fbUpdateOrderStatus error:", e); }
+        }
+
+        async function fbDeleteAllOrders() {
+            try {
+                const snap = await getDocs(collection(db, "orders"));
+                const dels = [];
+                snap.forEach(d => dels.push(deleteDoc(d.ref)));
+                await Promise.all(dels);
+            } catch(e) { console.error("fbDeleteAllOrders error:", e); }
+        }
+
+        // ===== VISITS =====
+        async function fbTrackVisit(visitData) {
+            try {
+                const docId = Date.now().toString();
+                await setDoc(doc(db, "visits", docId), visitData);
+            } catch(e) { console.error("fbTrackVisit error:", e); }
+        }
+
+        async function fbGetVisits() {
+            try {
+                const snap = await getDocs(collection(db, "visits"));
+                const visits = [];
+                snap.forEach(d => visits.push(d.data()));
+                return visits;
+            } catch(e) { console.error("fbGetVisits error:", e); return []; }
+        }
+
+        // ===== EXPOSE TO WINDOW =====
+        window.FB = {
+            getProducts: fbGetProducts,
+            saveProduct: fbSaveProduct,
+            saveAllProducts: fbSaveAllProducts,
+            deleteProduct: fbDeleteProduct,
+            saveOrder: fbSaveOrder,
+            getOrders: fbGetOrders,
+            updateOrderStatus: fbUpdateOrderStatus,
+            deleteAllOrders: fbDeleteAllOrders,
+            trackVisit: fbTrackVisit,
+            getVisits: fbGetVisits,
+            ready: true
+        };
+
+        console.log("✅ Firebase connected!");
+
+        // ===== OVERRIDE getProducts to use Firebase =====
+        window._fbInitProducts = async function() {
+            const fbProducts = await fbGetProducts();
+            if (fbProducts && fbProducts.length > 0) {
+                // Sync to localStorage as cache
+                localStorage.setItem('sedra_products', JSON.stringify(fbProducts));
+                window.PRODUCTS = fbProducts;
+                if (typeof buildProductGrid === 'function') buildProductGrid();
+                if (typeof renderAdminProducts === 'function') renderAdminProducts();
+            } else {
+                // First time: upload default products to Firebase
+                const defaults = window.getLocalProducts ? window.getLocalProducts() : JSON.parse(localStorage.getItem('sedra_products') || '[]');
+                if (defaults.length > 0) {
+                    await fbSaveAllProducts(defaults);
+                    console.log("✅ Default products uploaded to Firebase");
+                }
+            }
+        };
+
+        // Run after DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(window._fbInitProducts, 500);
+        });
+
+    </script>
+
     <!-- LOAD SCRIPTS -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>const EGYPT_DATA = { "القاهرة": ["مدينة نصر", "مصر الجديدة", "المعادي", "حلوان", "شبرا", "الزيتون", "عين شمس", "المطرية", "الوايلي", "باب الشعرية", "الأزهر", "الجمالية", "الموسكي", "السيدة زينب", "الخليفة", "مصر القديمة", "المقطم", "15 مايو", "التجمع الخامس", "الرحاب", "مدينتي", "بدر", "العبور", "القطامية", "المنيل", "الدقي", "العجوزة", "بولاق", "امبابة", "أخرى"], "الجيزة": ["الجيزة", "الهرم", "الدقي", "المهندسين", "العجوزة", "إمبابة", "بولاق الدكرور", "فيصل", "الشيخ زايد", "6 أكتوبر", "الواحات البحرية", "البدرشين", "العياط", "الصف", "أطفيح", "أبو النمرس", "كرداسة", "أوسيم", "منشأة القناطر", "أخرى"], "الإسكندرية": ["المنتزه", "العجمي", "برج العرب", "الدخيلة", "العامرية", "محرم بك", "سيدي بشر", "ستانلي", "سيدي جابر", "الإبراهيمية", "الرمل", "باكوس", "أخرى"], "القليوبية": ["بنها", "شبرا الخيمة", "قليوب", "طوخ", "الخانكة", "المرج", "القناطر الخيرية", "أخرى"], "الشرقية": ["الزقازيق", "بلبيس", "فاقوس", "أبو كبير", "ديرب نجم", "الحسينية", "أبو حماد", "أخرى"], "الدقهلية": ["المنصورة", "طلخا", "ميت غمر", "شربين", "دكرنس", "المطرية", "بلقاس", "أخرى"], "الغربية": ["طنطا", "المحلة الكبرى", "كفر الزيات", "زفتى", "السنطة", "قطور", "بسيون", "سمنود", "أخرى"], "المنوفية": ["شبين الكوم", "السادات", "منوف", "تلا", "الشهداء", "أشمون", "بركة السبع", "أخرى"], "كفر الشيخ": ["كفر الشيخ", "دسوق", "فوة", "الرياض", "بلطيم", "مطوبس", "سيدي سالم", "أخرى"], "البحيرة": ["دمنهور", "كفر الدوار", "رشيد", "إيتاي البارود", "الدلنجات", "أبو حمص", "حوش عيسى", "أخرى"], "الإسماعيلية": ["الإسماعيلية", "التل الكبير", "أبو صوير", "فايد", "القنطرة", "أخرى"], "بورسعيد": ["بورسعيد", "بور فؤاد", "العرب", "الشرق", "الغرب", "أخرى"], "السويس": ["السويس", "عتاقة", "فيصل", "الجناين", "أخرى"], "دمياط": ["دمياط", "رأس البر", "فارسكور", "الزرقا", "كفر سعد", "أخرى"], "الفيوم": ["الفيوم", "سنورس", "أبشواي", "طامية", "إطسا", "يوسف الصديق", "أخرى"], "بني سويف": ["بني سويف", "ناصر", "إهناسيا", "ببا", "أبو النمرس", "أخرى"], "المنيا": ["المنيا", "ملوي", "أبو قرقاص", "بني مزار", "مطاي", "سمالوط", "أخرى"], "أسيوط": ["أسيوط", "ديروط", "منفلوط", "أبو تيج", "القوصية", "الغنايم", "ساحل سليم", "أخرى"], "سوهاج": ["سوهاج", "طهطا", "جرجا", "أخميم", "البلينا", "دار السلام", "المراغة", "أخرى"], "قنا": ["قنا", "نجع حمادي", "قوص", "قفط", "نقادة", "الوقف", "دشنا", "أخرى"], "الأقصر": ["الأقصر", "الأقصر الغربية", "إسنا", "أخرى"], "أسوان": ["أسوان", "كوم أمبو", "إدفو", "دراو", "أسوان الجديدة", "أخرى"], "البحر الأحمر": ["الغردقة", "سفاجا", "القصير", "مرسى علم", "شلاتين", "أخرى"], "شمال سيناء": ["العريش", "رفح", "الشيخ زويد", "بئر العبد", "أخرى"], "جنوب سيناء": ["الطور", "شرم الشيخ", "دهب", "نويبع", "سانت كاترين", "أخرى"], "مطروح": ["مرسى مطروح", "العلمين", "سيوة", "الضبعة", "أخرى"], "الوادي الجديد": ["الخارجة", "الداخلة", "الفرافرة", "بريس", "أخرى"] };</script>
@@ -3405,6 +3548,13 @@
 
         const IMG_MAP = { P2: IMG_P2, P3: IMG_P3, P4: IMG_P4, P5: IMG_P5, P6: IMG_P6, P7: IMG_P7, P8: IMG_P8, P9: IMG_P9 };
 
+        // Keep reference for Firebase init
+        window.getLocalProducts = function() {
+            const stored = localStorage.getItem('sedra_products');
+            if (stored) { const p = JSON.parse(stored); if (p.length > 0) return p; }
+            return DEFAULT_PRODUCTS;
+        };
+
         function getProducts() {
             const stored = localStorage.getItem('sedra_products');
             if (stored) {
@@ -3417,6 +3567,10 @@
 
         function saveProducts(products) {
             localStorage.setItem('sedra_products', JSON.stringify(products));
+            // Also save to Firebase
+            if (window.FB && window.FB.ready) {
+                window.FB.saveAllProducts(products).catch(e => console.error(e));
+            }
         }
 
         let PRODUCTS = getProducts();
@@ -3589,6 +3743,10 @@
 
         // ---- ORDER SUBMISSION ----
         let ordersDB = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
+        // Load orders from Firebase on startup
+        if (window.FB && window.FB.ready) {
+            window.FB.getOrders().then(orders => { ordersDB = orders; localStorage.setItem('sedra_orders', JSON.stringify(orders)); });
+        }
 
         function submitOrder() {
             const name = document.getElementById('cust-name').value.trim();
@@ -3637,6 +3795,7 @@ document.getElementById('cust-phone').value = phoneToValidate;
 
             ordersDB.push(order);
             localStorage.setItem('sedra_orders', JSON.stringify(ordersDB));
+            if (window.FB && window.FB.ready) window.FB.saveOrder(order);
             trackVisit();
 
             // Send Telegram notification
@@ -3857,10 +4016,12 @@ document.getElementById('cust-phone').value = phoneToValidate;
         }
 
         function trackVisit() {
+            const visitData = { time: new Date().toISOString(), device: getDeviceType(), page: location.pathname };
             let visits = JSON.parse(localStorage.getItem('sedra_visits') || '[]');
-            visits.push({ time: new Date().toISOString(), device: getDeviceType(), page: location.pathname });
+            visits.push(visitData);
             if (visits.length > 500) visits = visits.slice(-500);
             localStorage.setItem('sedra_visits', JSON.stringify(visits));
+            if (window.FB && window.FB.ready) window.FB.trackVisit(visitData);
         }
 
         // Track on load
@@ -3872,7 +4033,8 @@ document.getElementById('cust-phone').value = phoneToValidate;
         });
 
         // ---- EXPORT FUNCTIONS ----
-        function exportToExcel() {
+        async function exportToExcel() {
+            if (window.FB && window.FB.ready) { const o = await window.FB.getOrders(); localStorage.setItem('sedra_orders', JSON.stringify(o)); }
             const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
             if (orders.length === 0) { showToast('⚠ لا توجد طلبات للتصدير'); return; }
 
@@ -3899,7 +4061,8 @@ document.getElementById('cust-phone').value = phoneToValidate;
             showToast('✅ تم تصدير الملف بنجاح');
         }
 
-        function exportToPDF() {
+        async function exportToPDF() {
+            if (window.FB && window.FB.ready) { const o = await window.FB.getOrders(); localStorage.setItem('sedra_orders', JSON.stringify(o)); }
             const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
             if (orders.length === 0) { showToast('⚠ لا توجد طلبات للتصدير'); return; }
 
@@ -3978,7 +4141,13 @@ document.getElementById('cust-phone').value = phoneToValidate;
 
         function loadAdminStats() { /* stats loaded on demand */ }
 
-        function renderAdminDashboard() {
+        async function renderAdminDashboard() {
+            if (window.FB && window.FB.ready) {
+                const [fbOrders, fbVisits] = await Promise.all([window.FB.getOrders(), window.FB.getVisits()]);
+                localStorage.setItem('sedra_orders', JSON.stringify(fbOrders));
+                localStorage.setItem('sedra_visits', JSON.stringify(fbVisits));
+                ordersDB = fbOrders;
+            }
             const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
             const visits = JSON.parse(localStorage.getItem('sedra_visits') || '[]');
 
@@ -4089,6 +4258,7 @@ document.getElementById('cust-phone').value = phoneToValidate;
             orders[idx].status = newStatus;
             localStorage.setItem('sedra_orders', JSON.stringify(orders));
             ordersDB = orders;
+            if (window.FB && window.FB.ready) window.FB.updateOrderStatus(orderId, newStatus);
             showToast(`✅ تم تحديث حالة الطلب ${orderId} إلى "${newStatus}"`);
 
             // Send email notification to customer if they have an email
@@ -4104,6 +4274,7 @@ document.getElementById('cust-phone').value = phoneToValidate;
             if (!confirm('🔥 تأكيد نهائي: هل تريد حذف كميع الأوردرات؟')) return;
             localStorage.removeItem('sedra_orders');
             ordersDB = [];
+            if (window.FB && window.FB.ready) window.FB.deleteAllOrders();
             renderAdminDashboard();
             showToast('🗑️ تم حذف جميع الأوردرات!');
         }
@@ -4255,7 +4426,12 @@ document.getElementById('cust-phone').value = phoneToValidate;
         }
 
         // رسم إحصائيات الزيارات والأجهزة في تبويب الإحصائيات
-        function renderVisitStats() {
+        async function renderVisitStats() {
+            if (window.FB && window.FB.ready) {
+                const [fbOrders, fbVisits] = await Promise.all([window.FB.getOrders(), window.FB.getVisits()]);
+                localStorage.setItem('sedra_orders', JSON.stringify(fbOrders));
+                localStorage.setItem('sedra_visits', JSON.stringify(fbVisits));
+            }
             const visits = JSON.parse(localStorage.getItem('sedra_visits') || '[]');
             const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
 
@@ -4350,8 +4526,10 @@ document.getElementById('cust-phone').value = phoneToValidate;
             if (!selectedProductImage) { showToast('⚠️ من فضلك اختر صورة للمنتج'); return; }
             const products = getProducts();
             if (products.some(p => p.name === name)) { showToast('⚠️ هذا المنتج موجود بالفعل'); return; }
-            products.push({ id: Date.now(), name, sub: desc || '', material: material || '', badge, price, imageData: selectedProductImage, createdAt: new Date().toISOString() });
+            const newProduct = { id: Date.now(), name, sub: desc || '', material: material || '', badge, price, imageData: selectedProductImage, createdAt: new Date().toISOString() };
+            products.push(newProduct);
             saveProducts(products);
+            if (window.FB && window.FB.ready) window.FB.saveProduct(newProduct);
             resetProductForm();
             buildProductGrid();
             renderAdminProducts();
@@ -4420,7 +4598,9 @@ document.getElementById('cust-phone').value = phoneToValidate;
         function deleteProduct(productId) {
             if (!confirm('⚠️ هل أنت متأكد من حذف هذا المنتج؟')) return;
             const products = getProducts();
-            saveProducts(products.filter(p => p.id !== productId));
+            const filtered = products.filter(p => p.id !== productId);
+            saveProducts(filtered);
+            if (window.FB && window.FB.ready) window.FB.deleteProduct(productId);
             buildProductGrid();
             renderAdminProducts();
             showToast('🗑️ تم حذف المنتج');
