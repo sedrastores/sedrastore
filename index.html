@@ -580,10 +580,17 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
             max-width: 1200px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        }
+        @media (max-width: 540px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
         }
 
         .product-card {
@@ -594,10 +601,12 @@
             transition: var(--transition);
             cursor: pointer;
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-gold-strong);
             border-color: var(--gold);
         }
@@ -606,17 +615,57 @@
             position: relative;
             overflow: hidden;
             aspect-ratio: 3/4;
+            background: var(--black-3);
+        }
+
+        /* Skeleton shimmer while image loads */
+        .product-img-wrap::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                var(--black-3) 0%,
+                rgba(201,168,76,0.06) 40%,
+                var(--black-3) 80%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+        .product-img-wrap.img-loaded::before {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .product-img-wrap img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.45s ease, opacity 0.4s ease;
+            opacity: 0;
+            position: relative;
+            z-index: 2;
+        }
+        .product-img-wrap img.img-ready {
+            opacity: 1;
         }
 
         .product-card:hover .product-img-wrap img {
-            transform: scale(1.08);
+            transform: scale(1.07);
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-info .btn-order {
+            margin-top: auto;
         }
 
         .product-badge {
@@ -633,7 +682,30 @@
         }
 
         .product-info {
-            padding: 18px 20px;
+            padding: 12px 14px 14px;
+        }
+
+        @media (max-width: 540px) {
+            .product-info {
+                padding: 8px 10px 10px;
+            }
+            .product-name {
+                font-size: 0.82rem;
+            }
+            .spec-tag {
+                font-size: 0.62rem;
+                padding: 2px 7px;
+            }
+            .product-price {
+                font-size: 1.05rem;
+            }
+            .price-old-badge {
+                font-size: 0.68rem;
+            }
+            .btn-order {
+                font-size: 0.78rem;
+                padding: 8px 10px;
+            }
         }
 
         .product-name {
@@ -2673,7 +2745,8 @@
 
         @media (max-width: 400px) {
             .products-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
             }
         }
 
@@ -2762,25 +2835,27 @@
         }
 
         .loader-bar {
-            width: 200px;
-            height: 2px;
+            width: 220px;
+            height: 3px;
             background: var(--black-3);
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .loader-bar-fill {
             height: 100%;
-            width: 0;
-            background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
-            border-radius: 2px;
-            animation: load-fill 1.5s ease-in-out forwards;
+            width: 0%;
+            background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-shine));
+            border-radius: 3px;
+            transition: width 0.25s ease;
         }
 
-        @keyframes load-fill {
-            to {
-                width: 100%;
-            }
+        .loader-text {
+            font-family: var(--font-ar);
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            letter-spacing: 1px;
         }
 
         /* ========== BANNER ANIMATION ========== */
@@ -2886,8 +2961,9 @@
             <img id="loader-logo-img" src="" alt="Sedra Store">
         </div>
         <div class="loader-bar">
-            <div class="loader-bar-fill"></div>
+            <div class="loader-bar-fill" id="loader-bar-fill"></div>
         </div>
+        <div class="loader-text" id="loader-text">جاري تحميل المنتجات...</div>
     </div>
 
     <!-- NAVBAR -->
@@ -3763,24 +3839,82 @@
 
         // ---- IMAGE INJECTION ----
         document.addEventListener('DOMContentLoaded', () => {
-            // Inject images from base64 constants
             const setImg = (id, src) => { const el = document.getElementById(id); if (el) el.src = src; };
             const setBg = (id, src) => { const el = document.getElementById(id); if (el) el.style.backgroundImage = `url(${src})`; };
 
+            // Inject static images immediately
             setImg('loader-logo-img', IMG_LOGO);
             setImg('nav-logo-img', IMG_LOGO);
+            setImg('footer-logo', IMG_LOGO);
+            setImg('admin-logo', IMG_LOGO);
+
+            // ---- Smart Preloader ----
+            const barFill = document.getElementById('loader-bar-fill');
+            const loaderText = document.getElementById('loader-text');
+            const MAX_LOADER_TIME = 7000; // hard cap: hide after 7s no matter what
+
+            // Collect all images to preload
+            const allProducts = typeof getProducts === 'function' ? getProducts() : (typeof DEFAULT_PRODUCTS !== 'undefined' ? DEFAULT_PRODUCTS : []);
+            const productSrcs = allProducts.map(p => {
+                if (p.imageData) return p.imageData;
+                if (typeof IMG_MAP !== 'undefined' && p.img && IMG_MAP[p.img]) return IMG_MAP[p.img];
+                return null;
+            }).filter(Boolean);
+
+            const criticalSrcs = [IMG_LOGO, IMG_BANNER, IMG_CATEGORY].filter(Boolean);
+            const allSrcs = [...new Set([...criticalSrcs, ...productSrcs])];
+            const total = allSrcs.length;
+            let loaded = 0;
+
+            function setProgress(pct, msg) {
+                if (barFill) barFill.style.width = Math.min(pct, 100) + '%';
+                if (loaderText && msg) loaderText.textContent = msg;
+            }
+
+            function hideLoader() {
+                const loader = document.getElementById('page-loader');
+                if (!loader || loader.classList.contains('hidden')) return;
+                setProgress(100, 'جاهز! ✨');
+                setTimeout(() => {
+                    loader.classList.add('hidden');
+                    setTimeout(() => loader.remove(), 500);
+                }, 200);
+            }
+
+            function onImgDone() {
+                loaded++;
+                const pct = Math.round((loaded / total) * 95);
+                const msg = loaded < total
+                    ? `جاري تحميل الصور... ${loaded}/${total}`
+                    : 'اكتمل التحميل ✨';
+                setProgress(pct, msg);
+                if (loaded >= total) hideLoader();
+            }
+
+            // Start at 5%
+            setProgress(5, 'جاري تحميل الصور...');
+
+            if (total === 0) {
+                // No images to preload — hide after minimal delay
+                setTimeout(hideLoader, 800);
+            } else {
+                allSrcs.forEach(src => {
+                    if (!src || src.length < 10) { onImgDone(); return; }
+                    const img = new Image();
+                    img.onload = onImgDone;
+                    img.onerror = onImgDone; // count errors too so we don't hang
+                    img.src = src;
+                });
+            }
+
+            // Hard safety cap — never show loader > 7s
+            setTimeout(hideLoader, MAX_LOADER_TIME);
+
+            // Inject remaining images
             setImg('banner-img', IMG_BANNER);
             setImg('category-img', IMG_CATEGORY);
             setImg('about-img', IMG_PADDED);
-            setImg('footer-logo', IMG_LOGO);
-            setImg('admin-logo', IMG_LOGO);
             setBg('hero-bg', IMG_BANNER);
-
-            // Hide loader after short delay
-            setTimeout(() => {
-                const loader = document.getElementById('page-loader');
-                if (loader) { loader.classList.add('hidden'); setTimeout(() => loader.remove(), 600); }
-            }, 1800);
 
             // Init everything
             buildProductGrid();
@@ -3854,19 +3988,22 @@
             if (!grid) return;
             grid.innerHTML = PRODUCTS.map(p => {
                 const oos = p.outOfStock;
+                const imgSrc = getProductImageForDisplay(p);
+                const pid = p.id || 0;
                 return `
     <div class="product-card fade-in${oos ? ' out-of-stock-card' : ''}">
       ${oos ? '<div class="oos-overlay"><span>نفذت الكمية</span></div>' : ''}
-      <div class="product-img-wrap" style="cursor:${oos?'default':'zoom-in'};" ${oos?'':` onclick="openProductModal(${p.id || 0})"`}>
-        <img src="${getProductImageForDisplay(p)}" alt="${p.name}" loading="lazy">
+      <div class="product-img-wrap" style="cursor:${oos?'default':'zoom-in'};" ${oos?'':`onclick="openProductModal(${pid})"`}>
+        <img src="${imgSrc}" alt="${p.name}" decoding="async"
+             onload="this.classList.add('img-ready');this.closest('.product-img-wrap').classList.add('img-loaded')"
+             onerror="this.classList.add('img-ready');this.closest('.product-img-wrap').classList.add('img-loaded')">
         ${p.badge && !oos ? `<span class="product-badge">${p.badge}</span>` : ''}
         ${oos ? '<span class="product-badge" style="background:linear-gradient(135deg,#555,#888);color:#fff;">نفذت الكمية</span>' : ''}
-      </div>
       </div>
       <div class="product-info">
         <div class="product-name">${p.name}</div>
         <div class="product-specs">
-          <span class="spec-tag">68 × 120 سم</span>
+          <span class="spec-tag">120×68 سم</span>
           <span class="spec-tag">بطانة 2.5 سم</span>
           <span class="spec-tag">مانع انزلاق</span>
         </div>
