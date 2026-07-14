@@ -6433,7 +6433,7 @@
             reader.readAsDataURL(file);
         }
 
-        function addNewProduct() {
+        async function addNewProduct() {
             const name = document.getElementById('new-product-name').value.trim();
             const price = parseInt(document.getElementById('new-product-price').value) || 320;
             const desc = document.getElementById('new-product-desc').value.trim();
@@ -6445,12 +6445,21 @@
             if (products.some(p => p.name === name)) { showToast('⚠️ هذا المنتج موجود بالفعل'); return; }
             const newProduct = { id: Date.now(), name, sub: desc || '', material: material || '', badge, price, imageData: selectedProductImage, createdAt: new Date().toISOString() };
             products.push(newProduct);
-            saveProducts(products);
-            if (window.FB && window.FB.ready) window.FB.saveProduct(newProduct);
+            // حفظ في localStorage
+            PRODUCTS = products;
+            localStorage.setItem('sedra_products', JSON.stringify(products));
+            // حفظ في Firebase
+            if (window.FB && window.FB.ready) {
+                try {
+                    await window.FB.saveProduct(newProduct);
+                } catch (e) {
+                    console.error('Firebase saveProduct error:', e);
+                }
+            }
             resetProductForm();
             buildProductGrid();
             renderAdminProducts();
-            showToast('✅ تم إضافة المنتج بنجاح');
+            showToast('✅ تم إضافة المنتج وظهر على الموقع');
         }
 
         function resetProductForm() {
@@ -6489,7 +6498,7 @@
             showToast('✏️ جاري تعديل المنتج');
         }
 
-        function updateProduct() {
+        async function updateProduct() {
             const productId = parseInt(document.getElementById('edit-product-id').value);
             const name = document.getElementById('new-product-name').value.trim();
             const price = parseInt(document.getElementById('new-product-price').value) || 320;
@@ -6503,7 +6512,17 @@
             if (index === -1) { showToast('⚠️ المنتج غير موجود'); return; }
             if (products.some(p => p.name === name && p.id !== productId)) { showToast('⚠️ هذا الاسم موجود لمنتج آخر'); return; }
             products[index] = { ...products[index], name, sub: desc, material, badge, price, imageData: selectedProductImage };
-            saveProducts(products);
+            // حفظ في localStorage
+            PRODUCTS = products;
+            localStorage.setItem('sedra_products', JSON.stringify(products));
+            // حفظ في Firebase
+            if (window.FB && window.FB.ready) {
+                try {
+                    await window.FB.saveProduct(products[index]);
+                } catch (e) {
+                    console.error('Firebase updateProduct error:', e);
+                }
+            }
             resetProductForm();
             buildProductGrid();
             renderAdminProducts();
@@ -6512,15 +6531,26 @@
 
         function cancelEditProduct() { resetProductForm(); showToast('تم إلغاء التعديل'); }
 
-        function deleteProduct(productId) {
+        async function deleteProduct(productId) {
             if (!confirm('⚠️ هل أنت متأكد من حذف هذا المنتج؟')) return;
             const products = getProducts();
             const filtered = products.filter(p => p.id !== productId);
-            saveProducts(filtered);
-            if (window.FB && window.FB.ready) window.FB.deleteProduct(productId);
+            // حفظ في localStorage أولاً
+            PRODUCTS = filtered;
+            localStorage.setItem('sedra_products', JSON.stringify(filtered));
+            // مسح من Firebase مباشرة (بدون saveAllProducts عشان نضمن المسح)
+            if (window.FB && window.FB.ready) {
+                try {
+                    await window.FB.deleteProduct(productId);
+                    // بعد المسح: احفظ القائمة الجديدة في Firebase كمان عشان تتزامن
+                    await window.FB.saveAllProducts(filtered);
+                } catch (e) {
+                    console.error('Firebase delete error:', e);
+                }
+            }
             buildProductGrid();
             renderAdminProducts();
-            showToast('🗑️ تم حذف المنتج');
+            showToast('🗑️ تم حذف المنتج من الموقع');
         }
 
         function renderAdminProducts() {
@@ -6548,12 +6578,16 @@
             }).join('');
         }
 
-        function toggleOutOfStock(productId) {
+        async function toggleOutOfStock(productId) {
             const products = getProducts();
             const idx = products.findIndex(p => p.id === productId);
             if (idx === -1) return;
             products[idx].outOfStock = !products[idx].outOfStock;
-            saveProducts(products);
+            PRODUCTS = products;
+            localStorage.setItem('sedra_products', JSON.stringify(products));
+            if (window.FB && window.FB.ready) {
+                try { await window.FB.saveProduct(products[idx]); } catch (e) { console.error(e); }
+            }
             buildProductGrid();
             renderAdminProducts();
             const name = products[idx].name;
