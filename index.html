@@ -4003,22 +4003,43 @@
 
         console.log("✅ Firebase connected!");
 
+        // ===== CATALOG VERSION (bump this to force-reset Firebase + localStorage) =====
+        const FB_CATALOG_VERSION = 'v3-23designs';
+
         // ===== OVERRIDE getProducts to use Firebase =====
         window._fbInitProducts = async function() {
             const fbProducts = await fbGetProducts();
-            if (fbProducts && fbProducts.length > 0) {
-                // Sync to localStorage as cache
+
+            // Check if Firebase has the correct catalog version
+            const fbVersion = fbProducts && fbProducts.length > 0 && fbProducts[0].__catalogVersion;
+            const needsReset = !fbProducts || fbProducts.length === 0 || fbProducts.length < 23 || fbVersion !== FB_CATALOG_VERSION;
+
+            if (!needsReset && fbProducts && fbProducts.length > 0) {
+                // Firebase is up to date — use it
                 localStorage.setItem('sedra_products', JSON.stringify(fbProducts));
                 window.PRODUCTS = fbProducts;
                 if (typeof buildProductGrid === 'function') buildProductGrid();
                 if (typeof renderAdminProducts === 'function') renderAdminProducts();
             } else {
-                // First time: upload default products to Firebase
-                const defaults = window.getLocalProducts ? window.getLocalProducts() : JSON.parse(localStorage.getItem('sedra_products') || '[]');
-                if (defaults.length > 0) {
-                    await fbSaveAllProducts(defaults);
-                    console.log("✅ Default products uploaded to Firebase");
-                }
+                // Firebase is outdated or empty — delete old docs and upload fresh catalog
+                console.log("🔄 Resetting Firebase catalog to " + FB_CATALOG_VERSION + "...");
+                try {
+                    // Delete all old product docs first
+                    if (fbProducts && fbProducts.length > 0) {
+                        const dels = fbProducts.map(p => deleteDoc(doc(db, "products", String(p.id))));
+                        await Promise.all(dels);
+                    }
+                } catch(e) { console.warn("Delete old products:", e); }
+
+                // Tag each product with catalog version and upload
+                const freshProducts = DEFAULT_PRODUCTS.map(p => ({ ...p, __catalogVersion: FB_CATALOG_VERSION }));
+                await fbSaveAllProducts(freshProducts);
+                localStorage.setItem('sedra_products', JSON.stringify(freshProducts));
+                localStorage.setItem('sedra_products_version', 'v3-23designs-fix');
+                window.PRODUCTS = freshProducts;
+                if (typeof buildProductGrid === 'function') buildProductGrid();
+                if (typeof renderAdminProducts === 'function') renderAdminProducts();
+                console.log("✅ Firebase catalog reset to " + FB_CATALOG_VERSION + " with " + freshProducts.length + " products");
             }
         };
 
