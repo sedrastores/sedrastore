@@ -10,10 +10,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-<link rel="canonical" href="https://sedrastores.com/">
+    <link rel="canonical" href="https://sedrastores.com/">
     <style>
-
-        
         /* ========== CSS VARIABLES ========== */
         :root {
             --black: #0a0a0a;
@@ -107,11 +105,12 @@
             z-index: 1001;
             height: 32px;
             background: linear-gradient(90deg, #0a0a0a 0%, #1a1209 50%, #0a0a0a 100%);
-            border-bottom: 1px solid rgba(201,168,76,0.4);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.4);
             overflow: hidden;
             display: flex;
             align-items: center;
         }
+
         .top-promo-track {
             display: flex;
             gap: 0;
@@ -119,6 +118,7 @@
             white-space: nowrap;
             will-change: transform;
         }
+
         .top-promo-item {
             display: inline-flex;
             align-items: center;
@@ -130,14 +130,21 @@
             padding: 0 28px;
             font-family: var(--font-ar);
         }
+
         .top-promo-sep {
             color: var(--gold);
             font-size: 0.55rem;
             opacity: 0.7;
         }
+
         @keyframes promo-scroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         /* ========== GOLD TEXT GRADIENT ========== */
@@ -154,11 +161,11 @@
             background: linear-gradient(90deg, transparent, var(--gold), transparent);
             margin: 12px auto;
         }
-  
 
 
 
-        
+
+
         #navbar {
             position: fixed;
             top: 32px;
@@ -277,7 +284,7 @@
             padding: 80px 24px 40px;
             gap: 4px;
             transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: -10px 0 40px rgba(0,0,0,0.6);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
             overflow-y: auto;
         }
 
@@ -290,11 +297,14 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.55);
+            background: rgba(0, 0, 0, 0.55);
             z-index: 1099;
             backdrop-filter: blur(2px);
         }
-        .drawer-backdrop.show { display: block; }
+
+        .drawer-backdrop.show {
+            display: block;
+        }
 
         /* Close X button inside drawer */
         .drawer-close {
@@ -314,7 +324,10 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        .drawer-close:hover { background: rgba(201,168,76,0.15); }
+
+        .drawer-close:hover {
+            background: rgba(201, 168, 76, 0.15);
+        }
 
         .mobile-menu a {
             padding: 14px 18px;
@@ -328,7 +341,7 @@
 
         .mobile-menu a:hover {
             color: var(--gold-light);
-            background: rgba(201,168,76,0.07);
+            background: rgba(201, 168, 76, 0.07);
             padding-right: 26px;
         }
 
@@ -337,9 +350,18 @@
         }
 
         /* Hamburger → X animation */
-        .nav-hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .nav-hamburger.is-open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-        .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        .nav-hamburger.is-open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-hamburger.is-open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .nav-hamburger.is-open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
 
         /* ========== HERO / BANNER ========== */
         #hero {
@@ -418,8 +440,13 @@
         }
 
         @keyframes marquee {
-            from { transform: translateX(0) }
-            to   { transform: translateX(-50%) }
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
         }
 
 
@@ -471,9 +498,13 @@
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
+
         @media (max-width: 700px) {
-            .offers-grid { grid-template-columns: 1fr; }
+            .offers-grid {
+                grid-template-columns: 1fr;
+            }
         }
+
         .offer-card {
             background: linear-gradient(160deg, var(--black-2), var(--black-3));
             border: 1px solid var(--border-gold-strong);
@@ -481,21 +512,25 @@
             padding: 28px 24px;
             text-align: center;
         }
+
         .offer-card-icon {
             font-size: 2.2rem;
             margin-bottom: 10px;
         }
+
         .offer-card h3 {
             font-size: 1.1rem;
             color: var(--gold-light);
             margin-bottom: 10px;
         }
+
         .offer-card p {
             font-size: 0.88rem;
             color: var(--white-dim);
             line-height: 1.8;
             margin-bottom: 18px;
         }
+
         .offer-card-btn {
             background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
             color: var(--black);
@@ -506,6 +541,7 @@
             border-radius: 50px;
             transition: var(--transition);
         }
+
         .offer-card-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(201, 168, 76, 0.5);
@@ -678,10 +714,17 @@
         }
 
         @media (max-width: 900px) {
-            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
         }
+
         @media (max-width: 540px) {
-            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
         }
 
         .product-card {
@@ -715,22 +758,28 @@
             position: absolute;
             inset: 0;
             background: linear-gradient(90deg,
-                var(--black-3) 0%,
-                rgba(201,168,76,0.06) 40%,
-                var(--black-3) 80%);
+                    var(--black-3) 0%,
+                    rgba(201, 168, 76, 0.06) 40%,
+                    var(--black-3) 80%);
             background-size: 200% 100%;
             animation: shimmer 1.4s infinite;
             z-index: 1;
             transition: opacity 0.3s ease;
         }
+
         .product-img-wrap.img-loaded::before {
             opacity: 0;
             pointer-events: none;
         }
 
         @keyframes shimmer {
-            0%   { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
         }
 
         .product-img-wrap img {
@@ -742,6 +791,7 @@
             position: relative;
             z-index: 2;
         }
+
         .product-img-wrap img.img-fallback {
             object-fit: contain;
             padding: 22%;
@@ -762,6 +812,7 @@
             flex-direction: column;
             gap: 10px;
         }
+
         .product-info .btn-order {
             margin-top: auto;
         }
@@ -782,7 +833,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
         }
 
         .product-info {
@@ -794,25 +845,31 @@
                 padding: 10px;
                 gap: 8px;
             }
+
             .product-badge {
                 top: 8px;
                 right: 8px;
                 font-size: 0.62rem;
                 padding: 4px 9px;
             }
+
             .product-name {
                 font-size: 0.8rem;
             }
+
             .spec-tag {
                 font-size: 0.6rem;
                 padding: 2px 7px;
             }
+
             .product-price {
                 font-size: 1rem;
             }
+
             .price-old-badge {
                 font-size: 0.62rem;
             }
+
             .btn-order {
                 font-size: 0.76rem;
                 padding: 9px 8px;
@@ -950,13 +1007,16 @@
             position: fixed;
             inset: 0;
             z-index: 2000;
-            background: rgba(0,0,0,0.78);
+            background: rgba(0, 0, 0, 0.78);
             backdrop-filter: blur(6px);
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
-        #product-modal-overlay.open { display: flex; }
+
+        #product-modal-overlay.open {
+            display: flex;
+        }
 
         .product-modal {
             background: var(--black-2);
@@ -969,13 +1029,20 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             position: relative;
-            box-shadow: 0 0 60px rgba(201,168,76,0.25);
-            animation: modal-in 0.3s cubic-bezier(0.4,0,0.2,1);
+            box-shadow: 0 0 60px rgba(201, 168, 76, 0.25);
+            animation: modal-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         @keyframes modal-in {
-            from { opacity:0; transform:scale(0.93) translateY(16px); }
-            to   { opacity:1; transform:scale(1) translateY(0); }
+            from {
+                opacity: 0;
+                transform: scale(0.93) translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
         }
 
         .modal-img-col {
@@ -986,16 +1053,22 @@
         }
 
         .modal-main-img {
-            width:100%; height:100%; object-fit:cover;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.5s ease;
             display: block;
         }
-        .modal-main-img:hover { transform: scale(1.05); }
+
+        .modal-main-img:hover {
+            transform: scale(1.05);
+        }
 
         .modal-thumbs {
             position: absolute;
             bottom: 12px;
-            left: 0; right: 0;
+            left: 0;
+            right: 0;
             display: flex;
             justify-content: center;
             gap: 8px;
@@ -1003,7 +1076,8 @@
         }
 
         .modal-thumb {
-            width: 50px; height: 50px;
+            width: 50px;
+            height: 50px;
             border-radius: 8px;
             object-fit: cover;
             border: 2px solid transparent;
@@ -1011,7 +1085,12 @@
             transition: var(--transition);
             opacity: 0.72;
         }
-        .modal-thumb.active, .modal-thumb:hover { border-color: var(--gold); opacity: 1; }
+
+        .modal-thumb.active,
+        .modal-thumb:hover {
+            border-color: var(--gold);
+            opacity: 1;
+        }
 
         .modal-info-col {
             padding: 28px 28px 24px 20px;
@@ -1024,96 +1103,148 @@
             position: absolute;
             top: 14px;
             right: 14px;
-            width: 34px; height: 34px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: var(--black-3);
             border: 1px solid var(--border-gold);
             color: var(--gold-light);
             font-size: 1rem;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
             transition: var(--transition);
             z-index: 10;
         }
-        .modal-close:hover { background: rgba(201,168,76,0.2); }
+
+        .modal-close:hover {
+            background: rgba(201, 168, 76, 0.2);
+        }
 
         .modal-badge {
             display: inline-block;
             background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
             color: var(--black);
-            font-size: 0.72rem; font-weight: 800;
+            font-size: 0.72rem;
+            font-weight: 800;
             padding: 4px 12px;
             border-radius: 50px;
             width: fit-content;
         }
 
         .modal-name {
-            font-size: 1.3rem; font-weight: 800;
+            font-size: 1.3rem;
+            font-weight: 800;
             color: var(--white);
             line-height: 1.35;
         }
 
-        .modal-sub { font-size: 0.85rem; color: var(--text-muted); }
+        .modal-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
 
         .modal-price-row {
-            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .modal-price {
-            font-size: 1.55rem; font-weight: 900;
+            font-size: 1.55rem;
+            font-weight: 900;
             background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .modal-specs { display: flex; gap: 8px; flex-wrap: wrap; }
+        .modal-specs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
 
         .modal-feature-list {
-            list-style: none; padding: 0; margin: 0;
-            display: flex; flex-direction: column; gap: 7px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
         }
+
         .modal-feature-list li {
-            font-size: 0.85rem; color: var(--white-dim);
-            display: flex; align-items: flex-start; gap: 8px;
+            font-size: 0.85rem;
+            color: var(--white-dim);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
         }
+
         .modal-feature-list li::before {
-            content: '✦'; color: var(--gold); font-size: 0.6rem;
-            margin-top: 5px; flex-shrink: 0;
+            content: '✦';
+            color: var(--gold);
+            font-size: 0.6rem;
+            margin-top: 5px;
+            flex-shrink: 0;
         }
 
         .modal-info-imgs {
-            display: grid; grid-template-columns: repeat(3,1fr); gap: 7px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 7px;
         }
+
         .modal-info-imgs img {
-            width: 100%; aspect-ratio: 1; object-fit: cover;
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
             border-radius: 8px;
             border: 1px solid var(--border-gold);
             cursor: pointer;
             transition: transform 0.3s;
         }
-        .modal-info-imgs img:hover { transform: scale(1.05); border-color: var(--gold); }
+
+        .modal-info-imgs img:hover {
+            transform: scale(1.05);
+            border-color: var(--gold);
+        }
 
         .modal-order-btn {
             background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
-            color: var(--black); font-weight: 800;
-            font-size: 0.95rem; padding: 14px 22px;
-            border-radius: 50px; width: 100%;
+            color: var(--black);
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 14px 22px;
+            border-radius: 50px;
+            width: 100%;
             margin-top: auto;
-            transition: var(--transition); min-height: 48px;
+            transition: var(--transition);
+            min-height: 48px;
         }
-        .modal-order-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.5); }
+
+        .modal-order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 168, 76, 0.5);
+        }
 
         @media (max-width: 620px) {
             .product-modal {
                 grid-template-columns: 1fr;
                 max-height: 92dvh;
             }
+
             .modal-img-col {
                 min-height: 260px;
                 border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             }
-            .modal-info-col { padding: 18px 16px 22px; }
+
+            .modal-info-col {
+                padding: 18px 16px 22px;
+            }
         }
 
         /* ========== FEATURES SECTION ========== */
@@ -1217,8 +1348,10 @@
 
         .about-text p {
             color: var(--text-muted);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             font-size: 0.95rem;
+            line-height: 1.55;
+            text-align: justify;
         }
 
         .about-stats {
@@ -1467,7 +1600,7 @@
         }
 
         .offer-mini-banner {
-            background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05));
             border: 1px solid var(--border-gold-strong);
             border-radius: var(--radius);
             padding: 12px 16px;
@@ -1498,39 +1631,118 @@
 
         .design-picker-filled {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 14px;
             background: var(--black-3);
             border: 1px solid var(--border-gold-strong);
             border-radius: var(--radius);
-            padding: 10px;
+            padding: 16px;
         }
 
-        .design-picker-filled img {
-            width: 56px;
-            height: 56px;
-            object-fit: cover;
-            border-radius: 10px;
-            flex-shrink: 0;
-        }
-
-        .design-picker-filled-info {
-            flex: 1;
-            min-width: 0;
+        .design-picker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
         }
 
         .design-picker-filled-label {
-            font-size: 0.68rem;
-            color: var(--text-muted);
+            font-size: 0.88rem;
+            color: var(--gold-light);
+            font-weight: 700;
         }
 
-        .design-picker-filled-name {
+        .design-picker-filled-count {
+            color: var(--white-dim);
+            font-size: 0.9rem;
+        }
+
+        .multi-designs-container {
+            display: grid;
+            gap: 10px;
+        }
+
+        .design-slot {
+            background: var(--black-2);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            display: grid;
+            grid-template-columns: 28px 44px 1fr auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .design-slot-num {
+            min-width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+            color: var(--black);
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .design-slot-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid var(--border-gold);
+        }
+
+        .design-slot-name {
             font-size: 0.92rem;
-            font-weight: 700;
+            font-weight: 600;
             color: var(--white);
-            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .design-slot-remove {
+            background: none;
+            border: 1px solid rgba(220, 53, 69, 0.4);
+            color: #dc3545;
+            font-size: 0.8rem;
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .design-slot-remove:hover {
+            background: rgba(220, 53, 69, 0.12);
+        }
+
+        .add-design-btn {
+            background: rgba(201, 168, 76, 0.08);
+            border: 1px dashed var(--gold);
+            color: var(--gold-light);
+            font-family: var(--font-ar);
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 14px 20px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .add-design-btn:hover {
+            background: rgba(201, 168, 76, 0.16);
+            border-color: var(--gold-light);
+        }
+
+        .multi-designs-note {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 4px;
         }
 
         .design-picker-change {
@@ -1912,6 +2124,18 @@
 
         .modal-close-btn:hover {
             transform: scale(1.05);
+        }
+
+        .review-star-btn {
+            background: none;
+            color: var(--text-muted);
+            font-size: 1.35rem;
+            transition: var(--transition);
+        }
+
+        .review-star-btn.active {
+            color: var(--gold-light);
+            transform: scale(1.08);
         }
 
         /* ========== CHATBOT ========== */
@@ -2966,7 +3190,8 @@
             .btn-order {
                 padding: 14px 22px;
                 font-size: 0.95rem;
-                min-height: 48px; /* comfortable thumb target */
+                min-height: 48px;
+                /* comfortable thumb target */
             }
 
             .location-btn {
@@ -3009,7 +3234,7 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: 0 0 0 3px rgba(201,168,76,0.5);
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.5);
             animation: pulse-logo 2s ease-in-out infinite;
             position: relative;
             z-index: 2;
@@ -3033,17 +3258,26 @@
             position: absolute;
             inset: 0;
             border-radius: 50%;
-            border: 1.5px dashed rgba(201,168,76,0.3);
+            border: 1.5px dashed rgba(201, 168, 76, 0.3);
             animation: ring-spin 3s linear infinite reverse;
         }
 
         @keyframes ring-spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         @keyframes pulse-logo {
-            0%, 100% { box-shadow: 0 0 0 3px rgba(201,168,76,0.4), 0 0 20px rgba(201,168,76,0.2); }
-            50%       { box-shadow: 0 0 0 4px rgba(201,168,76,0.7), 0 0 35px rgba(201,168,76,0.5); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.4), 0 0 20px rgba(201, 168, 76, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.7), 0 0 35px rgba(201, 168, 76, 0.5);
+            }
         }
 
         .loader-bar {
@@ -3124,16 +3358,18 @@
             box-shadow: var(--shadow-gold-strong);
             margin-bottom: 12px;
         }
+
         .about-img-main-wrap img {
             width: 100%;
             border-radius: var(--radius-lg);
             display: block;
         }
+
         .about-img-badge {
             position: absolute;
             bottom: 14px;
             right: 14px;
-            background: rgba(10,10,10,0.82);
+            background: rgba(10, 10, 10, 0.82);
             border: 1px solid var(--gold);
             color: var(--gold-light);
             font-size: 0.72rem;
@@ -3143,17 +3379,20 @@
             backdrop-filter: blur(8px);
             letter-spacing: 0.5px;
         }
+
         .about-img-duo {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
+
         .about-img-duo-item {
             position: relative;
             border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(201,168,76,0.12);
+            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.12);
         }
+
         .about-img-duo-item img {
             width: 100%;
             height: 150px;
@@ -3162,13 +3401,17 @@
             display: block;
             transition: transform 0.4s ease;
         }
-        .about-img-duo-item:hover img { transform: scale(1.05); }
+
+        .about-img-duo-item:hover img {
+            transform: scale(1.05);
+        }
+
         .about-img-duo-label {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(to top, rgba(10,10,10,0.88) 0%, transparent 100%);
+            background: linear-gradient(to top, rgba(10, 10, 10, 0.88) 0%, transparent 100%);
             color: var(--gold-light);
             font-size: 0.68rem;
             font-weight: 600;
@@ -3179,37 +3422,41 @@
         /* ========== WHATSAPP FLOAT BUTTON ========== */
         .whatsapp-float {
             position: fixed;
-            bottom: 86px;
-            left: 24px;
+            bottom: 90px;
+            right: 28px;
             z-index: 3500;
             width: 58px;
             height: 58px;
             border-radius: 50%;
             background: linear-gradient(135deg, #c9a84c 0%, #f5e27a 50%, #a07c30 100%);
-            box-shadow: 0 4px 20px rgba(201,168,76,0.55), 0 0 0 3px rgba(201,168,76,0.18);
+            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.55), 0 0 0 3px rgba(201, 168, 76, 0.18);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
             animation: wa-pulse 2.8s ease-in-out infinite;
         }
+
         .whatsapp-float:hover {
             transform: scale(1.13) translateY(-3px);
-            box-shadow: 0 8px 32px rgba(201,168,76,0.75), 0 0 0 5px rgba(201,168,76,0.22);
+            box-shadow: 0 8px 32px rgba(201, 168, 76, 0.75), 0 0 0 5px rgba(201, 168, 76, 0.22);
         }
+
         .whatsapp-float svg {
             width: 30px;
             height: 30px;
             fill: #0a0a0a;
         }
+
         .whatsapp-float-tooltip {
             position: absolute;
-            left: 68px;
+            left: auto;
+            right: 68px;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(10,10,10,0.92);
+            background: rgba(10, 10, 10, 0.92);
             border: 1px solid var(--gold);
             color: var(--gold-light);
             font-family: var(--font-ar);
@@ -3223,10 +3470,42 @@
             transition: opacity 0.2s ease;
             backdrop-filter: blur(8px);
         }
-        .whatsapp-float:hover .whatsapp-float-tooltip { opacity: 1; }
+
+        .whatsapp-float:hover .whatsapp-float-tooltip {
+            opacity: 1;
+        }
+
         @keyframes wa-pulse {
-            0%,100% { box-shadow: 0 4px 20px rgba(201,168,76,0.55), 0 0 0 3px rgba(201,168,76,0.18); }
-            50%      { box-shadow: 0 4px 28px rgba(201,168,76,0.8), 0 0 0 8px rgba(201,168,76,0.08); }
+
+            0%,
+            100% {
+                box-shadow: 0 4px 20px rgba(201, 168, 76, 0.55), 0 0 0 3px rgba(201, 168, 76, 0.18);
+            }
+
+            50% {
+                box-shadow: 0 4px 28px rgba(201, 168, 76, 0.8), 0 0 0 8px rgba(201, 168, 76, 0.08);
+            }
+        }
+
+        .features-media {
+            max-width: 620px;
+            margin: 0 auto 30px;
+            text-align: center;
+        }
+
+        .features-media img {
+            border-radius: 24px;
+            box-shadow: var(--shadow-gold);
+            max-height: 420px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .features-media h3 {
+            margin-top: 18px;
+            font-size: 1.15rem;
+            color: var(--gold-light);
+            font-weight: 700;
         }
 
         /* ========== MULTI-DESIGN SELECTOR ========== */
@@ -3236,6 +3515,7 @@
             flex-direction: column;
             gap: 10px;
         }
+
         .design-slot {
             background: var(--black-3);
             border: 1px solid var(--border-gold);
@@ -3247,7 +3527,11 @@
             position: relative;
             transition: var(--transition);
         }
-        .design-slot:hover { border-color: var(--gold); }
+
+        .design-slot:hover {
+            border-color: var(--gold);
+        }
+
         .design-slot-num {
             min-width: 26px;
             height: 26px;
@@ -3260,6 +3544,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .design-slot-img {
             width: 44px;
             height: 44px;
@@ -3267,15 +3552,17 @@
             object-fit: cover;
             border: 1px solid var(--border-gold);
         }
+
         .design-slot-name {
             flex: 1;
             font-size: 0.88rem;
             font-weight: 600;
             color: var(--white-dim);
         }
+
         .design-slot-remove {
             background: none;
-            border: 1px solid rgba(220,53,69,0.4);
+            border: 1px solid rgba(220, 53, 69, 0.4);
             color: #dc3545;
             font-size: 0.75rem;
             padding: 4px 8px;
@@ -3284,9 +3571,13 @@
             font-family: var(--font-ar);
             transition: var(--transition);
         }
-        .design-slot-remove:hover { background: rgba(220,53,69,0.12); }
+
+        .design-slot-remove:hover {
+            background: rgba(220, 53, 69, 0.12);
+        }
+
         .add-design-btn {
-            background: rgba(201,168,76,0.08);
+            background: rgba(201, 168, 76, 0.08);
             border: 1px dashed var(--gold);
             color: var(--gold-light);
             font-family: var(--font-ar);
@@ -3299,10 +3590,53 @@
             transition: var(--transition);
             text-align: center;
         }
+
         .add-design-btn:hover {
-            background: rgba(201,168,76,0.16);
+            background: rgba(201, 168, 76, 0.16);
             border-color: var(--gold-light);
         }
+
+        .design-picker-btn {
+            width: 100%;
+            background: rgba(201, 168, 76, 0.08);
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 14px 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .design-picker-btn:hover {
+            background: rgba(201, 168, 76, 0.16);
+        }
+
+        .design-picker-filled {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .design-picker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .design-picker-filled-label {
+            font-weight: 700;
+            color: var(--gold-light);
+        }
+
+        .design-picker-filled-count {
+            color: var(--white-dim);
+            font-size: 0.95rem;
+        }
+
         .multi-designs-note {
             font-size: 0.75rem;
             color: var(--text-muted);
@@ -3348,15 +3682,15 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-<link rel="shortcut icon" href="/favicon.ico">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
 
 
-    
+
 </head>
 
 <body>
@@ -3414,7 +3748,8 @@
             <a href="#about" onclick="closeMenu()">من نحن</a>
             <a href="#specs" onclick="closeMenu()">المواصفات</a>
             <a href="#testimonials" onclick="closeMenu()">آراء العملاء</a>
-            <a href="#order" onclick="closeMenu()" style="color: var(--gold-light); font-weight:700;background:rgba(201,168,76,0.1);">🛒 اطلب الآن</a>
+            <a href="#order" onclick="closeMenu()"
+                style="color: var(--gold-light); font-weight:700;background:rgba(201,168,76,0.1);">🛒 اطلب الآن</a>
         </div>
     </nav>
     <!-- Drawer backdrop -->
@@ -3426,7 +3761,9 @@
     <!-- HERO -->
     <section id="hero">
         <div class="hero-bg" id="hero-bg"></div>
-        <div class="hero-banner-img fade-in" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;" role="button" aria-label="تصفح المنتجات">
+        <div class="hero-banner-img fade-in"
+            onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;"
+            role="button" aria-label="تصفح المنتجات">
             <img id="banner-img" src="" alt="سدرة ستور - مصليات مبطنة فاخرة">
         </div>
     </section>
@@ -3479,8 +3816,10 @@
                     <div class="cd-label">ثانية</div>
                 </div>
             </div>
-            <div class="offer-badge" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;">احصل على المصلاية الآن بسعر 320ج بدلاً من 500ج!</div>
-            <div style="margin-top:12px; font-size:0.82rem; color:var(--text-muted);">* مصاريف الشحن 100ج لجميع المحافظات
+            <div class="offer-badge" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"
+                style="cursor:pointer;">احصل على المصلاية الآن بسعر 320ج بدلاً من 500ج!</div>
+            <div style="margin-top:12px; font-size:0.82rem; color:var(--text-muted);">* مصاريف الشحن 100ج لجميع
+                المحافظات
             </div>
         </div>
     </section>
@@ -3492,13 +3831,17 @@
                 <div class="offer-card-icon">🚚</div>
                 <h3>عرض المصليتين — شحن مجاني</h3>
                 <p>اطلب مصليتين مع بعض (بنفس التصميم أو تصميمين مختلفين) وهيوصلولك من غير ما تدفع مصاريف شحن خالص.</p>
-                <button class="offer-card-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اختر تصميمينك الآن ←</button>
+                <button class="offer-card-btn"
+                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اختر تصميمينك الآن
+                    ←</button>
             </div>
             <div class="offer-card">
                 <div class="offer-card-icon">🎁</div>
                 <h3>هدية مجانية مع كل طلب</h3>
                 <p>كل طلب بيوصل ومعاه هدية بسيطة منّا كهدية شكر ليك على ثقتك في سدرة ستور — من غير أي تكلفة إضافية.</p>
-                <button class="offer-card-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب الآن ←</button>
+                <button class="offer-card-btn"
+                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب الآن
+                    ←</button>
             </div>
         </div>
     </section>
@@ -3538,6 +3881,10 @@
             <div class="eyebrow">لماذا سدرة؟</div>
             <h2>جودة <span>تشعرك بالتميز</span></h2>
         </div>
+        <div class="features-media fade-in">
+            <img src="mat-mosque-horizon-rolled.jpg" alt="مصلاة أفق المسجد مطوية" />
+
+        </div>
         <div class="features-grid fade-in">
             <div class="feature-card">
                 <div class="feature-icon">🕌</div>
@@ -3547,7 +3894,8 @@
             <div class="feature-card">
                 <div class="feature-icon">🛡️</div>
                 <h3>ظهر أسود مانع للانزلاق</h3>
-                <p>قاعدة مطاطية متطورة باللون الأسود تثبّت المصلاة على أي سطح، ولا يظهر عليها اتساخ الأرض بسرعة مثل الألوان الفاتحة</p>
+                <p>قاعدة مطاطية متطورة باللون الأسود تثبّت المصلاة على أي سطح، ولا يظهر عليها اتساخ الأرض بسرعة مثل
+                    الألوان الفاتحة</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">☁️</div>
@@ -3578,15 +3926,16 @@
             <div class="about-img fade-in">
                 <div class="about-img-main-wrap">
                     <img id="about-img" src="" alt="مصلاية سدرة ستور مطوية" onerror="this.src='padded.jpg'">
-                    <div class="about-img-badge">مصلاية أفق المسجد</div>
                 </div>
                 <div class="about-img-duo">
                     <div class="about-img-duo-item">
-                        <img id="about-img-2" src="" alt="تفاصيل خامة مصلاية سدرة ستور" onerror="this.style.display='none'">
+                        <img id="about-img-2" src="" alt="تفاصيل خامة مصلاية سدرة ستور"
+                            onerror="this.style.display='none'">
                         <span class="about-img-duo-label">مطوية بشنطتها</span>
                     </div>
                     <div class="about-img-duo-item">
-                        <img id="about-img-3" src="" alt="تفاصيل نقشة مصلاية أفق المسجد" onerror="this.style.display='none'">
+                        <img id="about-img-3" src="" alt="تفاصيل نقشة مصلاية أفق المسجد"
+                            onerror="this.style.display='none'">
                         <span class="about-img-duo-label">تفاصيل النقشة</span>
                     </div>
                 </div>
@@ -3608,9 +3957,11 @@
                 </p>
                 <p>
                     كل مصلاية بظهر أسود قوي مانع للانزلاق — يثبّتها في مكانها ولا يظهر عليه اتساخ الأرض بسرعة مثل
-                    الألوان الفاتحة، فتفضل نظيفة وأنيقة لفترة أطول. وتيجي مطوية داخل شنطة حافظة أنيقة تسهّل حملها وحفظها.
+                    الألوان الفاتحة، فتفضل نظيفة وأنيقة لفترة أطول. وتيجي مطوية داخل شنطة حافظة أنيقة تسهّل حملها
+                    وحفظها.
                 </p>
-                <p style="font-size:0.8rem;color:var(--text-muted);">* الصور توضيحية لعرض التصميم، وقد تختلف الإضاءة والألوان قليلًا حسب الشاشة.</p>
+                <p style="font-size:0.8rem;color:var(--text-muted);">* الصور توضيحية لعرض التصميم، وقد تختلف الإضاءة
+                    والألوان قليلًا حسب الشاشة.</p>
                 <div class="about-stats">
                     <div class="stat-item">
                         <div class="stat-num">+500</div>
@@ -3731,20 +4082,23 @@
 
                 <div class="price-display">
                     <div class="pd-item">
-                        <div class="pd-label">سعر المصلاية</div>
+                        <div class="pd-label">سعر المصليات</div>
                         <div style="display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap;">
-                            <div class="pd-val">320 جنيه</div>
+                            <div class="pd-val" id="pd-mat-price">320 جنيه</div>
                             <div class="price-old-badge" style="font-size:0.75rem;padding:2px 7px;">500 ج</div>
                         </div>
                     </div>
                     <div class="pd-item">
                         <div class="pd-label">مصاريف الشحن</div>
-                        <div class="pd-val">100 جنيه</div>
+                        <div class="pd-val" id="pd-shipping">100 جنيه</div>
                     </div>
                     <div class="pd-item pd-total">
                         <div class="pd-label">الإجمالي</div>
-                        <div class="pd-val">420 جنيه</div>
+                        <div class="pd-val" id="pd-total">420 جنيه</div>
                     </div>
+                </div>
+                <div id="pd-free-shipping-note" style="display:none;text-align:center;margin-top:8px;color:#28a745;font-size:0.85rem;font-weight:700;">
+                    🎉 مبروك! حصلت على شحن مجاني
                 </div>
 
                 <!-- Offers reminder -->
@@ -3774,25 +4128,28 @@
                         🖼️ اختر تصميمك من معرض التصاميم
                     </button>
 
-                    <!-- Filled state: shows the chosen design with a thumbnail -->
                     <div id="picker-filled" class="design-picker-filled" style="display:none;">
-                        <img id="picker-filled-img" src="" alt="" onerror="this.src='logo.png'">
-                        <div class="design-picker-filled-info">
-                            <div class="design-picker-filled-label">التصميم المختار</div>
-                            <div id="picker-filled-name" class="design-picker-filled-name"></div>
+                        <div class="design-picker-header">
+                            <span class="design-picker-filled-label">التصاميم المختارة</span>
+                            <span id="picker-filled-count" class="design-picker-filled-count"></span>
                         </div>
-                        <button type="button" class="design-picker-change" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">تغيير</button>
+                        <div id="selected-designs-list" class="multi-designs-container"></div>
+                        <button type="button" class="add-design-btn"
+                            onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                            اختر تصميم آخر
+                        </button>
+                        <p class="multi-designs-note">يمكنك اختيار أكثر من تصميم واحد، ثم أرسل الطلب مباشرة.</p>
                     </div>
                 </div>
 
-                <!-- Quantity -->
+                <!-- Quantity: تُحسب تلقائيًا من عدد المصليات المختارة أعلاه (بدون تحكم يدوي منفصل لمنع التكرار) -->
                 <div class="form-group">
-                    <label for="order-quantity">الكمية</label>
+                    <label>الكمية الإجمالية</label>
                     <div style="display:flex; align-items:center; gap:12px;">
-                        <button type="button" onclick="changeQty(-1)" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:var(--black-2);color:var(--gold);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">−</button>
-                        <span id="order-quantity" style="font-size:1.1rem;font-weight:bold;color:var(--gold);min-width:30px;text-align:center;">1</span>
-                        <button type="button" onclick="changeQty(1)" style="width:36px;height:36px;border-radius:50%;border:1px solid var(--gold);background:var(--black-2);color:var(--gold);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
-                        <span id="order-total-price" style="color:var(--gold-light);font-size:0.95rem;margin-right:8px;">الإجمالي: 320 ج</span>
+                        <span id="order-quantity"
+                            style="font-size:1.1rem;font-weight:bold;color:var(--gold);min-width:30px;text-align:center;">1</span>
+                        <span id="order-total-price"
+                            style="color:var(--gold-light);font-size:0.95rem;margin-right:8px;">الإجمالي: 320 ج</span>
                     </div>
                 </div>
 
@@ -3896,7 +4253,8 @@
                 </div>
 
                 <div class="return-policy-box">
-                    📝 <strong>سياسة واضحة:</strong> في حالة رفض الاستلام بدون وجود عيب في المنتج، يتحمل العميل رسوم الشحن.
+                    📝 <strong>سياسة واضحة:</strong> في حالة رفض الاستلام بدون وجود عيب في المنتج، يتحمل العميل رسوم
+                    الشحن.
                 </div>
 
                 <button type="button" class="btn-submit" id="submit-btn" onclick="submitOrder()">
@@ -3944,9 +4302,12 @@
     </footer>
 
     <!-- WHATSAPP FLOAT BUTTON -->
-    <a class="whatsapp-float" href="https://wa.me/201033035681?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B5%D9%84%D9%8A%D8%A7%D8%AA%20%D8%B3%D8%AF%D8%B1%D8%A9%20%D8%B3%D8%AA%D9%88%D8%B1" target="_blank" rel="noopener noreferrer" aria-label="تواصل معنا على واتساب">
+    <a class="whatsapp-float"
+        href="https://wa.me/201033035681?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B5%D9%84%D9%8A%D8%A7%D8%AA%20%D8%B3%D8%AF%D8%B1%D8%A9%20%D8%B3%D8%AA%D9%88%D8%B1"
+        target="_blank" rel="noopener noreferrer" aria-label="تواصل معنا على واتساب">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
         </svg>
         <span class="whatsapp-float-tooltip">تواصل معنا 💬</span>
     </a>
@@ -3992,11 +4353,25 @@
     <div class="modal-overlay" id="success-modal">
         <div class="modal-box">
             <div class="modal-icon">✅</div>
-            <h3 class="gold-text">تم استلام طلبك!</h3>
-            <p>شكراً <strong id="modal-name"></strong>! طلبك وصلنا وهيتواصل معاك فريقنا في أقرب وقت.</p>
+            <h3 class="gold-text">تم تأكيد طلبك!</h3>
+            <p id="success-modal-message">شكراً <strong id="modal-name"></strong>! تم تأكيد طلبك وسيتم التواصل معاك
+                قريباً.</p>
+            <p id="success-modal-subtitle" style="margin-bottom:12px;">سيتم التواصل معك من خلال فريق سدرة ستور لإتمام
+                الطلب.</p>
             <div class="order-id-display" id="modal-order-id">SED-XXXXX</div>
             <p id="modal-email-note" style="display:none; font-size:0.82rem;">📧 هيوصلك تأكيد على إيميلك قريباً</p>
-            <button class="modal-close-btn" onclick="closeModal()">🛍 متابعة التسوق</button>
+            <div id="review-section" style="margin-top:18px; display:none;">
+                <p style="font-size:0.9rem; color:var(--gold-light); font-weight:700; margin-bottom:8px;">⭐ قيم تجربتك
+                    مع الموقع</p>
+                <div id="review-stars" style="display:flex; justify-content:center; gap:8px; margin-bottom:10px;"></div>
+                <textarea id="review-comment" rows="3"
+                    style="width:100%; border:1px solid var(--border-gold); background:var(--black); color:var(--white); border-radius:10px; padding:10px; resize:vertical;"
+                    placeholder="اكتب ملاحظاتك أو رأيك..."></textarea>
+                <button class="modal-close-btn" onclick="submitOrderReview()"
+                    style="margin-top:10px; padding:12px 24px;">إرسال التقييم</button>
+                <div id="review-success-msg" style="margin-top:8px; font-size:0.8rem; color:var(--gold-light);"></div>
+            </div>
+            <button class="modal-close-btn" onclick="closeModal()" style="margin-top:14px;">🛍 متابعة التسوق</button>
         </div>
     </div>
 
@@ -4047,13 +4422,16 @@
                 <div class="stats-row" id="stats-row"></div>
                 <!-- Export buttons -->
                 <div style="display:flex; gap:12px; margin-bottom:16px; justify-content:flex-start;">
-                    <button onclick="exportToExcel()" style="background:linear-gradient(135deg,#1d6f42,#2a9d5c);color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-family:var(--font-ar);font-size:0.85rem;display:flex;align-items:center;gap:8px;">
+                    <button onclick="exportToExcel()"
+                        style="background:linear-gradient(135deg,#1d6f42,#2a9d5c);color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-family:var(--font-ar);font-size:0.85rem;display:flex;align-items:center;gap:8px;">
                         📊 تصدير Excel
                     </button>
-                    <button onclick="exportToPDF()" style="background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-family:var(--font-ar);font-size:0.85rem;display:flex;align-items:center;gap:8px;">
+                    <button onclick="exportToPDF()"
+                        style="background:linear-gradient(135deg,#c0392b,#e74c3c);color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-family:var(--font-ar);font-size:0.85rem;display:flex;align-items:center;gap:8px;">
                         📄 تصدير PDF
                     </button>
-                    <span id="orders-count-badge" style="background:rgba(201,168,76,0.15);border:1px solid var(--border-gold);color:var(--gold);padding:6px 14px;border-radius:8px;font-size:0.85rem;display:flex;align-items:center;"></span>
+                    <span id="orders-count-badge"
+                        style="background:rgba(201,168,76,0.15);border:1px solid var(--border-gold);color:var(--gold);padding:6px 14px;border-radius:8px;font-size:0.85rem;display:flex;align-items:center;"></span>
                 </div>
                 <div class="admin-grid">
                     <div class="admin-box" style="grid-column:1/-1;">
@@ -4192,20 +4570,20 @@
                 // sort by createdAt or id
                 products.sort((a, b) => (a.createdAt || '') < (b.createdAt || '') ? -1 : 1);
                 return products;
-            } catch(e) { console.error("fbGetProducts error:", e); return null; }
+            } catch (e) { console.error("fbGetProducts error:", e); return null; }
         }
 
         async function fbSaveProduct(product) {
             try {
                 const docId = String(product.id);
                 await setDoc(doc(db, "products", docId), product);
-            } catch(e) { console.error("fbSaveProduct error:", e); }
+            } catch (e) { console.error("fbSaveProduct error:", e); }
         }
 
         async function fbDeleteProduct(productId) {
             try {
                 await deleteDoc(doc(db, "products", String(productId)));
-            } catch(e) { console.error("fbDeleteProduct error:", e); }
+            } catch (e) { console.error("fbDeleteProduct error:", e); }
         }
 
         async function fbSaveAllProducts(products) {
@@ -4218,7 +4596,7 @@
         async function fbSaveOrder(order) {
             try {
                 await setDoc(doc(db, "orders", order.id), order);
-            } catch(e) { console.error("fbSaveOrder error:", e); }
+            } catch (e) { console.error("fbSaveOrder error:", e); }
         }
 
         async function fbGetOrders() {
@@ -4226,15 +4604,15 @@
                 const snap = await getDocs(collection(db, "orders"));
                 const orders = [];
                 snap.forEach(d => orders.push(d.data()));
-                orders.sort((a,b) => (b.ts||0) - (a.ts||0));
+                orders.sort((a, b) => (b.ts || 0) - (a.ts || 0));
                 return orders;
-            } catch(e) { console.error("fbGetOrders error:", e); return []; }
+            } catch (e) { console.error("fbGetOrders error:", e); return []; }
         }
 
         async function fbUpdateOrderStatus(orderId, newStatus) {
             try {
                 await updateDoc(doc(db, "orders", orderId), { status: newStatus });
-            } catch(e) { console.error("fbUpdateOrderStatus error:", e); }
+            } catch (e) { console.error("fbUpdateOrderStatus error:", e); }
         }
 
         async function fbDeleteAllOrders() {
@@ -4243,7 +4621,7 @@
                 const dels = [];
                 snap.forEach(d => dels.push(deleteDoc(d.ref)));
                 await Promise.all(dels);
-            } catch(e) { console.error("fbDeleteAllOrders error:", e); }
+            } catch (e) { console.error("fbDeleteAllOrders error:", e); }
         }
 
         // ===== VISITS =====
@@ -4251,7 +4629,7 @@
             try {
                 const docId = Date.now().toString();
                 await setDoc(doc(db, "visits", docId), visitData);
-            } catch(e) { console.error("fbTrackVisit error:", e); }
+            } catch (e) { console.error("fbTrackVisit error:", e); }
         }
 
         async function fbGetVisits() {
@@ -4260,7 +4638,7 @@
                 const visits = [];
                 snap.forEach(d => visits.push(d.data()));
                 return visits;
-            } catch(e) { console.error("fbGetVisits error:", e); return []; }
+            } catch (e) { console.error("fbGetVisits error:", e); return []; }
         }
 
         // ===== EXPOSE TO WINDOW =====
@@ -4284,39 +4662,13 @@
         const FB_CATALOG_VERSION = 'v3-23designs';
 
         // ===== OVERRIDE getProducts to use Firebase =====
-        window._fbInitProducts = async function() {
-            const fbProducts = await fbGetProducts();
-
-            // Check if Firebase has the correct catalog version
-            const fbVersion = fbProducts && fbProducts.length > 0 && fbProducts[0].__catalogVersion;
-            const needsReset = !fbProducts || fbProducts.length === 0 || fbProducts.length < 23 || fbVersion !== FB_CATALOG_VERSION;
-
-            if (!needsReset && fbProducts && fbProducts.length > 0) {
-                // Firebase is up to date — use it
-                localStorage.setItem('sedra_products', JSON.stringify(fbProducts));
-                window.PRODUCTS = fbProducts;
-                if (typeof buildProductGrid === 'function') buildProductGrid();
-                if (typeof renderAdminProducts === 'function') renderAdminProducts();
-            } else {
-                // Firebase is outdated or empty — delete old docs and upload fresh catalog
-                console.log("🔄 Resetting Firebase catalog to " + FB_CATALOG_VERSION + "...");
-                try {
-                    // Delete all old product docs first
-                    if (fbProducts && fbProducts.length > 0) {
-                        const dels = fbProducts.map(p => deleteDoc(doc(db, "products", String(p.id))));
-                        await Promise.all(dels);
-                    }
-                } catch(e) { console.warn("Delete old products:", e); }
-
-                // Tag each product with catalog version and upload
-                const freshProducts = DEFAULT_PRODUCTS.map(p => ({ ...p, __catalogVersion: FB_CATALOG_VERSION }));
-                await fbSaveAllProducts(freshProducts);
-                localStorage.setItem('sedra_products', JSON.stringify(freshProducts));
-                localStorage.setItem('sedra_products_version', 'v3-23designs-fix');
-                window.PRODUCTS = freshProducts;
-                if (typeof buildProductGrid === 'function') buildProductGrid();
-                if (typeof renderAdminProducts === 'function') renderAdminProducts();
-                console.log("✅ Firebase catalog reset to " + FB_CATALOG_VERSION + " with " + freshProducts.length + " products");
+        window._fbInitProducts = async function () {
+            const localProducts = getProducts();
+            if (window.FB && window.FB.ready) {
+                const loaded = await syncProductsFromFirebase(true);
+                if (!loaded) {
+                    saveProducts(localProducts, { syncToFirebase: true });
+                }
             }
         };
 
@@ -4446,8 +4798,8 @@
             // Inject remaining images
             setImg('banner-img', IMG_BANNER);
             setImg('category-img', IMG_CATEGORY);
-            setImg('about-img', IMG_ROLLED);
-            setImg('about-img-2', IMG_HALF);
+            setImg('about-img', IMG_HALF);
+            setImg('about-img-2', IMG_ROLLED);
             setBg('hero-bg', IMG_BANNER);
 
             // Init everything
@@ -4495,36 +4847,68 @@
         };
 
         // Keep reference for Firebase init
-        window.getLocalProducts = function() {
+        window.getLocalProducts = function () {
             const stored = localStorage.getItem('sedra_products');
-            if (stored) { const p = JSON.parse(stored); if (p.length > 0) return p; }
+            if (stored) { try { const p = JSON.parse(stored); if (Array.isArray(p) && p.length > 0) return p; } catch (e) { } }
             return DEFAULT_PRODUCTS;
         };
 
         const PRODUCTS_VERSION = 'v3-23designs-fix';
+        let PRODUCTS = null;
 
         function getProducts() {
-            const storedVersion = localStorage.getItem('sedra_products_version');
-            const stored = localStorage.getItem('sedra_products');
-            if (stored && storedVersion === PRODUCTS_VERSION) {
-                const parsed = JSON.parse(stored);
-                if (parsed.length > 0) return parsed;
-            }
-            // New deploy or first visit: reset cache to the latest default catalog
+            if (Array.isArray(PRODUCTS) && PRODUCTS.length > 0) return PRODUCTS;
+            try {
+                const stored = localStorage.getItem('sedra_products');
+                if (stored) {
+                    const parsed = JSON.parse(stored);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        PRODUCTS = parsed;
+                        return PRODUCTS;
+                    }
+                }
+            } catch (e) { }
+
+            PRODUCTS = DEFAULT_PRODUCTS.map(p => ({ ...p }));
+            localStorage.setItem('sedra_products', JSON.stringify(PRODUCTS));
             localStorage.setItem('sedra_products_version', PRODUCTS_VERSION);
-            saveProducts(DEFAULT_PRODUCTS);
-            return DEFAULT_PRODUCTS;
+            return PRODUCTS;
         }
 
-        function saveProducts(products) {
-            localStorage.setItem('sedra_products', JSON.stringify(products));
-            // Also save to Firebase
-            if (window.FB && window.FB.ready) {
-                window.FB.saveAllProducts(products).catch(e => console.error(e));
+        function saveProducts(products, options = {}) {
+            const normalized = Array.isArray(products) ? products : [];
+            PRODUCTS = normalized;
+            localStorage.setItem('sedra_products', JSON.stringify(normalized));
+            localStorage.setItem('sedra_products_version', PRODUCTS_VERSION);
+            if (window.FB && window.FB.ready && options.syncToFirebase !== false) {
+                window.FB.saveAllProducts(normalized).catch(e => console.error(e));
             }
         }
 
-        let PRODUCTS = getProducts();
+        async function syncProductsFromFirebase(force = false) {
+            if (!(window.FB && window.FB.ready)) return false;
+            try {
+                const fbProducts = await window.FB.getProducts();
+                if (Array.isArray(fbProducts) && fbProducts.length > 0) {
+                    saveProducts(fbProducts, { syncToFirebase: false });
+                    if (typeof buildProductGrid === 'function') buildProductGrid();
+                    if (typeof renderAdminProducts === 'function') renderAdminProducts();
+                    return true;
+                }
+                if (force || !Array.isArray(PRODUCTS) || PRODUCTS.length === 0) {
+                    const fallbackProducts = getProducts();
+                    saveProducts(fallbackProducts, { syncToFirebase: true });
+                }
+                return false;
+            } catch (e) {
+                console.error('syncProductsFromFirebase error:', e);
+                return false;
+            }
+        }
+
+        window.syncProductsFromFirebase = syncProductsFromFirebase;
+
+        PRODUCTS = getProducts();
 
         function getProductImageUrl(productName) {
             const product = getProducts().find(p => p.name === productName);
@@ -4551,7 +4935,7 @@
                 return `
     <div class="product-card fade-in${oos ? ' out-of-stock-card' : ''}">
       ${oos ? '<div class="oos-overlay"><span>نفذت الكمية</span></div>' : ''}
-      <div class="product-img-wrap" style="cursor:${oos?'default':'zoom-in'};" ${oos?'':`onclick="openProductModal(${pid})"`}>
+      <div class="product-img-wrap" style="cursor:${oos ? 'default' : 'zoom-in'};" ${oos ? '' : `onclick="openProductModal(${pid})"`}>
         <img src="${imgSrc}" alt="${p.name}" decoding="async"
              onload="this.classList.add('img-ready');this.closest('.product-img-wrap').classList.add('img-loaded')"
              onerror="this.src='logo.png';this.classList.add('img-fallback');this.classList.add('img-ready');this.closest('.product-img-wrap').classList.add('img-loaded')">
@@ -4636,7 +5020,7 @@
             const nearbyProds = products.slice(0, 4);
             thumbsEl.innerHTML = nearbyProds.map((np, i) => {
                 const src = getProductImageForDisplay(np);
-                return `<img class="modal-thumb${np.id===p.id?' active':''}" src="${src}" alt="${np.name}"
+                return `<img class="modal-thumb${np.id === p.id ? ' active' : ''}" src="${src}" alt="${np.name}"
                     onclick="switchModalImg(this,'${src}','${np.name}')">`;
             }).join('');
 
@@ -4646,7 +5030,7 @@
             if (infoSrcs.length) {
                 infoEl.innerHTML = infoSrcs.map((s, i) => {
                     const labels = ['طبقات المصلاية', 'المقاسات', 'تفاصيل التصنيع'];
-                    return `<img src="${s}" alt="${labels[i]||'تفصيل'}" title="${labels[i]||''}">`;
+                    return `<img src="${s}" alt="${labels[i] || 'تفصيل'}" title="${labels[i] || ''}">`;
                 }).join('');
                 infoEl.style.display = 'grid';
             } else {
@@ -4695,44 +5079,167 @@
             if (e.key === 'Escape') closeProductModalDirect();
         });
 
+        const SHIPPING_FEE = 100;
+
+        // الكمية الإجمالية = مجموع كميات كل التصاميم المختارة فقط (بدون أي مضاعفة إضافية)
+        function getTotalSelectedQuantity() {
+            let totalQuantity = 0;
+            selectedDesigns.forEach(design => {
+                const qty = typeof design === 'string' ? 1 : (design.quantity || 1);
+                totalQuantity += qty;
+            });
+            return totalQuantity || 1; // لو مفيش تصاميم متختارة لسه، اعتبرها 1 لعرض السعر الافتراضي
+        }
+
+        // سعر المصليات = مجموع (سعر كل تصميم × كميته) بناءً على السعر الفعلي لكل منتج
+        function getMaterialsTotal() {
+            if (!selectedDesigns.length) return BASE_PRICE;
+            const products = getProducts();
+            return selectedDesigns.reduce((sum, design) => {
+                const name = typeof design === 'string' ? design : design.name;
+                const qty = typeof design === 'string' ? 1 : (design.quantity || 1);
+                const product = products.find(p => p.name === name);
+                const unitPrice = product ? product.price : BASE_PRICE;
+                return sum + (unitPrice * qty);
+            }, 0);
+        }
+
+        function updateOrderTotalUI() {
+            const totalQuantity = getTotalSelectedQuantity();
+            const materialsTotal = getMaterialsTotal();
+            const shippingFee = totalQuantity >= 2 ? 0 : SHIPPING_FEE;
+            const total = materialsTotal + shippingFee;
+
+            const qtyEl = document.getElementById('order-quantity');
+            if (qtyEl) qtyEl.textContent = totalQuantity;
+
+            const totalEl = document.getElementById('order-total-price');
+            if (totalEl) totalEl.textContent = 'الإجمالي: ' + total + ' ج';
+
+            const matPriceEl = document.getElementById('pd-mat-price');
+            if (matPriceEl) matPriceEl.textContent = materialsTotal + ' جنيه';
+
+            const shippingEl = document.getElementById('pd-shipping');
+            if (shippingEl) shippingEl.textContent = shippingFee === 0 ? 'مجاني' : (shippingFee + ' جنيه');
+
+            const pdTotalEl = document.getElementById('pd-total');
+            if (pdTotalEl) pdTotalEl.textContent = total + ' جنيه';
+
+            const freeShippingNote = document.getElementById('pd-free-shipping-note');
+            if (freeShippingNote) freeShippingNote.style.display = shippingFee === 0 ? 'block' : 'none';
+        }
+
         function selectProduct(name) {
             const product = getProducts().find(p => p.name === name);
+            if (!name) {
+                showToast('⚠ الرجاء اختيار التصميم');
+                return;
+            }
             if (product && product.outOfStock) {
                 showToast('⛔ هذا المنتج نفذت كميته حالياً');
                 return;
             }
-            const sel = document.getElementById('product-select');
-            if (sel) {
-                sel.value = name;
-                // If exact not found try partial
-                if (!sel.value) {
-                    for (let o of sel.options) {
-                        if (o.value.includes(name)) { sel.value = o.value; break; }
-                    }
+
+            // Check if design is already selected
+            const existingIndex = selectedDesigns.findIndex(d =>
+                (typeof d === 'string' ? d : d.name) === name
+            );
+
+            if (existingIndex !== -1) {
+                // If already exists, increment its quantity
+                if (typeof selectedDesigns[existingIndex] === 'string') {
+                    // Convert old format to new format with quantity
+                    selectedDesigns[existingIndex] = { name: name, quantity: 2 };
+                } else {
+                    selectedDesigns[existingIndex].quantity++;
                 }
+                showToast('✅ تم زيادة الكمية للتصميم "' + name + '"');
+            } else {
+                // Add new design with quantity 1
+                selectedDesigns.push({ name: name, quantity: 1 });
+                showToast('✅ أضيف التصميم "' + name + '"');
             }
+
             syncProductPickerUI();
-            document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
-            showToast('✅ تم اختيار ' + name);
+            updateOrderTotalUI();
+            document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Sync the visual "choose your design" button/preview with the hidden select
+        function removeSelectedDesign(index) {
+            if (index < 0 || index >= selectedDesigns.length) return;
+
+            const design = selectedDesigns[index];
+            const designName = typeof design === 'string' ? design : design.name;
+            const currentQty = (typeof design === 'string' ? 1 : design.quantity) || 1;
+
+            if (currentQty > 1) {
+                // Decrement quantity if more than 1
+                if (typeof selectedDesigns[index] === 'string') {
+                    selectedDesigns[index] = { name: designName, quantity: currentQty - 1 };
+                } else {
+                    selectedDesigns[index].quantity--;
+                }
+                showToast('✅ تم تقليل الكمية');
+            } else {
+                // Remove completely if quantity is 1
+                selectedDesigns.splice(index, 1);
+                showToast('✅ تم إزالة التصميم');
+            }
+
+            syncProductPickerUI();
+            updateOrderTotalUI();
+        }
+
         function syncProductPickerUI() {
-            const sel = document.getElementById('product-select');
             const emptyBtn = document.getElementById('picker-empty-btn');
             const filled = document.getElementById('picker-filled');
-            if (!sel || !emptyBtn || !filled) return;
-            const name = sel.value;
-            if (!name) {
+            const listEl = document.getElementById('selected-designs-list');
+            const countEl = document.getElementById('picker-filled-count');
+            if (!emptyBtn || !filled || !listEl || !countEl) return;
+            if (selectedDesigns.length === 0) {
                 emptyBtn.style.display = 'block';
                 filled.style.display = 'none';
+                listEl.innerHTML = '';
+                countEl.textContent = '';
                 return;
             }
-            const product = getProducts().find(p => p.name === name);
             emptyBtn.style.display = 'none';
             filled.style.display = 'flex';
-            document.getElementById('picker-filled-name').textContent = name;
-            document.getElementById('picker-filled-img').src = product ? getProductImageForDisplay(product) : '';
+
+            // Calculate total unique designs
+            const totalCount = selectedDesigns.reduce((sum, d) => {
+                const qty = (typeof d === 'string' ? 1 : d.quantity) || 1;
+                return sum + qty;
+            }, 0);
+
+            countEl.textContent = totalCount + ' تصميم';
+            listEl.innerHTML = selectedDesigns.map((design, i) => {
+                const name = typeof design === 'string' ? design : design.name;
+                const qty = (typeof design === 'string' ? 1 : design.quantity) || 1;
+                const img = getProductImageUrl(name) || IMG_LOGO;
+                return `
+                    <div class="design-slot">
+                        <span class="design-slot-num">${i + 1}</span>
+                        <img class="design-slot-img" src="${img}" alt="${name}">
+                        <div class="design-slot-name">${name}</div>
+                        <div class="design-slot-qty" style="font-size:0.75rem; color:var(--gold); margin-top:4px; font-weight:700;">الكمية: ${qty}</div>
+                        <button type="button" class="design-slot-remove" onclick="removeSelectedDesign(${i})" style="font-size:0.75rem;">− إزالة</button>
+                        <button type="button" class="design-slot-remove" onclick="incrementDesignQty(${i})" style="font-size:0.75rem; background:rgba(40,167,69,0.2); border:1px solid rgba(40,167,69,0.4); color:#28a745; margin-top:4px;">+ زيادة</button>
+                    </div>`;
+            }).join('');
+            updateOrderTotalUI();
+        }
+
+        function incrementDesignQty(index) {
+            if (index < 0 || index >= selectedDesigns.length) return;
+            const design = selectedDesigns[index];
+            if (typeof design === 'string') {
+                selectedDesigns[index] = { name: design, quantity: 2 };
+            } else {
+                design.quantity++;
+            }
+            syncProductPickerUI();
+            updateOrderTotalUI();
         }
 
         // ---- GOVERNORATES ----
@@ -4820,7 +5327,7 @@
                 );
                 if (!res.ok) return null;
                 return await res.json();
-            } catch(e) { return null; }
+            } catch (e) { return null; }
         }
 
         function autoFillFromGeocode(data, lat, lng) {
@@ -4925,7 +5432,7 @@
                         style="width:100%;height:220px;border:none;display:block;"
                         loading="lazy"
                         referrerpolicy="no-referrer"
-                        src="https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(lng)-0.005},${parseFloat(lat)-0.005},${parseFloat(lng)+0.005},${parseFloat(lat)+0.005}&layer=mapnik&marker=${lat},${lng}">
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(lng) - 0.005},${parseFloat(lat) - 0.005},${parseFloat(lng) + 0.005},${parseFloat(lat) + 0.005}&layer=mapnik&marker=${lat},${lng}">
                     </iframe>
                     <div style="position:absolute;top:8px;right:8px;background:rgba(10,10,10,0.85);border:1px solid var(--gold);border-radius:6px;padding:4px 10px;font-size:0.7rem;color:var(--gold-light);">
                         📍 موقعك الحالي
@@ -4940,7 +5447,7 @@
                 // Update existing iframe
                 const frame = document.getElementById('map-preview-frame');
                 if (frame) {
-                    frame.src = `https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(lng)-0.005},${parseFloat(lat)-0.005},${parseFloat(lng)+0.005},${parseFloat(lat)+0.005}&layer=mapnik&marker=${lat},${lng}`;
+                    frame.src = `https://www.openstreetmap.org/export/embed.html?bbox=${parseFloat(lng) - 0.005},${parseFloat(lat) - 0.005},${parseFloat(lng) + 0.005},${parseFloat(lat) + 0.005}&layer=mapnik&marker=${lat},${lng}`;
                 }
             }
 
@@ -4973,6 +5480,7 @@
                     const geoData = await reverseGeocode(lat, lng);
 
                     if (geoData) {
+                        gpsUsed = true;
                         autoFillFromGeocode(geoData, lat, lng);
                         if (btn) { btn.disabled = false; btn.innerHTML = '✅ تم تحديد الموقع وملء العنوان'; }
                         showToast('✅ تم! راجع البيانات وعدّل لو لازم');
@@ -4987,8 +5495,8 @@
                 (err) => {
                     if (btn) { btn.disabled = false; btn.innerHTML = '📍 استخدم موقعي الحالي'; }
                     const msg = err.code === 1 ? '❌ رفضت الإذن — فعّل الموقع من إعدادات المتصفح'
-                               : err.code === 2 ? '❌ تعذّر تحديد الموقع — جرّب تاني'
-                               : '❌ انتهى الوقت — جرّب مرة تانية';
+                        : err.code === 2 ? '❌ تعذّر تحديد الموقع — جرّب تاني'
+                            : '❌ انتهى الوقت — جرّب مرة تانية';
                     showToast(msg);
                 },
                 { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
@@ -5024,6 +5532,8 @@
 
         // ---- ORDER SUBMISSION ----
         let ordersDB = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
+        let gpsUsed = false;
+        let latestOrderId = null;
         // Load orders from Firebase on startup
         if (window.FB && window.FB.ready) {
             window.FB.getOrders().then(orders => { ordersDB = orders; localStorage.setItem('sedra_orders', JSON.stringify(orders)); });
@@ -5032,7 +5542,13 @@
         function submitOrder() {
             const name = document.getElementById('cust-name').value.trim();
             const phone = document.getElementById('cust-phone').value.trim();
-            const product = document.getElementById('product-select').value;
+
+            // Extract design names from the new format (objects with name and quantity)
+            const selectedProducts = selectedDesigns.map(design => {
+                return typeof design === 'string' ? design : design.name;
+            });
+            const product = selectedProducts.join(' - ');
+
             const gov = document.getElementById('gov-select').value;
             const city = document.getElementById('city-select').value;
             const address = document.getElementById('cust-address').value.trim();
@@ -5045,13 +5561,11 @@
             // Validation
             if (!name) { showToast('⚠ من فضلك أدخل اسمك'); document.getElementById('cust-name').focus(); return; }
             // Convert Arabic/Eastern Arabic numerals to Western
-const normalizedPhone = phone.replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰۱۲۳۴۵۶۷۸۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
-const phoneToValidate = normalizedPhone.replace(/\s|-/g, '');
-if (!phoneToValidate || !/^[0-9]{11}$/.test(phoneToValidate)) { showToast('⚠ أدخل رقم هاتف صحيح (11 رقم)'); document.getElementById('cust-phone').focus(); return; }
-document.getElementById('cust-phone').value = phoneToValidate;
-            if (!product) { showToast('⚠ اختر التصميم المطلوب'); document.getElementById('picker-empty-btn')?.scrollIntoView({behavior:'smooth', block:'center'}); return; }
-            const gpsUsed = !!_gpsCoords; // true if user tapped the location pin
-
+            const normalizedPhone = phone.replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰۱۲۳۴۵۶۷۸۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
+            const phoneToValidate = normalizedPhone.replace(/\s|-/g, '');
+            if (!phoneToValidate || !/^[0-9]{11}$/.test(phoneToValidate)) { showToast('⚠ أدخل رقم هاتف صحيح (11 رقم)'); document.getElementById('cust-phone').focus(); return; }
+            document.getElementById('cust-phone').value = phoneToValidate;
+            if (!selectedProducts.length) { showToast('⚠ اختر تصميم واحد على الأقل'); document.getElementById('picker-empty-btn')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
             // If GPS was used, gov/city/address are all optional
             if (!gpsUsed) {
                 if (!gov) { showToast('⚠ اختر المحافظة'); document.getElementById('gov-select').focus(); return; }
@@ -5065,11 +5579,32 @@ document.getElementById('cust-phone').value = phoneToValidate;
 
             const orderId = 'SED-' + Date.now().toString().slice(-5) + Math.floor(Math.random() * 100);
             const finalCity = city === 'أخرى' ? customLoc : city;
-            const selectedProduct = getProducts().find(p => p.name === product);
-            const productPrice = selectedProduct ? selectedProduct.price : 320;
+
+            // Build designsMeta with quantities from the new format
+            const selectedProductsMeta = selectedDesigns.map(design => {
+                const designName = typeof design === 'string' ? design : design.name;
+                const designQty = typeof design === 'string' ? 1 : (design.quantity || 1);
+                const product = getProducts().find(p => p.name === designName);
+                return {
+                    name: designName,
+                    quantity: designQty,
+                    price: product ? product.price : BASE_PRICE,
+                    imageData: product ? product.imageData || getProductImageForDisplay(product) : null
+                };
+            });
+
+            const firstProduct = selectedProductsMeta[0] || { name: selectedProducts[0] || 'تصميم غير محدد', price: BASE_PRICE };
+            const productPrice = firstProduct.price;
+            // الكمية الإجمالية = مجموع كميات كل التصاميم المختارة فقط (بدون أي مضاعفة إضافية)
+            const productCount = selectedProductsMeta.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            // إجمالي سعر المصليات الفعلي = مجموع (سعر كل تصميم × كميته)
+            const materialsTotal = selectedProductsMeta.reduce((sum, item) => sum + ((item.price || BASE_PRICE) * (item.quantity || 1)), 0);
+            const shippingFee = productCount >= 2 ? 0 : SHIPPING_FEE;
+            const orderTotal = materialsTotal + shippingFee;
 
             const order = {
-                id: orderId, name, phone, email, product, quantity: orderQty, price: productPrice * orderQty, unitPrice: productPrice, gov,
+                id: orderId, name, phone, email, product, products: selectedProducts, quantity: productCount,
+                price: materialsTotal, unitPrice: productPrice, shippingFee, total: orderTotal, gov,
                 city: finalCity, address, notes,
                 payment: selectedPayment === 'cod' ? 'عند الاستلام' : 'محفظة إلكترونية',
                 delivDate, delivTime,
@@ -5077,7 +5612,10 @@ document.getElementById('cust-phone').value = phoneToValidate;
                 date: new Date().toLocaleString('ar-EG'),
                 device: getDeviceType(),
                 ts: Date.now(),
-                mapLink: _gpsCoords ? `https://maps.google.com/?q=${_gpsCoords.lat},${_gpsCoords.lng}` : null
+                mapLink: _gpsCoords ? `https://maps.google.com/?q=${_gpsCoords.lat},${_gpsCoords.lng}` : null,
+                designs: selectedProducts,
+                designsMeta: selectedProductsMeta,
+                designSummary: selectedProductsMeta.map((item, index) => `${index + 1}. ${item.name}`).join(' • ')
             };
 
             ordersDB.push(order);
@@ -5096,29 +5634,87 @@ document.getElementById('cust-phone').value = phoneToValidate;
             // Show success
             setTimeout(() => {
                 btn.disabled = false; btn.textContent = '🛒 تأكيد الطلب الآن';
+                latestOrderId = order.id;
                 document.getElementById('modal-name').textContent = name;
                 document.getElementById('modal-order-id').textContent = orderId;
+                document.getElementById('success-modal-message').textContent = 'تم تأكيد طلبك بنجاح وسيتم التواصل معك قريبًا.';
+                document.getElementById('success-modal-subtitle').textContent = 'سيتم التواصل معك من خلال فريق سدرة ستور لإتمام الطلب.';
                 if (email) { document.getElementById('modal-email-note').style.display = 'block'; }
+                document.getElementById('review-section').style.display = 'block';
+                resetReviewUI();
                 document.getElementById('success-modal').classList.add('open');
                 resetForm();
             }, 1200);
         }
 
         function resetForm() {
-            orderQty = 1; document.getElementById('order-quantity').textContent = '1'; document.getElementById('order-total-price').textContent = 'الإجمالي: 320 ج';
+            document.getElementById('order-quantity').textContent = '1';
             ['cust-name', 'cust-phone', 'cust-email', 'cust-address', 'cust-notes', 'delivery-date'].forEach(id => {
                 const el = document.getElementById(id); if (el) el.value = '';
             });
+            selectedDesigns = [];
+            gpsUsed = false;
             document.getElementById('product-select').value = '';
             syncProductPickerUI();
             document.getElementById('gov-select').value = '';
             document.getElementById('city-select').innerHTML = '<option value="">-- اختر أولاً المحافظة --</option>';
             document.getElementById('delivery-time').value = '';
             setPayment('cod');
+            updateOrderTotalUI();
         }
 
         function closeModal() {
             document.getElementById('success-modal').classList.remove('open');
+        }
+
+        function resetReviewUI() {
+            const reviewComment = document.getElementById('review-comment');
+            const reviewStars = document.getElementById('review-stars');
+            const reviewNote = document.getElementById('review-success-msg');
+            if (reviewComment) reviewComment.value = '';
+            if (reviewNote) reviewNote.textContent = '';
+            if (reviewStars) {
+                reviewStars.innerHTML = [1, 2, 3, 4, 5].map(star => `<button type="button" class="review-star-btn" onclick="selectReviewStar(${star})">★</button>`).join('');
+            }
+            window.selectedReviewRating = 0;
+        }
+
+        function selectReviewStar(stars) {
+            window.selectedReviewRating = stars;
+            const reviewStars = document.getElementById('review-stars');
+            if (!reviewStars) return;
+            reviewStars.querySelectorAll('.review-star-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index < stars);
+            });
+        }
+
+        function submitOrderReview() {
+            if (!latestOrderId) { showToast('⚠ لا يوجد طلب مؤكد حاليًا'); return; }
+            const rating = Number(window.selectedReviewRating || 0);
+            if (!rating) { showToast('⭐ من فضلك اختر تقييم'); return; }
+            const comment = document.getElementById('review-comment').value.trim();
+            const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
+            const orderIndex = orders.findIndex(item => item.id === latestOrderId);
+            if (orderIndex === -1) { showToast('⚠ لم يتم العثور على الطلب'); return; }
+            orders[orderIndex].review = { rating, comment, submittedAt: new Date().toISOString() };
+            localStorage.setItem('sedra_orders', JSON.stringify(orders));
+            ordersDB = orders;
+            if (window.FB && window.FB.ready) window.FB.saveOrder(orders[orderIndex]);
+            sendReviewTelegramNotification(orders[orderIndex]);
+            document.getElementById('review-success-msg').textContent = '✅ تم إرسال تقييمك بنجاح، شكراً لمشاركتك.';
+            showToast('✅ تم إرسال تقييمك');
+        }
+
+        function sendReviewTelegramNotification(order) {
+            const msg = `⭐ تقييم جديد من العميل\n\nالطلب: ${order.id}\nالاسم: ${order.name}\nالتقييم: ${order.review.rating}/5\nالتعليق: ${order.review.comment || 'لا يوجد تعليق'}`;
+            if (!window.FB || !window.FB.ready) return;
+            const BOT_TOKEN = '8992224626:AAH_nhRrVnLuYZpox7X0c-Gs-nS6Xekrj8k';
+            const CHAT_ID = '8288843086';
+            fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'HTML' })
+            }).catch(() => { });
         }
 
         // ---- COUNTDOWN ----
@@ -5238,15 +5834,11 @@ document.getElementById('cust-phone').value = phoneToValidate;
             other: '💬 للاستفسارات الأخرى، تواصل معنا على: 01033035681 أو ابعتلنا على الواتساب وهيرد معاك فريقنا!'
         };
 
-        let orderQty = 1;
+        let selectedDesigns = [];
         const BASE_PRICE = 320;
-
-        function changeQty(delta) {
-            orderQty = Math.max(1, Math.min(10, orderQty + delta));
-            document.getElementById('order-quantity').textContent = orderQty;
-            const total = orderQty * BASE_PRICE;
-            document.getElementById('order-total-price').textContent = 'الإجمالي: ' + total + ' ج';
-        }
+        // ملحوظة: تم إلغاء التحكم اليدوي المنفصل في الكمية (orderQty / changeQty) لأنه كان
+        // يتسبب في مضاعفة الكمية مع كميات التصاميم المختارة نفسها. الكمية الآن تُحسب
+        // تلقائيًا من مجموع كميات التصاميم فقط عبر getTotalSelectedQuantity().
 
         function toggleChat() {
             const win = document.getElementById('chatbot-window');
@@ -5334,7 +5926,7 @@ document.getElementById('cust-phone').value = phoneToValidate;
             const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
             if (orders.length === 0) { showToast('⚠ لا توجد طلبات للتصدير'); return; }
 
-            const headers = ['رقم الطلب','الاسم','المنتج','الكمية','السعر','المحافظة','المدينة','العنوان','الهاتف','الإيميل','الدفع','ملاحظات','الحالة','التاريخ'];
+            const headers = ['رقم الطلب', 'الاسم', 'المنتج', 'الكمية', 'السعر', 'المحافظة', 'المدينة', 'العنوان', 'الهاتف', 'الإيميل', 'الدفع', 'ملاحظات', 'الحالة', 'التاريخ'];
             const rows = [...orders].reverse().map(o => [
                 o.id, o.name, o.product || '', o.quantity || 1, o.price || 320,
                 o.gov || '', o.city || '', o.address || '', o.phone, o.email || '',
@@ -5365,7 +5957,7 @@ document.getElementById('cust-phone').value = phoneToValidate;
             const win = window.open('', '_blank');
             const date = new Date().toLocaleDateString('ar-EG');
             const rows = [...orders].reverse().map((o, i) => `
-                <tr style="background:${i%2===0?'#f9f9f9':'#fff'}">
+                <tr style="background:${i % 2 === 0 ? '#f9f9f9' : '#fff'}">
                     <td>${o.id}</td>
                     <td>${o.name}</td>
                     <td>${o.product || '-'}</td>
@@ -5396,7 +5988,7 @@ document.getElementById('cust-phone').value = phoneToValidate;
                 '<th>الهاتف</th><th>الدفع</th><th>الحالة</th><th>التاريخ</th>' +
                 '</tr></thead><tbody>' + rows + '</tbody></table></body></html>');
             win.document.close();
-            win.onload = function() { win.print(); };
+            win.onload = function () { win.print(); };
         }
 
         // ---- ADMIN ----
@@ -5486,11 +6078,19 @@ document.getElementById('cust-phone').value = phoneToValidate;
                 const badge = document.getElementById('orders-count-badge');
                 if (badge) badge.textContent = 'إجمالي الطلبات: ' + orders.length;
 
-                tbody.innerHTML = [...orders].reverse().map((o, i) => `
+                tbody.innerHTML = [...orders].reverse().map((o, i) => {
+                    const designMarkup = Array.isArray(o.designsMeta) && o.designsMeta.length
+                        ? o.designsMeta.map(item => `
+                            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                              ${item.imageData ? `<img src="${item.imageData}" alt="${item.name}" style="width:34px;height:34px;border-radius:6px;object-fit:cover;border:1px solid var(--border-gold);">` : ''}
+                              <span style="font-size:0.74rem;">${item.name}</span>
+                            </div>`).join('')
+                        : `<div style="font-size:0.78rem;">${o.product || '-'}</div>`;
+                    return `
       <tr>
         <td><strong style="color:var(--gold-light);white-space:nowrap">${o.id}</strong></td>
         <td style="white-space:nowrap">${o.name}</td>
-        <td style="font-size:0.78rem;min-width:140px">${o.product || '-'}</td>
+        <td style="font-size:0.78rem;min-width:180px">${designMarkup}</td>
         <td style="text-align:center">${o.quantity || 1}</td>
         <td style="white-space:nowrap;color:var(--gold)">${o.price || o.unitPrice || 320} ج</td>
         <td style="white-space:nowrap">${o.gov || '-'}</td>
@@ -5511,7 +6111,8 @@ document.getElementById('cust-phone').value = phoneToValidate;
         </td>
         <td style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap">${o.date}</td>
       </tr>
-    `).join('');
+    `;
+                }).join('');
             }
 
             // Device stats
@@ -5650,24 +6251,24 @@ document.getElementById('cust-phone').value = phoneToValidate;
             }
 
             const params = {
-    to_email:       order.email,
-    customer_name:  order.name,
-    customer_phone: order.phone,
-    order_id:       order.id,
-    product_name:   order.product,
-    product_price:  order.price || 320,
-    shipping_price: 'مجاني',
-    total_price:    order.price || 320,
-    governorate:    order.gov,
-    city:           order.city,
-    address:        order.address,
-    payment_method: order.payment,
-    notes:          order.notes || 'لا يوجد',
-    order_date:     order.date,
-    product_image:  '',
-    order_status:   newStatus,
-    ...extra
-};
+                to_email: order.email,
+                customer_name: order.name,
+                customer_phone: order.phone,
+                order_id: order.id,
+                product_name: order.product,
+                product_price: order.price || 320,
+                shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 100) + ' جنيه'),
+                total_price: order.total || order.price || 320,
+                governorate: order.gov,
+                city: order.city,
+                address: order.address,
+                payment_method: order.payment,
+                notes: order.notes || 'لا يوجد',
+                order_date: order.date,
+                product_image: '',
+                order_status: newStatus,
+                ...extra
+            };
 
             const account =
                 newStatus === 'تم الشحن'
@@ -5679,23 +6280,23 @@ document.getElementById('cust-phone').value = phoneToValidate;
         function sendOrderConfirmationEmail(order) {
             if (!order.email) return;
 
-           const params = {
-    to_email:        order.email,
-    customer_name:   order.name,
-    customer_phone:  order.phone,
-    order_id:        order.id,
-    product_name:    order.product,
-    product_price:   order.price || 320,
-    shipping_price:  'مجاني',
-    total_price:     order.price || 320,
-    governorate:     order.gov,
-    city:            order.city,
-    address:         order.address,
-    payment_method:  order.payment,
-    notes:           order.notes || 'لا يوجد',
-    order_date:      order.date,
-    product_image:   ''
-};
+            const params = {
+                to_email: order.email,
+                customer_name: order.name,
+                customer_phone: order.phone,
+                order_id: order.id,
+                product_name: order.product,
+                product_price: order.price || 320,
+                shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 100) + ' جنيه'),
+                total_price: order.total || order.price || 320,
+                governorate: order.gov,
+                city: order.city,
+                address: order.address,
+                payment_method: order.payment,
+                notes: order.notes || 'لا يوجد',
+                order_date: order.date,
+                product_image: ''
+            };
 
             sendEmailJS(
                 EMAILJS_ACCOUNT1,
@@ -5941,24 +6542,119 @@ document.getElementById('cust-phone').value = phoneToValidate;
         }
 
         // =============================================
-        // ENHANCED TELEGRAM WITH IMAGE
+        // ENHANCED TELEGRAM WITH IMAGES FOR ALL DESIGNS
         // =============================================
+        function dataURLtoBlob(dataurl) {
+            try {
+                const arr = dataurl.split(',');
+                const mime = arr[0].match(/:(.*?);/)[1];
+                const bstr = atob(arr[1]);
+                const n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                for (let i = 0; i < n; i++) {
+                    u8arr[i] = bstr.charCodeAt(i);
+                }
+                return new Blob([u8arr], { type: mime });
+            } catch (e) {
+                console.error('Failed to convert data URL to blob:', e);
+                return null;
+            }
+        }
+
+        // يحوّل أي مصدر صورة (base64 data URL أو رابط/مسار ملف عادي زي "product2.jpg") إلى Blob
+        // جاهز للإرسال لتيليجرام. ده هو الإصلاح الأساسي: قبل كده كانت الصور اللي مش base64
+        // (يعني كل صور المنتجات الافتراضية) بتتجاهل تمامًا فمكانتش توصل للتيليجرام.
+        async function imageSourceToBlob(src) {
+            if (!src) return null;
+            try {
+                if (src.startsWith('data:image')) {
+                    return dataURLtoBlob(src);
+                }
+                // مسار/رابط صورة عادي (ملف على السيرفر) — نحوله لرابط مطلق ونجيبه كـ blob
+                const absoluteUrl = new URL(src, window.location.href).href;
+                const res = await fetch(absoluteUrl);
+                if (!res.ok) return null;
+                return await res.blob();
+            } catch (e) {
+                console.log('imageSourceToBlob failed for', src, e);
+                return null;
+            }
+        }
+
         async function sendTelegramNotification(order) {
             const BOT_TOKEN = '8992224626:AAH_nhRrVnLuYZpox7X0c-Gs-nS6Xekrj8k';
             const CHAT_ID = '8288843086';
+            let photoSent = false;
+
             try {
-                const productImage = getProductImageForOrder(order.product);
-                if (productImage) {
-                    const blob = await fetch(productImage).then(r => r.blob());
-                    const formData = new FormData();
-                    formData.append('chat_id', CHAT_ID);
-                    formData.append('photo', blob, 'product.jpg');
-                    formData.append('caption', formatOrderCaption(order));
-                    formData.append('parse_mode', 'HTML');
-                    const photoRes = await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendPhoto', { method: 'POST', body: formData });
-                    if (photoRes.ok) { showToast('📱 تم إرسال الطلب على التيليجرام مع الصورة'); return; }
+                // خذ كل التصاميم اللي عندها أي مصدر صورة (base64 أو ملف عادي)
+                const designsWithImages = (Array.isArray(order.designsMeta) && order.designsMeta.length > 0)
+                    ? order.designsMeta.filter(item => !!(item && item.imageData))
+                    : [];
+
+                // Send all design images to Telegram
+                if (designsWithImages.length > 0) {
+                    let captionAttached = false; // نلصق تفاصيل الطلب مع أول صورة تنجح فعليًا، مش بالضرورة الأولى في الترتيب
+                    for (let i = 0; i < designsWithImages.length; i++) {
+                        const design = designsWithImages[i];
+                        const imageData = design.imageData;
+                        const caption = !captionAttached ? formatOrderCaption(order) : null;
+
+                        try {
+                            let ok = false;
+
+                            if (typeof imageData === 'string' && imageData.startsWith('data:image')) {
+                                // صورة base64 (منتج مضاف يدويًا من لوحة التحكم) — نرفعها كملف مباشرة
+                                const blob = dataURLtoBlob(imageData);
+                                if (blob) {
+                                    const formData = new FormData();
+                                    formData.append('chat_id', CHAT_ID);
+                                    formData.append('photo', blob, 'design-' + (i + 1) + '.jpg');
+                                    if (caption) {
+                                        formData.append('caption', caption);
+                                        formData.append('parse_mode', 'HTML');
+                                    }
+                                    const photoRes = await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendPhoto', {
+                                        method: 'POST',
+                                        body: formData
+                                    });
+                                    ok = photoRes.ok;
+                                }
+                            } else {
+                                // رابط/مسار صورة عادي (صور المنتجات الجاهزة) — نبعت الرابط مباشرة لتيليجرام
+                                // وخلي سيرفرات تيليجرام هي اللي تجيب الصورة، ده بيتفادى مشاكل fetch/CORS
+                                // اللي كانت بتمنع بعض الصور من الوصول (وده كان سبب توقف إرسال الصور)
+                                const absoluteUrl = new URL(imageData, window.location.href).href;
+                                const photoRes = await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendPhoto', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify(Object.assign(
+                                        { chat_id: CHAT_ID, photo: absoluteUrl },
+                                        caption ? { caption: caption, parse_mode: 'HTML' } : {}
+                                    ))
+                                });
+                                ok = photoRes.ok;
+                            }
+
+                            if (ok) {
+                                photoSent = true;
+                                if (caption) captionAttached = true;
+                            }
+                        } catch (e) {
+                            console.log('Photo ' + (i + 1) + ' send failed:', e);
+                        }
+                    }
+
+                    if (photoSent) {
+                        showToast('📱 تم إرسال الطلب على التيليجرام مع جميع الصور');
+                        return;
+                    }
                 }
-            } catch (e) { console.log('Photo send failed:', e); }
+            } catch (e) {
+                console.log('Photo send failed:', e);
+            }
+
+            // Fallback: send text message if photos fail
             const msg = formatOrderMessage(order);
             async function trySend(chatId) {
                 if (!chatId) return false;
@@ -5990,7 +6686,20 @@ document.getElementById('cust-phone').value = phoneToValidate;
             } catch (err) { console.error('Telegram error:', err); }
         }
 
-        function getProductImageForOrder(productName) {
+        function getProductImageForOrder(orderOrProductName) {
+            const order = typeof orderOrProductName === 'object' ? orderOrProductName : null;
+            const productName = order ? (order.product || '') : orderOrProductName;
+            const metaList = Array.isArray(order?.designsMeta) ? order.designsMeta : [];
+            const firstMetaWithImage = metaList.find(item => item && item.imageData);
+            if (firstMetaWithImage && firstMetaWithImage.imageData) return firstMetaWithImage.imageData;
+            if (order && Array.isArray(order.designs)) {
+                for (const designName of order.designs) {
+                    const product = getProducts().find(p => p.name === designName);
+                    if (product && product.imageData) return product.imageData;
+                    const defaultProduct = DEFAULT_PRODUCTS.find(p => p.name === designName);
+                    if (defaultProduct && defaultProduct.imageData) return defaultProduct.imageData;
+                }
+            }
             const product = getProducts().find(p => p.name === productName);
             if (product && product.imageData) return product.imageData;
             const defaultProduct = DEFAULT_PRODUCTS.find(p => p.name === productName);
@@ -6003,6 +6712,16 @@ document.getElementById('cust-phone').value = phoneToValidate;
             const mapPart = order.mapLink
                 ? '🗺 <b>موقع GPS:</b> <a href="' + order.mapLink + '">افتح على الخريطة 📌</a>\n'
                 : '';
+            const designLines = (Array.isArray(order.designsMeta) && order.designsMeta.length
+                ? order.designsMeta
+                : (Array.isArray(order.designs) ? order.designs.map(name => ({ name })) : [])
+            ).map((item, index) => {
+                const name = item && item.name ? item.name : item;
+                const qty = item && item.quantity ? item.quantity : 1;
+                const price = item && item.price ? ' — ' + item.price + ' ج' : '';
+                return (index + 1) + '. ' + name + ' (الكمية: ' + qty + ')' + price;
+            }).join('\n');
+            const selectedDesignsText = designLines ? '\n🧩 التصميمات المختارة:\n' + designLines + '\n' : '';
             return '🛒 <b>طلب جديد — سدرة ستور</b>\n\n' +
                 '━━━━━━━━━━━━━━━\n' +
                 '🆔 رقم الطلب: <code>' + order.id + '</code>\n' +
@@ -6011,9 +6730,12 @@ document.getElementById('cust-phone').value = phoneToValidate;
                 '📱 الهاتف: <code>' + order.phone + '</code>\n' +
                 '📧 الإيميل: ' + (order.email || 'لا يوجد') + '\n' +
                 '━━━━━━━━━━━━━━━\n' +
-                '🛍️ المنتج: <b>' + order.product + '</b>\n' +
-                '📦 الكمية: ' + (order.quantity || 1) + '\n' +
-                '💰 السعر: <b>' + (order.price || 320) + ' جنيه</b>\n' +
+                '🛍️ التصميمات: <b>' + (order.designSummary || order.product || '—') + '</b>\n' +
+                selectedDesignsText +
+                '📦 الكمية الإجمالية: <b>' + (order.quantity || 1) + '</b>\n' +
+                '💰 سعر المصليات: <b>' + (order.price || 320) + ' جنيه</b>\n' +
+                '🚚 الشحن: <b>' + (order.shippingFee === 0 ? 'مجاني 🎉' : ((order.shippingFee ?? 100) + ' جنيه')) + '</b>\n' +
+                '💵 الإجمالي: <b>' + (order.total || order.price || 320) + ' جنيه</b>\n' +
                 '━━━━━━━━━━━━━━━\n' +
                 '📍 المحافظة: ' + (order.gov || '—') + '\n' +
                 '🏙️ المدينة: ' + (order.city || '—') + '\n' +
@@ -6077,7 +6799,8 @@ document.getElementById('cust-phone').value = phoneToValidate;
                 <ul class="modal-feature-list">
                     <li>طبقة سفنج + فايبر عالي الجودة بسمك 2.5 سم</li>
                     <li>وجه قماش ناعم مطبوع بدقة عالية — ألوان لا تبهت</li>
-                    <li>ظهر أسود قوي مانع للانزلاق بالكامل — لا يظهر عليه اتساخ الأرض مثل الألوان الفاتحة، فيفضل نظيف المظهر لفترة أطول</li>
+                    <li>ظهر أسود قوي مانع للانزلاق بالكامل — لا يظهر عليه اتساخ الأرض مثل الألوان الفاتحة، فيفضل نظيف
+                        المظهر لفترة أطول</li>
                     <li>مقاس 120 × 68 سم — مناسب لكل الأجسام</li>
                     <li>تيجي مع شنطة حافظة أنيقة — وش مشمع وظهر قماش</li>
                     <li>مثالية هدية للمناسبات والأعياد الإسلامية</li>
@@ -6087,7 +6810,8 @@ document.getElementById('cust-phone').value = phoneToValidate;
                 <!-- Info images (3 uploaded photos) -->
                 <div class="modal-info-imgs" id="modal-info-imgs"></div>
 
-                <p style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;line-height:1.6;">* الصور توضيحية لعرض التصميم، وقد تختلف الإضاءة والألوان قليلًا حسب الشاشة.</p>
+                <p style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;line-height:1.6;">* الصور توضيحية
+                    لعرض التصميم، وقد تختلف الإضاءة والألوان قليلًا حسب الشاشة.</p>
 
                 <button class="modal-order-btn" id="modal-order-btn">اطلب هذا التصميم ←</button>
             </div>
