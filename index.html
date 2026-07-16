@@ -449,15 +449,16 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             width: 100%;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 20px 5%;
+            padding: 16px 4%;
             border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: var(--shadow-gold-strong);
         }
 
         .hero-banner-img img {
             width: 100%;
             border-radius: var(--radius-lg);
+            box-shadow: 0 0 25px rgba(201, 168, 76, 0.35);
+            display: block;
         }
 
         /* =============================================
@@ -3775,7 +3776,71 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 opacity: 1;
             }
         }
-    </style>
+    
+        /* ========== MOBILE FIXES ========== */
+        @media (max-width: 480px) {
+            #hero {
+                padding-top: 90px;
+                padding-bottom: 10px;
+            }
+
+            .hero-banner-img {
+                padding: 10px 3%;
+            }
+
+            .countdown-boxes {
+                display: flex;
+                flex-wrap: nowrap;
+                gap: 6px;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .cd-box {
+                min-width: 60px;
+                padding: 10px 8px;
+                flex: 1;
+                max-width: 72px;
+            }
+
+            .cd-num {
+                font-size: 1.6rem;
+            }
+
+            .cd-colon {
+                font-size: 1.4rem;
+                padding-bottom: 12px;
+                flex-shrink: 0;
+            }
+
+            .cd-label {
+                font-size: 0.65rem;
+            }
+
+            .offers-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            section {
+                padding: 40px 4%;
+            }
+
+            #countdown-section {
+                padding: 24px 16px;
+                margin-bottom: 20px;
+            }
+
+            .countdown-title {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            .offer-badge {
+                font-size: 0.85rem;
+                padding: 8px 16px;
+            }
+        }
+</style>
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
