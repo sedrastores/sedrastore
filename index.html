@@ -122,38 +122,71 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             left: 0;
             right: 0;
             z-index: 1001;
-            height: 32px;
-            background: linear-gradient(90deg, #0a0a0a 0%, #1a1209 50%, #0a0a0a 100%);
-            border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+            height: 36px;
+            background: linear-gradient(90deg, #0d0b00 0%, #1e1600 30%, #1a1209 50%, #1e1600 70%, #0d0b00 100%);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.5);
             overflow: hidden;
             display: flex;
             align-items: center;
+            box-shadow: 0 2px 12px rgba(201, 168, 76, 0.12);
+        }
+
+        .top-promo-bar::before,
+        .top-promo-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .top-promo-bar::before {
+            left: 0;
+            background: linear-gradient(to right, #0d0b00, transparent);
+        }
+
+        .top-promo-bar::after {
+            right: 0;
+            background: linear-gradient(to left, #0d0b00, transparent);
         }
 
         .top-promo-track {
             display: flex;
             gap: 0;
-            animation: promo-scroll 30s linear infinite;
+            animation: promo-scroll 55s linear infinite;
             white-space: nowrap;
             will-change: transform;
+        }
+
+        .top-promo-track:hover {
+            animation-play-state: paused;
         }
 
         .top-promo-item {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-size: 0.72rem;
+            font-weight: 700;
             color: var(--gold-light);
-            letter-spacing: 0.5px;
-            padding: 0 28px;
+            letter-spacing: 0.6px;
+            padding: 0 30px;
             font-family: var(--font-ar);
+            text-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
         }
 
         .top-promo-sep {
             color: var(--gold);
-            font-size: 0.55rem;
-            opacity: 0.7;
+            font-size: 0.6rem;
+            opacity: 0.8;
+            animation: sep-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes sep-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; text-shadow: 0 0 6px var(--gold); }
         }
 
         @keyframes promo-scroll {
@@ -436,8 +469,12 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         .marquee-track {
             display: flex;
             gap: 60px;
-            animation: marquee 25s linear infinite;
+            animation: marquee 45s linear infinite;
             width: max-content;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
         }
 
         .marquee-item {
@@ -447,15 +484,46 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             white-space: nowrap;
             font-family: var(--font-ar);
             font-size: 0.85rem;
-            font-weight: 400;
+            font-weight: 500;
             color: var(--text-muted);
-            letter-spacing: 0.12em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .marquee-item:hover {
+            color: var(--gold-light);
         }
 
         .marquee-dot {
             color: var(--gold);
-            font-size: 0.5rem;
+            font-size: 0.55rem;
+            opacity: 0.8;
+        }
+
+        .marquee-section {
+            position: relative;
+        }
+
+        .marquee-section::before,
+        .marquee-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .marquee-section::before {
+            left: 0;
+            background: linear-gradient(to right, var(--black-2), transparent);
+        }
+
+        .marquee-section::after {
+            right: 0;
+            background: linear-gradient(to left, var(--black-2), transparent);
         }
 
         @keyframes marquee {
@@ -511,14 +579,20 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         /* ========== OFFERS ========== */
         .offers-grid {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
 
-        @media (max-width: 700px) {
+        @media (max-width: 900px) {
+            .offers-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
             .offers-grid {
                 grid-template-columns: 1fr;
             }
@@ -3731,7 +3805,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <span class="top-promo-item">🎁 هدية مجانية مع كل طلب <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">🚚 شحن مجاني عند طلب مصليتين <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">⭐ جودة مضمونة 100% <span class="top-promo-sep">◆</span></span>
-            <span class="top-promo-item">💛 سعر خاص 320ج بدلاً من 500ج <span class="top-promo-sep">◆</span></span>
+            <span class="top-promo-item">💛 سعر خاص 450ج بدلاً من 600ج <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">📦 توصيل لجميع محافظات مصر <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">🕌 +9 تصاميم إسلامية حصرية <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">💳 الدفع عند الاستلام أو المحفظة <span class="top-promo-sep">◆</span></span>
@@ -3739,7 +3813,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <span class="top-promo-item">🎁 هدية مجانية مع كل طلب <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">🚚 شحن مجاني عند طلب مصليتين <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">⭐ جودة مضمونة 100% <span class="top-promo-sep">◆</span></span>
-            <span class="top-promo-item">💛 سعر خاص 320ج بدلاً من 500ج <span class="top-promo-sep">◆</span></span>
+            <span class="top-promo-item">💛 سعر خاص 450ج بدلاً من 600ج <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">📦 توصيل لجميع محافظات مصر <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">🕌 +9 تصاميم إسلامية حصرية <span class="top-promo-sep">◆</span></span>
             <span class="top-promo-item">💳 الدفع عند الاستلام أو المحفظة <span class="top-promo-sep">◆</span></span>
@@ -3813,7 +3887,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <section style="padding: 60px 5% 20px; background: var(--black);">
         <div id="countdown-section" class="fade-in">
             <div class="countdown-label">⏳ العرض ينتهي قريباً</div>
-            <div class="countdown-title">عرض خاص لمدة 48 ساعة فقط — المصلاية بـ 320ج بدلاً من 500ج!</div>
+            <div class="countdown-title">عرض خاص لمدة 48 ساعة فقط — المصلاية بـ 450ج بدلاً من 600ج!</div>
             <div class="countdown-boxes">
                 <div class="cd-box">
                     <div class="cd-num" id="cd-days">00</div>
@@ -3836,7 +3910,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 </div>
             </div>
             <div class="offer-badge" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"
-                style="cursor:pointer;">احصل على المصلاية الآن بسعر 320ج بدلاً من 500ج!</div>
+                style="cursor:pointer;">احصل على المصلاية الآن بسعر 450ج بدلاً من 600ج!</div>
             <div style="margin-top:12px; font-size:0.82rem; color:var(--text-muted);">* مصاريف الشحن 100ج لجميع
                 المحافظات
             </div>
@@ -3845,22 +3919,28 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
     <!-- OFFERS -->
     <section id="offers" style="padding: 20px 5% 40px;">
-        <div class="offers-grid">
+        <div class="offers-grid" style="grid-template-columns: repeat(3, 1fr);">
             <div class="offer-card">
-                <div class="offer-card-icon">🚚</div>
-                <h3>عرض المصليتين — شحن مجاني</h3>
-                <p>اطلب مصليتين مع بعض (بنفس التصميم أو تصميمين مختلفين) وهيوصلولك من غير ما تدفع مصاريف شحن خالص.</p>
+                <div class="offer-card-icon">🛒</div>
+                <h3>مصلاية واحدة</h3>
+                <p>المصلاية بـ <strong style="color:var(--gold-light);font-size:1.1rem;">450 جنيه</strong> بدلاً من <s style="color:#ef4444;">600 جنيه</s> — + 100 جنيه شحن لكل المحافظات.</p>
                 <button class="offer-card-btn"
-                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اختر تصميمينك الآن
-                    ←</button>
+                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب الآن ←</button>
+            </div>
+            <div class="offer-card" style="border-color: var(--gold); box-shadow: 0 0 30px rgba(201,168,76,0.3); position:relative;">
+                <div style="position:absolute;top:-12px;right:50%;transform:translateX(50%);background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;">الأكثر طلباً ⭐</div>
+                <div class="offer-card-icon">🚚</div>
+                <h3>مصليتين — شحن مجاني</h3>
+                <p>اطلب مصليتين بـ <strong style="color:var(--gold-light);font-size:1.1rem;">800 جنيه</strong> بدلاً من <s style="color:#ef4444;">900 جنيه</s> + شحن مجاني لجميع المحافظات!</p>
+                <button class="offer-card-btn"
+                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اختر تصميمينك ←</button>
             </div>
             <div class="offer-card">
                 <div class="offer-card-icon">🎁</div>
-                <h3>هدية مجانية مع كل طلب</h3>
-                <p>كل طلب بيوصل ومعاه هدية بسيطة منّا كهدية شكر ليك على ثقتك في سدرة ستور — من غير أي تكلفة إضافية.</p>
+                <h3>3 مصليات — شحن مجاني</h3>
+                <p>اطلب 3 مصليات بـ <strong style="color:var(--gold-light);font-size:1.1rem;">1150 جنيه</strong> + شحن مجاني + هدية مجانية مع كل طلب!</p>
                 <button class="offer-card-btn"
-                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب الآن
-                    ←</button>
+                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب 3 مصليات ←</button>
             </div>
         </div>
     </section>
@@ -4103,8 +4183,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <div class="pd-item">
                         <div class="pd-label">سعر المصليات</div>
                         <div style="display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap;">
-                            <div class="pd-val" id="pd-mat-price">320 جنيه</div>
-                            <div class="price-old-badge" style="font-size:0.75rem;padding:2px 7px;">500 ج</div>
+                            <div class="pd-val" id="pd-mat-price">450 جنيه</div>
+                            <div class="price-old-badge" style="font-size:0.75rem;padding:2px 7px;">600 ج</div>
                         </div>
                     </div>
                     <div class="pd-item">
@@ -4113,7 +4193,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     </div>
                     <div class="pd-item pd-total">
                         <div class="pd-label">الإجمالي</div>
-                        <div class="pd-val" id="pd-total">420 جنيه</div>
+                        <div class="pd-val" id="pd-total">550 جنيه</div>
                     </div>
                 </div>
                 <div id="pd-free-shipping-note" style="display:none;text-align:center;margin-top:8px;color:#28a745;font-size:0.85rem;font-weight:700;">
@@ -4122,7 +4202,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
                 <!-- Offers reminder -->
                 <div class="offer-mini-banner">
-                    🎁 هدية بسيطة مع كل طلب &nbsp;|&nbsp; 🚚 اطلب مصليتين واحصل على شحن مجاني
+                    🎁 هدية مجانية مع كل طلب &nbsp;|&nbsp; 🚚 مصليتين بـ 800ج + شحن مجاني &nbsp;|&nbsp; 🏆 3 مصليات بـ 1150ج + شحن مجاني
                 </div>
 
                 <!-- Product Selection -->
@@ -4168,7 +4248,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                         <span id="order-quantity"
                             style="font-size:1.1rem;font-weight:bold;color:var(--gold);min-width:30px;text-align:center;">1</span>
                         <span id="order-total-price"
-                            style="color:var(--gold-light);font-size:0.95rem;margin-right:8px;">الإجمالي: 320 ج</span>
+                            style="color:var(--gold-light);font-size:0.95rem;margin-right:8px;">الإجمالي: 450 ج</span>
                     </div>
                 </div>
 
@@ -4499,7 +4579,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                             </div>
                             <div class="admin-form-group">
                                 <label>السعر (جنيه) *</label>
-                                <input type="number" id="new-product-price" placeholder="320" min="0" required>
+                                <input type="number" id="new-product-price" placeholder="450" min="0" required>
                             </div>
                         </div>
                         <div class="form-row-admin full">
@@ -4835,28 +4915,28 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         // ---- PRODUCTS (Dynamic from localStorage) ----
         const DEFAULT_PRODUCTS = [
-            { id: 1, name: 'مصلاية بيج كلاسيك', sub: 'تصميم هندسي إسلامي فاخر', img: 'P2', badge: 'الأكثر طلباً', price: 320, imageData: IMG_P2 },
-            { id: 2, name: 'مصلاية نافذة المسجد', sub: 'تصميم القبة الأثرية بالكحلي', img: 'P3', badge: '', price: 320, imageData: IMG_P3 },
-            { id: 3, name: 'مصلاية ليالي القاهرة', sub: 'تصميم مساجد ملوّن فريد', img: 'P4', badge: '', price: 320, imageData: IMG_P4 },
-            { id: 4, name: 'مصلاية ليالي رمضان', sub: 'ألوان زرقاء برتقالية ساحرة', img: 'P5', badge: '', price: 320, imageData: IMG_P5 },
-            { id: 5, name: 'مصلاية القبة الخضراء', sub: 'المسجد النبوي الشريف', img: 'P6', badge: 'مميزة', price: 320, imageData: IMG_P6 },
-            { id: 6, name: 'مصلاية الزهور الشرقية', sub: 'أحمر فاخر ونقوش شرقية', img: 'P7', badge: '', price: 320, imageData: IMG_P7 },
-            { id: 7, name: 'مصلاية النيلوفر', sub: 'أزرق سماوي بزخارف زهرية', img: 'P8', badge: '', price: 320, imageData: IMG_P8 },
-            { id: 9, name: 'مصلاية تراث أندلسي', sub: 'بيج طبيعي بقوس إسلامي أنيق', img: 'P9', badge: '', price: 320, imageData: IMG_P9 },
-            { id: 10, name: 'مصلاية الأزهار الملكية', sub: 'تطريز أزرق وذهبي على أبيض عاجي', img: 'P10', badge: 'جديد', price: 320, imageData: IMG_P10 },
-            { id: 11, name: 'مصلاية الماس الملكي', sub: 'كحلي مخملي بحياكة الماس الفاخرة', img: 'P11', badge: '', price: 320, imageData: IMG_P11 },
-            { id: 12, name: 'مصلاية بستان الزهور', sub: 'ألوان زاهية بزخارف زهرية تراثية', img: 'P12', badge: '', price: 320, imageData: IMG_P12 },
-            { id: 13, name: 'مصلاية قصر السلطان', sub: 'كحلي وذهبي بنقشة هندسية فاخرة', img: 'P13', badge: '', price: 320, imageData: IMG_P13 },
-            { id: 14, name: 'مصلاية النجوم الزيتية', sub: 'أخضر زيتوني بنجوم فضية أنيقة', img: 'P14', badge: '', price: 320, imageData: IMG_P14 },
-            { id: 15, name: 'مصلاية أفق المسجد', sub: 'أسود وذهبي بخط عربي ومآذن', img: 'P15', badge: 'جديد', price: 320, imageData: IMG_P15 },
-            { id: 16, name: 'مصلاية المحراب الأزرق', sub: 'أزرق بترولي بأعمدة ذهبية', img: 'P16', badge: '', price: 320, imageData: IMG_P16 },
-            { id: 17, name: 'مصلاية الحديقة الزيتونية', sub: 'أخضر زيتي بزخرفة نباتية كثيفة', img: 'P17', badge: '', price: 320, imageData: IMG_P17 },
-            { id: 18, name: 'مصلاية الذهب الخالص', sub: 'تدرج ذهبي فاخر بإطار مطرز', img: 'P18', badge: '', price: 320, imageData: IMG_P18 },
-            { id: 19, name: 'مصلاية الرخام الذهبي', sub: 'أبيض وذهبي بنقشة هندسية أندلسية', img: 'P19', badge: '', price: 320, imageData: IMG_P19 },
-            { id: 20, name: 'مصلاية الطين الدافئ', sub: 'بني ترابي بإطار كريمي أنيق', img: 'P20', badge: '', price: 320, imageData: IMG_P20 },
-            { id: 21, name: 'مصلاية زهرية الحياة', sub: 'كريمي بزخرفة الزهرية والورود', img: 'P21', badge: '', price: 320, imageData: IMG_P21 },
-            { id: 22, name: 'مصلاية اللؤلؤة الزرقاء', sub: 'كريمي بزخارف زرقاء متعرجة', img: 'P22', badge: '', price: 320, imageData: IMG_P22 },
-            { id: 23, name: 'مصلاية قبة الصخرة', sub: 'تصميم المسجد الأقصى الشريف', img: 'P23', badge: 'مميزة', price: 320, imageData: IMG_P23 },
+            { id: 1, name: 'مصلاية بيج كلاسيك', sub: 'تصميم هندسي إسلامي فاخر', img: 'P2', badge: 'الأكثر طلباً', price: 450, imageData: IMG_P2 },
+            { id: 2, name: 'مصلاية نافذة المسجد', sub: 'تصميم القبة الأثرية بالكحلي', img: 'P3', badge: '', price: 450, imageData: IMG_P3 },
+            { id: 3, name: 'مصلاية ليالي القاهرة', sub: 'تصميم مساجد ملوّن فريد', img: 'P4', badge: '', price: 450, imageData: IMG_P4 },
+            { id: 4, name: 'مصلاية ليالي رمضان', sub: 'ألوان زرقاء برتقالية ساحرة', img: 'P5', badge: '', price: 450, imageData: IMG_P5 },
+            { id: 5, name: 'مصلاية القبة الخضراء', sub: 'المسجد النبوي الشريف', img: 'P6', badge: 'مميزة', price: 450, imageData: IMG_P6 },
+            { id: 6, name: 'مصلاية الزهور الشرقية', sub: 'أحمر فاخر ونقوش شرقية', img: 'P7', badge: '', price: 450, imageData: IMG_P7 },
+            { id: 7, name: 'مصلاية النيلوفر', sub: 'أزرق سماوي بزخارف زهرية', img: 'P8', badge: '', price: 450, imageData: IMG_P8 },
+            { id: 9, name: 'مصلاية تراث أندلسي', sub: 'بيج طبيعي بقوس إسلامي أنيق', img: 'P9', badge: '', price: 450, imageData: IMG_P9 },
+            { id: 10, name: 'مصلاية الأزهار الملكية', sub: 'تطريز أزرق وذهبي على أبيض عاجي', img: 'P10', badge: 'جديد', price: 450, imageData: IMG_P10 },
+            { id: 11, name: 'مصلاية الماس الملكي', sub: 'كحلي مخملي بحياكة الماس الفاخرة', img: 'P11', badge: '', price: 450, imageData: IMG_P11 },
+            { id: 12, name: 'مصلاية بستان الزهور', sub: 'ألوان زاهية بزخارف زهرية تراثية', img: 'P12', badge: '', price: 450, imageData: IMG_P12 },
+            { id: 13, name: 'مصلاية قصر السلطان', sub: 'كحلي وذهبي بنقشة هندسية فاخرة', img: 'P13', badge: '', price: 450, imageData: IMG_P13 },
+            { id: 14, name: 'مصلاية النجوم الزيتية', sub: 'أخضر زيتوني بنجوم فضية أنيقة', img: 'P14', badge: '', price: 450, imageData: IMG_P14 },
+            { id: 15, name: 'مصلاية أفق المسجد', sub: 'أسود وذهبي بخط عربي ومآذن', img: 'P15', badge: 'جديد', price: 450, imageData: IMG_P15 },
+            { id: 16, name: 'مصلاية المحراب الأزرق', sub: 'أزرق بترولي بأعمدة ذهبية', img: 'P16', badge: '', price: 450, imageData: IMG_P16 },
+            { id: 17, name: 'مصلاية الحديقة الزيتونية', sub: 'أخضر زيتي بزخرفة نباتية كثيفة', img: 'P17', badge: '', price: 450, imageData: IMG_P17 },
+            { id: 18, name: 'مصلاية الذهب الخالص', sub: 'تدرج ذهبي فاخر بإطار مطرز', img: 'P18', badge: '', price: 450, imageData: IMG_P18 },
+            { id: 19, name: 'مصلاية الرخام الذهبي', sub: 'أبيض وذهبي بنقشة هندسية أندلسية', img: 'P19', badge: '', price: 450, imageData: IMG_P19 },
+            { id: 20, name: 'مصلاية الطين الدافئ', sub: 'بني ترابي بإطار كريمي أنيق', img: 'P20', badge: '', price: 450, imageData: IMG_P20 },
+            { id: 21, name: 'مصلاية زهرية الحياة', sub: 'كريمي بزخرفة الزهرية والورود', img: 'P21', badge: '', price: 450, imageData: IMG_P21 },
+            { id: 22, name: 'مصلاية اللؤلؤة الزرقاء', sub: 'كريمي بزخارف زرقاء متعرجة', img: 'P22', badge: '', price: 450, imageData: IMG_P22 },
+            { id: 23, name: 'مصلاية قبة الصخرة', sub: 'تصميم المسجد الأقصى الشريف', img: 'P23', badge: 'مميزة', price: 450, imageData: IMG_P23 },
         ];
 
         const IMG_MAP = {
@@ -4970,8 +5050,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         </div>
         <div class="product-price-row">
           <div class="product-price-line">
-            <div class="product-price">${p.price || 320} ج</div>
-            <div class="price-old-badge">500 ج</div>
+            <div class="product-price">${p.price || 450} ج</div>
+            <div class="price-old-badge">600 ج</div>
           </div>
           <div class="product-price-note">+ 100 ج شحن للاستلام</div>
         </div>
@@ -5032,7 +5112,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             // Name / sub / price
             document.getElementById('modal-name').textContent = p.name;
             document.getElementById('modal-sub').textContent = p.sub || '';
-            document.getElementById('modal-price').textContent = `${p.price || 320} ج`;
+            document.getElementById('modal-price').textContent = `${p.price || 450} ج`;
 
             // Thumbnails — show current product image + siblings
             const thumbsEl = document.getElementById('modal-thumbs');
@@ -5125,7 +5205,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         function updateOrderTotalUI() {
             const totalQuantity = getTotalSelectedQuantity();
-            const materialsTotal = getMaterialsTotal();
+            let materialsTotal = getMaterialsTotal();
+            // Bundle discount: 2 mats = 800, 3 mats = 1150
+            if (totalQuantity === 2) materialsTotal = 800;
+            else if (totalQuantity >= 3) materialsTotal = 1150;
             const shippingFee = totalQuantity >= 2 ? 0 : SHIPPING_FEE;
             const total = materialsTotal + shippingFee;
 
@@ -5617,7 +5700,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             // الكمية الإجمالية = مجموع كميات كل التصاميم المختارة فقط (بدون أي مضاعفة إضافية)
             const productCount = selectedProductsMeta.reduce((sum, item) => sum + (item.quantity || 1), 0);
             // إجمالي سعر المصليات الفعلي = مجموع (سعر كل تصميم × كميته)
-            const materialsTotal = selectedProductsMeta.reduce((sum, item) => sum + ((item.price || BASE_PRICE) * (item.quantity || 1)), 0);
+            let materialsTotal = selectedProductsMeta.reduce((sum, item) => sum + ((item.price || BASE_PRICE) * (item.quantity || 1)), 0);
+            // Bundle discount: 2 mats = 800, 3 mats = 1150
+            if (productCount === 2) materialsTotal = 800;
+            else if (productCount >= 3) materialsTotal = 1150;
             const shippingFee = productCount >= 2 ? 0 : SHIPPING_FEE;
             const orderTotal = materialsTotal + shippingFee;
 
@@ -5845,7 +5931,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         // ---- CHATBOT ----
         const CHAT_ANSWERS = {
             timing: '⏰ عادةً الطلبات بتوصل خلال 2-4 أيام عمل حسب محافظتك. محافظات كبيرة زي القاهرة والإسكندرية بتاخد يوم أو يومين.',
-            price: '💰 سعر المصلاية 320 جنيه + 100 جنيه مصاريف شحن = 420 جنيه إجمالي. دا بيشمل المصلاية والشنطة الحافظة!',
+            price: '💰 سعر المصلاية 450 جنيه + 100 جنيه مصاريف شحن = 550 جنيه إجمالي. دا بيشمل المصلاية والشنطة الحافظة!',
             specs: '📐 المواصفات:\n• المقاس: 68 × 120 سم\n• السماكة: 2.5 سم (سفنج + فايبر)\n• ظهر مانع للانزلاق\n• شنطة حافظة (وش مشمع + ظهر قماش)',
             payment: '💳 عندنا طريقتين:\n1️⃣ الدفع عند الاستلام — كاش مع المندوب\n2️⃣ محفظة إلكترونية — تحويل على 01146164155',
             return: '🔄 لو فيه مشكلة في المنتج بعد الاستلام، تواصل معنا خلال 48 ساعة وهنحل الموضوع فوراً. رضاك أهم حاجة عندنا!',
@@ -5854,7 +5940,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         };
 
         let selectedDesigns = [];
-        const BASE_PRICE = 320;
+        const BASE_PRICE = 450;
         // ملحوظة: تم إلغاء التحكم اليدوي المنفصل في الكمية (orderQty / changeQty) لأنه كان
         // يتسبب في مضاعفة الكمية مع كميات التصاميم المختارة نفسها. الكمية الآن تُحسب
         // تلقائيًا من مجموع كميات التصاميم فقط عبر getTotalSelectedQuantity().
@@ -5947,7 +6033,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
             const headers = ['رقم الطلب', 'الاسم', 'المنتج', 'الكمية', 'السعر', 'المحافظة', 'المدينة', 'العنوان', 'الهاتف', 'الإيميل', 'الدفع', 'ملاحظات', 'الحالة', 'التاريخ'];
             const rows = [...orders].reverse().map(o => [
-                o.id, o.name, o.product || '', o.quantity || 1, o.price || 320,
+                o.id, o.name, o.product || '', o.quantity || 1, o.price || 450,
                 o.gov || '', o.city || '', o.address || '', o.phone, o.email || '',
                 o.payment, o.notes || '', o.status, o.date
             ]);
@@ -5981,7 +6067,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <td>${o.name}</td>
                     <td>${o.product || '-'}</td>
                     <td>${o.quantity || 1}</td>
-                    <td>${o.price || 320} ج</td>
+                    <td>${o.price || 450} ج</td>
                     <td>${o.gov || '-'}</td>
                     <td>${o.city || '-'}</td>
                     <td>${o.address || '-'}</td>
@@ -6111,7 +6197,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         <td style="white-space:nowrap">${o.name}</td>
         <td style="font-size:0.78rem;min-width:180px">${designMarkup}</td>
         <td style="text-align:center">${o.quantity || 1}</td>
-        <td style="white-space:nowrap;color:var(--gold)">${o.price || o.unitPrice || 320} ج</td>
+        <td style="white-space:nowrap;color:var(--gold)">${o.price || o.unitPrice || 450} ج</td>
         <td style="white-space:nowrap">${o.gov || '-'}</td>
         <td style="white-space:nowrap">${o.city || '-'}</td>
         <td style="min-width:160px;font-size:0.78rem">${o.address || '-'}</td>
@@ -6275,9 +6361,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 customer_phone: order.phone,
                 order_id: order.id,
                 product_name: order.product,
-                product_price: order.price || 320,
+                product_price: order.price || 450,
                 shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 100) + ' جنيه'),
-                total_price: order.total || order.price || 320,
+                total_price: order.total || order.price || 450,
                 governorate: order.gov,
                 city: order.city,
                 address: order.address,
@@ -6305,9 +6391,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 customer_phone: order.phone,
                 order_id: order.id,
                 product_name: order.product,
-                product_price: order.price || 320,
+                product_price: order.price || 450,
                 shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 100) + ' جنيه'),
-                total_price: order.total || order.price || 320,
+                total_price: order.total || order.price || 450,
                 governorate: order.gov,
                 city: order.city,
                 address: order.address,
@@ -6435,7 +6521,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         async function addNewProduct() {
             const name = document.getElementById('new-product-name').value.trim();
-            const price = parseInt(document.getElementById('new-product-price').value) || 320;
+            const price = parseInt(document.getElementById('new-product-price').value) || 450;
             const desc = document.getElementById('new-product-desc').value.trim();
             const material = document.getElementById('new-product-material').value.trim();
             const badge = document.getElementById('new-product-badge').value.trim();
@@ -6482,7 +6568,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             if (!product) { showToast('⚠️ المنتج غير موجود'); return; }
             document.getElementById('edit-product-id').value = productId;
             document.getElementById('new-product-name').value = product.name;
-            document.getElementById('new-product-price').value = product.price || 320;
+            document.getElementById('new-product-price').value = product.price || 450;
             document.getElementById('new-product-desc').value = product.sub || '';
             document.getElementById('new-product-material').value = product.material || '';
             document.getElementById('new-product-badge').value = product.badge || '';
@@ -6501,7 +6587,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         async function updateProduct() {
             const productId = parseInt(document.getElementById('edit-product-id').value);
             const name = document.getElementById('new-product-name').value.trim();
-            const price = parseInt(document.getElementById('new-product-price').value) || 320;
+            const price = parseInt(document.getElementById('new-product-price').value) || 450;
             const desc = document.getElementById('new-product-desc').value.trim();
             const material = document.getElementById('new-product-material').value.trim();
             const badge = document.getElementById('new-product-badge').value.trim();
@@ -6567,7 +6653,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     '<img class="admin-product-img" src="' + getProductImageForDisplay(p) + '" alt="' + p.name + '">' +
                     '<div class="admin-product-info">' +
                     '<div class="admin-product-name">' + p.name + (oos ? ' <span style="color:#e74c3c;font-size:0.75rem;">[نفذت الكمية]</span>' : '') + '</div>' +
-                    '<div class="admin-product-price">' + (p.price || 320) + ' جنيه</div>' +
+                    '<div class="admin-product-price">' + (p.price || 450) + ' جنيه</div>' +
                     (p.sub ? '<div class="admin-product-desc">' + p.sub + '</div>' : '') +
                     '</div>' +
                     '<div class="admin-product-actions">' +
@@ -6786,9 +6872,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 '🛍️ التصميمات: <b>' + (order.designSummary || order.product || '—') + '</b>\n' +
                 selectedDesignsText +
                 '📦 الكمية الإجمالية: <b>' + (order.quantity || 1) + '</b>\n' +
-                '💰 سعر المصليات: <b>' + (order.price || 320) + ' جنيه</b>\n' +
+                '💰 سعر المصليات: <b>' + (order.price || 450) + ' جنيه</b>\n' +
                 '🚚 الشحن: <b>' + (order.shippingFee === 0 ? 'مجاني 🎉' : ((order.shippingFee ?? 100) + ' جنيه')) + '</b>\n' +
-                '💵 الإجمالي: <b>' + (order.total || order.price || 320) + ' جنيه</b>\n' +
+                '💵 الإجمالي: <b>' + (order.total || order.price || 450) + ' جنيه</b>\n' +
                 '━━━━━━━━━━━━━━━\n' +
                 '📍 المحافظة: ' + (order.gov || '—') + '\n' +
                 '🏙️ المدينة: ' + (order.city || '—') + '\n' +
@@ -6841,7 +6927,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <div class="modal-sub" id="modal-sub"></div>
                 <div class="modal-price-row">
                     <div class="modal-price" id="modal-price"></div>
-                    <div class="price-old-badge" style="font-size:0.82rem;">500 ج</div>
+                    <div class="price-old-badge" style="font-size:0.82rem;">600 ج</div>
                 </div>
                 <div class="modal-specs">
                     <span class="spec-tag">68 × 120 سم</span>
