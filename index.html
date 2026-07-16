@@ -195,7 +195,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             }
 
             100% {
-                transform: translateX(-50%);
+                transform: translateX(50%);
             }
         }
 
@@ -417,7 +417,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         /* ========== HERO / BANNER ========== */
         #hero {
-            min-height: 100vh;
+            min-height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -425,6 +425,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             overflow: hidden;
             background: var(--black);
             padding-top: 104px;
+            padding-bottom: 20px;
+        }
+
+        #hero.hero-hidden {
+            display: none;
         }
 
         .hero-bg {
@@ -532,7 +537,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             }
 
             to {
-                transform: translateX(-50%)
+                transform: translateX(50%)
             }
         }
 
@@ -4901,6 +4906,33 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             setImg('about-img-2', IMG_ROLLED);
             setBg('hero-bg', IMG_BANNER);
 
+            // إخفاء الـ hero لو الصورة مش موجودة أو فشلت في التحميل
+            (function() {
+                const heroEl = document.getElementById('hero');
+                const bannerImg = document.getElementById('banner-img');
+                if (!heroEl || !bannerImg) return;
+                function checkHeroImage() {
+                    const src = bannerImg.getAttribute('src');
+                    if (!src || src === '' || src === 'undefined') {
+                        heroEl.classList.add('hero-hidden');
+                    } else {
+                        heroEl.classList.remove('hero-hidden');
+                    }
+                }
+                bannerImg.addEventListener('error', function() {
+                    heroEl.classList.add('hero-hidden');
+                });
+                bannerImg.addEventListener('load', function() {
+                    if (this.naturalWidth > 0) {
+                        heroEl.classList.remove('hero-hidden');
+                    } else {
+                        heroEl.classList.add('hero-hidden');
+                    }
+                });
+                checkHeroImage();
+                setTimeout(checkHeroImage, 500);
+            })();
+
             // Init everything
             buildProductGrid();
             buildGovernorateSelect();
@@ -4952,16 +4984,28 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             return DEFAULT_PRODUCTS;
         };
 
-        const PRODUCTS_VERSION = 'v3-23designs-fix';
+        const PRODUCTS_VERSION = 'v4-price450-reset';
         let PRODUCTS = null;
 
         function getProducts() {
             if (Array.isArray(PRODUCTS) && PRODUCTS.length > 0) return PRODUCTS;
             try {
                 const stored = localStorage.getItem('sedra_products');
+                const storedVersion = localStorage.getItem('sedra_products_version');
                 if (stored) {
                     const parsed = JSON.parse(stored);
                     if (Array.isArray(parsed) && parsed.length > 0) {
+                        // Price migration: if version changed or any price < 450, reset prices
+                        if (storedVersion !== PRODUCTS_VERSION) {
+                            // Version mismatch - merge with DEFAULT_PRODUCTS prices
+                            PRODUCTS = parsed.map(p => {
+                                const def = DEFAULT_PRODUCTS.find(d => d.id === p.id || d.name === p.name);
+                                return { ...p, price: def ? def.price : 450 };
+                            });
+                            localStorage.setItem('sedra_products', JSON.stringify(PRODUCTS));
+                            localStorage.setItem('sedra_products_version', PRODUCTS_VERSION);
+                            return PRODUCTS;
+                        }
                         PRODUCTS = parsed;
                         return PRODUCTS;
                     }
@@ -4989,7 +5033,20 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             try {
                 const fbProducts = await window.FB.getProducts();
                 if (Array.isArray(fbProducts) && fbProducts.length > 0) {
-                    saveProducts(fbProducts, { syncToFirebase: false });
+                    // Price migration: update any product with old price to 450
+                    let needsSync = false;
+                    const migratedProducts = fbProducts.map(p => {
+                        if (p.price && p.price < 450) {
+                            needsSync = true;
+                            return { ...p, price: 450 };
+                        }
+                        if (!p.price) {
+                            needsSync = true;
+                            return { ...p, price: 450 };
+                        }
+                        return p;
+                    });
+                    saveProducts(migratedProducts, { syncToFirebase: needsSync });
                     if (typeof buildProductGrid === 'function') buildProductGrid();
                     if (typeof renderAdminProducts === 'function') renderAdminProducts();
                     return true;
