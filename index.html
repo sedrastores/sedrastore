@@ -3141,6 +3141,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             color: #2ecc71;
         }
 
+        .status-returned {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
         .devices-chart {
             margin-top: 20px;
         }
@@ -3743,6 +3748,95 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             margin-top: 4px;
         }
 
+        /* ========== FLOATING CART BAR ========== */
+        #floating-cart-bar {
+            position: fixed;
+            bottom: -120px;
+            left: 0;
+            right: 0;
+            z-index: 950;
+            background: linear-gradient(90deg, #111111 0%, #1a1a1a 50%, #111111 100%);
+            border-top: 1px solid var(--border-gold-strong);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+            padding: 12px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #floating-cart-bar.show {
+            bottom: 0;
+        }
+
+        .cart-bar-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--white-dim);
+            font-size: 0.9rem;
+        }
+
+        .cart-bar-info .cart-bar-icon {
+            font-size: 1.3rem;
+        }
+
+        .cart-bar-info b {
+            color: var(--gold-light);
+        }
+
+        .cart-bar-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .cart-bar-more,
+        .cart-bar-checkout {
+            font-family: var(--font-ar);
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        .cart-bar-more {
+            background: transparent;
+            border: 1px solid var(--border-gold-strong);
+            color: var(--gold-light);
+        }
+
+        .cart-bar-more:hover {
+            background: rgba(201, 168, 76, 0.1);
+        }
+
+        .cart-bar-checkout {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+            border: none;
+            color: var(--black);
+        }
+
+        .cart-bar-checkout:hover {
+            box-shadow: var(--shadow-gold-strong);
+            transform: translateY(-2px);
+        }
+
+        body.has-cart-bar #chatbot-btn { bottom: 96px; }
+        body.has-cart-bar #scroll-top { bottom: 96px; }
+        body.has-cart-bar .whatsapp-float { bottom: 158px; }
+
+        @media (max-width: 600px) {
+            #floating-cart-bar {
+                padding: 10px 4%;
+            }
+            .cart-bar-info {
+                font-size: 0.8rem;
+            }
+            .cart-bar-more { display: none; }
+        }
+
         /* ========== TOAST ========== */
         .toast {
             position: fixed;
@@ -4001,14 +4095,14 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <div style="position:absolute;top:-12px;right:50%;transform:translateX(50%);background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;">الأكثر طلباً ⭐</div>
                 <div class="offer-card-icon">🚚</div>
                 <h3>مصليتين — شحن مجاني</h3>
-                <p>اطلب مصليتين بـ <strong style="color:var(--gold-light);font-size:1.1rem;">800 جنيه</strong> بدلاً من <s style="color:#ef4444;">900 جنيه</s> + شحن مجاني لجميع المحافظات!</p>
+                <p>اطلب مصليتين بـ <strong style="color:var(--gold-light);font-size:1.1rem;">850 جنيه</strong> + شحن مجاني لجميع المحافظات!</p>
                 <button class="offer-card-btn"
                     onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اختر تصميمينك ←</button>
             </div>
             <div class="offer-card">
                 <div class="offer-card-icon">🎁</div>
                 <h3>3 مصليات — شحن مجاني</h3>
-                <p>اطلب 3 مصليات بـ <strong style="color:var(--gold-light);font-size:1.1rem;">1150 جنيه</strong> + شحن مجاني + هدية مجانية مع كل طلب!</p>
+                <p>اطلب 3 مصليات بـ <strong style="color:var(--gold-light);font-size:1.1rem;">1,200 جنيه</strong> + شحن مجاني + هدية مجانية مع كل طلب!</p>
                 <button class="offer-card-btn"
                     onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب 3 مصليات ←</button>
             </div>
@@ -4272,7 +4366,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
                 <!-- Offers reminder -->
                 <div class="offer-mini-banner">
-                    🎁 هدية مجانية مع كل طلب &nbsp;|&nbsp; 🚚 مصليتين بـ 800ج + شحن مجاني &nbsp;|&nbsp; 🏆 3 مصليات بـ 1150ج + شحن مجاني
+                    🎁 هدية مجانية مع كل طلب &nbsp;|&nbsp; 🚚 مصليتين بـ 850ج + شحن مجاني &nbsp;|&nbsp; 🏆 3 مصليات بـ 1,200ج + شحن مجاني
                 </div>
 
                 <!-- Product Selection -->
@@ -4545,6 +4639,18 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     </div>
 
     <!-- TOAST -->
+    <!-- FLOATING CART BAR -->
+    <div id="floating-cart-bar">
+        <div class="cart-bar-info">
+            <span class="cart-bar-icon">🛒</span>
+            <span>مُضاف للسلة: <b id="cart-bar-qty">0</b> مصلاية — <b id="cart-bar-total">0 ج</b></span>
+        </div>
+        <div class="cart-bar-actions">
+            <button class="cart-bar-more" onclick="document.getElementById('products')?.scrollIntoView({behavior:'smooth'})">تصفح أكتر</button>
+            <button class="cart-bar-checkout" onclick="scrollToOrderForm()">استكمل الطلب ←</button>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <!-- ADMIN PANEL -->
@@ -4614,6 +4720,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                                         <th>المنتج</th>
                                         <th>الكمية</th>
                                         <th>السعر</th>
+                                        <th>الإجمالي (شامل الشحن)</th>
                                         <th>المحافظة</th>
                                         <th>المدينة</th>
                                         <th>العنوان</th>
@@ -5328,9 +5435,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         function updateOrderTotalUI() {
             const totalQuantity = getTotalSelectedQuantity();
             let materialsTotal = getMaterialsTotal();
-            // Bundle discount: 2 mats = 800, 3 mats = 1150
-            if (totalQuantity === 2) materialsTotal = 800;
-            else if (totalQuantity >= 3) materialsTotal = 1150;
+            // Bundle pricing: 1 = 450 (+100 shipping), 2 = 850, 3 = 1200, 4+ = 1200 + 400 لكل مصلاية زيادة عن التلاتة
+            if (totalQuantity === 2) materialsTotal = 850;
+            else if (totalQuantity === 3) materialsTotal = 1200;
+            else if (totalQuantity > 3) materialsTotal = 1200 + (totalQuantity - 3) * 400;
             const shippingFee = totalQuantity >= 2 ? 0 : SHIPPING_FEE;
             const total = materialsTotal + shippingFee;
 
@@ -5351,6 +5459,29 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
             const freeShippingNote = document.getElementById('pd-free-shipping-note');
             if (freeShippingNote) freeShippingNote.style.display = shippingFee === 0 ? 'block' : 'none';
+
+            updateFloatingCart(totalQuantity, total);
+        }
+
+        // ---- FLOATING CART BAR ----
+        // بيظهر تحت لما يبقى فيه تصميم متضاف، عشان الزبون يقدر يكمل يتصفح ويطلب أكتر
+        // من غير ما يتزنق على قفل التصفح والنزول للفورم على طول
+        function updateFloatingCart(qty, total) {
+            const bar = document.getElementById('floating-cart-bar');
+            if (!bar) return;
+            if (!selectedDesigns.length) {
+                bar.classList.remove('show');
+                document.body.classList.remove('has-cart-bar');
+                return;
+            }
+            document.getElementById('cart-bar-qty').textContent = qty;
+            document.getElementById('cart-bar-total').textContent = total + ' ج';
+            bar.classList.add('show');
+            document.body.classList.add('has-cart-bar');
+        }
+
+        function scrollToOrderForm() {
+            document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
         }
 
         function selectProduct(name) {
@@ -5386,7 +5517,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
             syncProductPickerUI();
             updateOrderTotalUI();
-            document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
         }
 
         function removeSelectedDesign(index) {
@@ -5823,9 +5953,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const productCount = selectedProductsMeta.reduce((sum, item) => sum + (item.quantity || 1), 0);
             // إجمالي سعر المصليات الفعلي = مجموع (سعر كل تصميم × كميته)
             let materialsTotal = selectedProductsMeta.reduce((sum, item) => sum + ((item.price || BASE_PRICE) * (item.quantity || 1)), 0);
-            // Bundle discount: 2 mats = 800, 3 mats = 1150
-            if (productCount === 2) materialsTotal = 800;
-            else if (productCount >= 3) materialsTotal = 1150;
+            // Bundle pricing: 1 = 450 (+100 shipping), 2 = 850, 3 = 1200, 4+ = 1200 + 400 لكل مصلاية زيادة عن التلاتة
+            if (productCount === 2) materialsTotal = 850;
+            else if (productCount === 3) materialsTotal = 1200;
+            else if (productCount > 3) materialsTotal = 1200 + (productCount - 3) * 400;
             const shippingFee = productCount >= 2 ? 0 : SHIPPING_FEE;
             const orderTotal = materialsTotal + shippingFee;
 
@@ -5883,6 +6014,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             gpsUsed = false;
             document.getElementById('product-select').value = '';
             syncProductPickerUI();
+            updateFloatingCart(0, 0);
             document.getElementById('gov-select').value = '';
             document.getElementById('city-select').innerHTML = '<option value="">-- اختر أولاً المحافظة --</option>';
             document.getElementById('delivery-time').value = '';
@@ -6153,9 +6285,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
             if (orders.length === 0) { showToast('⚠ لا توجد طلبات للتصدير'); return; }
 
-            const headers = ['رقم الطلب', 'الاسم', 'المنتج', 'الكمية', 'السعر', 'المحافظة', 'المدينة', 'العنوان', 'الهاتف', 'الإيميل', 'الدفع', 'ملاحظات', 'الحالة', 'التاريخ'];
+            const headers = ['رقم الطلب', 'الاسم', 'المنتج', 'الكمية', 'السعر', 'الإجمالي (شامل الشحن)', 'المحافظة', 'المدينة', 'العنوان', 'الهاتف', 'الإيميل', 'الدفع', 'ملاحظات', 'الحالة', 'التاريخ'];
             const rows = [...orders].reverse().map(o => [
                 o.id, o.name, o.product || '', o.quantity || 1, o.price || 450,
+                (o.total || ((o.price || o.unitPrice || 450) + (o.shippingFee ?? 100))),
                 o.gov || '', o.city || '', o.address || '', o.phone, o.email || '',
                 o.payment, o.notes || '', o.status, o.date
             ]);
@@ -6190,6 +6323,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <td>${o.product || '-'}</td>
                     <td>${o.quantity || 1}</td>
                     <td>${o.price || 450} ج</td>
+                    <td>${(o.total || ((o.price || o.unitPrice || 450) + (o.shippingFee ?? 100)))} ج</td>
                     <td>${o.gov || '-'}</td>
                     <td>${o.city || '-'}</td>
                     <td>${o.address || '-'}</td>
@@ -6211,7 +6345,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 '<p>تاريخ التصدير: ' + date + ' | إجمالي الطلبات: ' + orders.length + '</p>' +
                 '<table><thead><tr>' +
                 '<th>رقم الطلب</th><th>الاسم</th><th>المنتج</th><th>الكمية</th>' +
-                '<th>السعر</th><th>المحافظة</th><th>المدينة</th><th>العنوان</th>' +
+                '<th>السعر</th><th>الإجمالي</th><th>المحافظة</th><th>المدينة</th><th>العنوان</th>' +
                 '<th>الهاتف</th><th>الدفع</th><th>الحالة</th><th>التاريخ</th>' +
                 '</tr></thead><tbody>' + rows + '</tbody></table></body></html>');
             win.document.close();
@@ -6268,7 +6402,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
             // Stats
             const todayOrders = orders.filter(o => new Date(o.ts).toDateString() === new Date().toDateString()).length;
-            const totalRevenue = orders.length * 420;
+            // إجمالي المبيعات = مجموع الطلبات اللي حالتها "تم التسليم" فقط (شامل الشحن) — المرتجع ميتحسبش
+            const totalRevenue = orders
+                .filter(o => o.status === 'تم التسليم')
+                .reduce((sum, o) => sum + (o.total || ((o.price || o.unitPrice || 450) + (o.shippingFee ?? 100))), 0);
 
             document.getElementById('stats-row').innerHTML = `
     <div class="stat-card">
@@ -6289,7 +6426,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <div class="stat-card">
       <div class="stat-card-label">إجمالي المبيعات</div>
       <div class="stat-card-value">${totalRevenue.toLocaleString('ar-EG')}</div>
-      <div class="stat-card-sub">جنيه مصري</div>
+      <div class="stat-card-sub">جنيه مصري (الطلبات المُسلَّمة فقط)</div>
     </div>
   `;
 
@@ -6320,6 +6457,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         <td style="font-size:0.78rem;min-width:180px">${designMarkup}</td>
         <td style="text-align:center">${o.quantity || 1}</td>
         <td style="white-space:nowrap;color:var(--gold)">${o.price || o.unitPrice || 450} ج</td>
+        <td style="white-space:nowrap;color:var(--gold-light);font-weight:800">${(o.total || ((o.price || o.unitPrice || 450) + (o.shippingFee ?? 100)))} ج</td>
         <td style="white-space:nowrap">${o.gov || '-'}</td>
         <td style="white-space:nowrap">${o.city || '-'}</td>
         <td style="min-width:160px;font-size:0.78rem">${o.address || '-'}</td>
@@ -6334,6 +6472,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <option value="قيد التجهيز" ${o.status === 'قيد التجهيز' ? 'selected' : ''}>⚙ قيد التجهيز</option>
             <option value="تم الشحن" ${o.status === 'تم الشحن' ? 'selected' : ''}>🚚 تم الشحن</option>
             <option value="تم التسليم" ${o.status === 'تم التسليم' ? 'selected' : ''}>✅ تم التسليم</option>
+            <option value="مرتجع" ${o.status === 'مرتجع' ? 'selected' : ''}>❌ مرتجع</option>
           </select>
         </td>
         <td style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap">${o.date}</td>
