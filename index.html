@@ -4813,6 +4813,14 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <div id="visit-stats"></div>
                     <div class="devices-chart" id="devices-chart"></div>
                 </div>
+                <div class="admin-box" style="grid-column:1/-1;">
+                    <div class="admin-section-title">🏆 أكتر الأشكال طلبًا (من واقع الأوردرات الفعلية المؤكدة)</div>
+                    <div id="top-products-stats"></div>
+                </div>
+                <div class="admin-box" style="grid-column:1/-1;">
+                    <div class="admin-section-title">🧺 عدد مرات الإضافة للسلة لكل شكل (اهتمام الزوار)</div>
+                    <div id="cart-adds-stats"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -4917,6 +4925,23 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             } catch (e) { console.error("fbGetVisits error:", e); return []; }
         }
 
+        // ===== CART ADDS (اهتمام الزوار — كل مرة حد يضيف تصميم للسلة) =====
+        async function fbTrackCartAdd(cartAddData) {
+            try {
+                const docId = Date.now().toString() + '-' + Math.floor(Math.random() * 1000);
+                await setDoc(doc(db, "cartAdds", docId), cartAddData);
+            } catch (e) { console.error("fbTrackCartAdd error:", e); }
+        }
+
+        async function fbGetCartAdds() {
+            try {
+                const snap = await getDocs(collection(db, "cartAdds"));
+                const adds = [];
+                snap.forEach(d => adds.push(d.data()));
+                return adds;
+            } catch (e) { console.error("fbGetCartAdds error:", e); return []; }
+        }
+
         // ===== EXPOSE TO WINDOW =====
         window.FB = {
             getProducts: fbGetProducts,
@@ -4929,6 +4954,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             deleteAllOrders: fbDeleteAllOrders,
             trackVisit: fbTrackVisit,
             getVisits: fbGetVisits,
+            trackCartAdd: fbTrackCartAdd,
+            getCartAdds: fbGetCartAdds,
             ready: true
         };
 
@@ -5343,6 +5370,18 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             document.getElementById('modal-sub').textContent = p.sub || '';
             document.getElementById('modal-price').textContent = `${p.price || 450} ج`;
 
+            // ===== Meta Pixel: ViewContent =====
+            // بيقول لفيسبوك إن حد شاف تفاصيل المنتج ده — يفيد في بناء جمهور مشابه (Lookalike)
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'ViewContent', {
+                    content_name: p.name,
+                    content_ids: [p.id || p.name],
+                    content_type: 'product',
+                    currency: 'EGP',
+                    value: p.price || 450
+                });
+            }
+
             // Thumbnails — show current product image + siblings
             const thumbsEl = document.getElementById('modal-thumbs');
             const nearbyProds = products.slice(0, 4);
@@ -5481,6 +5520,22 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         }
 
         function scrollToOrderForm() {
+            // ===== Meta Pixel: InitiateCheckout =====
+            // بيقول لفيسبوك إن العميل بدأ خطوات إتمام الطلب — مهم جدًا لمتابعة نسبة
+            // اللي بيوصلوا للفورم من اللي بيدخلوا الموقع (Funnel)
+            if (typeof fbq !== 'undefined' && selectedDesigns.length) {
+                const total = selectedDesigns.reduce((sum, d) => {
+                    const qty = (typeof d === 'string' ? 1 : (d.quantity || 1));
+                    const p = getProducts().find(x => x.name === (typeof d === 'string' ? d : d.name));
+                    return sum + ((p ? p.price : BASE_PRICE) * qty);
+                }, 0);
+                fbq('track', 'InitiateCheckout', {
+                    content_type: 'product',
+                    currency: 'EGP',
+                    value: total,
+                    num_items: selectedDesigns.reduce((s, d) => s + (typeof d === 'string' ? 1 : (d.quantity || 1)), 0)
+                });
+            }
             document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -5514,6 +5569,27 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 selectedDesigns.push({ name: name, quantity: 1 });
                 showToast('✅ أضيف التصميم "' + name + '"');
             }
+
+            // ===== Meta Pixel: AddToCart =====
+            // بيقول لفيسبوك إن حد مهتم فعلاً بالمنتج ده — بيتستخدم في بناء جمهور
+            // "Retargeting" (إعادة استهداف) للي ضافوا للسلة ومكملوش الطلب
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'AddToCart', {
+                    content_name: name,
+                    content_ids: [name],
+                    content_type: 'product',
+                    currency: 'EGP',
+                    value: product ? (product.price || BASE_PRICE) : BASE_PRICE
+                });
+            }
+
+            // تسجيل مرة إضافة للسلة — بيانات دقيقة لمعرفة أكتر شكل بيجذب الزوار
+            const cartAddData = { name, time: new Date().toISOString(), device: getDeviceType() };
+            let cartAdds = JSON.parse(localStorage.getItem('sedra_cart_adds') || '[]');
+            cartAdds.push(cartAddData);
+            if (cartAdds.length > 1000) cartAdds = cartAdds.slice(-1000);
+            localStorage.setItem('sedra_cart_adds', JSON.stringify(cartAdds));
+            if (window.FB && window.FB.ready) window.FB.trackCartAdd(cartAddData);
 
             syncProductPickerUI();
             updateOrderTotalUI();
@@ -5979,7 +6055,20 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             ordersDB.push(order);
             localStorage.setItem('sedra_orders', JSON.stringify(ordersDB));
             if (window.FB && window.FB.ready) window.FB.saveOrder(order);
-            trackVisit();
+
+            // ===== Meta Pixel: Purchase =====
+            // أهم إيفنت للإعلان — ده اللي بيقول لفيسبوك "ده عميل اشترى فعلاً بقيمة كذا"
+            // وعليه بيتم تحسين استهداف الإعلان (Optimization) عشان يجيبلك ناس شبه اللي بتشتري بجد
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Purchase', {
+                    value: orderTotal,
+                    currency: 'EGP',
+                    content_type: 'product',
+                    content_ids: selectedProducts,
+                    contents: selectedProductsMeta.map(item => ({ id: item.name, quantity: item.quantity, item_price: item.price })),
+                    num_items: productCount
+                });
+            }
 
             // Send Telegram notification
             sendTelegramNotification(order);
@@ -6262,8 +6351,20 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             return 'كومبيوتر';
         }
 
+        // ملحوظة مهمة: الزيارة بتتسجل مرة واحدة بس لكل جلسة تصفح (Session) عشان رقم
+        // "إجمالي الزيارات" يكون حقيقي وموثوق، ومايتضخمش بسبب تحديث الصفحة أو التنقل
+        // بين أقسامها. وبتتسجل على Firebase على طول عشان تظهر في لوحة التحكم من أي جهاز.
         function trackVisit() {
-            const visitData = { time: new Date().toISOString(), device: getDeviceType(), page: location.pathname };
+            if (sessionStorage.getItem('sedra_visit_logged')) return;
+            sessionStorage.setItem('sedra_visit_logged', '1');
+
+            const visitData = {
+                time: new Date().toISOString(),
+                device: getDeviceType(),
+                page: location.pathname,
+                referrer: document.referrer || 'direct',
+                source: new URLSearchParams(location.search).get('utm_source') || (document.referrer ? 'referral' : 'direct')
+            };
             let visits = JSON.parse(localStorage.getItem('sedra_visits') || '[]');
             visits.push(visitData);
             if (visits.length > 500) visits = visits.slice(-500);
@@ -6271,13 +6372,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             if (window.FB && window.FB.ready) window.FB.trackVisit(visitData);
         }
 
-        // Track on load
-        window.addEventListener('load', () => {
-            let visits = JSON.parse(localStorage.getItem('sedra_visits') || '[]');
-            visits.push({ time: new Date().toISOString(), device: getDeviceType() });
-            if (visits.length > 500) visits = visits.slice(-500);
-            localStorage.setItem('sedra_visits', JSON.stringify(visits));
-        });
+        // تسجيل الزيارة فور تحميل الصفحة — ده المصدر الوحيد والصحيح لعدد الزيارات
+        // (قبل كده كانت الزيارة الحقيقية بتتسجل في المتصفح بس من غير ما توصل لقاعدة
+        // البيانات، وكانت بتتسجل فعليًا بس لما حد يكمل طلب، فالرقم كان غلط تمامًا)
+        window.addEventListener('load', trackVisit);
 
         // ---- EXPORT FUNCTIONS ----
         async function exportToExcel() {
@@ -6392,13 +6490,15 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         async function renderAdminDashboard() {
             if (window.FB && window.FB.ready) {
-                const [fbOrders, fbVisits] = await Promise.all([window.FB.getOrders(), window.FB.getVisits()]);
+                const [fbOrders, fbVisits, fbCartAdds] = await Promise.all([window.FB.getOrders(), window.FB.getVisits(), window.FB.getCartAdds()]);
                 localStorage.setItem('sedra_orders', JSON.stringify(fbOrders));
                 localStorage.setItem('sedra_visits', JSON.stringify(fbVisits));
+                localStorage.setItem('sedra_cart_adds', JSON.stringify(fbCartAdds));
                 ordersDB = fbOrders;
             }
             const orders = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
             const visits = JSON.parse(localStorage.getItem('sedra_visits') || '[]');
+            const cartAdds = JSON.parse(localStorage.getItem('sedra_cart_adds') || '[]');
 
             // Stats
             const todayOrders = orders.filter(o => new Date(o.ts).toDateString() === new Date().toDateString()).length;
@@ -6513,6 +6613,64 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
       </div>
     </div>
   `;
+
+            // ===== Top ordered products (من الأوردرات الفعلية المؤكدة — بيانات دقيقة 100%) =====
+            const productOrderCount = {};
+            let totalOrderedUnits = 0;
+            orders.forEach(o => {
+                const list = (Array.isArray(o.designsMeta) && o.designsMeta.length)
+                    ? o.designsMeta
+                    : (Array.isArray(o.designs) ? o.designs.map(n => ({ name: n, quantity: 1 })) : []);
+                list.forEach(item => {
+                    const n = item && item.name ? item.name : item;
+                    const q = (item && item.quantity) || 1;
+                    if (!n) return;
+                    productOrderCount[n] = (productOrderCount[n] || 0) + q;
+                    totalOrderedUnits += q;
+                });
+            });
+            const topProductsEl = document.getElementById('top-products-stats');
+            if (topProductsEl) {
+                const ranked = Object.entries(productOrderCount).sort((a, b) => b[1] - a[1]);
+                if (!ranked.length) {
+                    topProductsEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem;">لا توجد أوردرات كفاية لعرض الترتيب بعد</p>';
+                } else {
+                    topProductsEl.innerHTML = ranked.map(([n, c], i) => {
+                        const pct = totalOrderedUnits ? Math.round(c / totalOrderedUnits * 100) : 0;
+                        return `<div class="device-bar">
+              <span class="device-label" style="min-width:170px;">${i + 1}. ${n}</span>
+              <div style="flex:1; background:var(--black-3); border-radius:4px; height:8px; overflow:hidden;">
+                <div class="device-bar-fill" style="width:${pct}%"></div>
+              </div>
+              <span class="device-pct">${c} قطعة (${pct}%)</span>
+            </div>`;
+                    }).join('');
+                }
+            }
+
+            // ===== Cart-add interest stats (اهتمام الزوار — قد يشمل ناس لسه مقررتش تشتري) =====
+            const productCartCount = {};
+            cartAdds.forEach(a => { if (a && a.name) productCartCount[a.name] = (productCartCount[a.name] || 0) + 1; });
+            const cartAddsEl = document.getElementById('cart-adds-stats');
+            if (cartAddsEl) {
+                const rankedCart = Object.entries(productCartCount).sort((a, b) => b[1] - a[1]);
+                const totalCartAdds = cartAdds.length || 1;
+                if (!rankedCart.length) {
+                    cartAddsEl.innerHTML = '<p style="color:var(--text-muted); font-size:0.85rem;">لا توجد بيانات كفاية بعد</p>';
+                } else {
+                    cartAddsEl.innerHTML = `<div style="margin-bottom:10px; font-size:0.8rem; color:var(--text-muted);">إجمالي مرات الإضافة للسلة: <b style="color:var(--gold-light)">${cartAdds.length}</b></div>` +
+                        rankedCart.map(([n, c]) => {
+                            const pct = Math.round(c / totalCartAdds * 100);
+                            return `<div class="device-bar">
+              <span class="device-label" style="min-width:170px;">${n}</span>
+              <div style="flex:1; background:var(--black-3); border-radius:4px; height:8px; overflow:hidden;">
+                <div class="device-bar-fill" style="width:${pct}%"></div>
+              </div>
+              <span class="device-pct">${c} مرة</span>
+            </div>`;
+                        }).join('');
+                }
+            }
         }
 
         function updateOrderStatus(orderId, newStatus) {
