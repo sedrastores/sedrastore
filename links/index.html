@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050505" />
+
+  <!-- SEO -->
+  <title>سدرة ستور – مصليات فاخرة</title>
+  <meta name="description" content="سدرة ستور – مصليات فاخرة مصممة لتمنح كل سجدة راحة وأناقة. جودة عالية، شحن لجميع المحافظات، دعم سريع." />
+  <meta name="keywords" content="سدرة ستور, مصليات فاخرة, سجادة صلاة, مصليات, مصليات راقية" />
+  <meta name="author" content="Sedra Store" />
+  <link rel="canonical" href="https://sedrastores.com/links" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="سدرة ستور – مصليات فاخرة" />
+  <meta property="og:description" content="مصليات فاخرة مصممة لتمنح كل سجدة راحة وأناقة." />
+  <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:url" content="https://sedrastores.com/links" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ar_EG" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="سدرة ستور – مصليات فاخرة" />
+  <meta name="twitter:description" content="مصليات فاخرة مصممة لتمنح كل سجدة راحة وأناقة." />
+  <meta name="twitter:image" content="assets/logo.png" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="assets/logo.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  LOADING SCREEN                                 -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="loader" role="status" aria-label="جارٍ التحميل">
+    <div class="loader-inner">
+      <div class="loader-logo-ring">
+        <img src="assets/logo.png" alt="سدرة ستور" class="loader-logo" />
+        <svg class="loader-ring-svg" viewBox="0 0 200 200" aria-hidden="true">
+          <circle class="loader-ring-track" cx="100" cy="100" r="90" />
+          <circle class="loader-ring-fill" cx="100" cy="100" r="90" />
+        </svg>
+      </div>
+      <p class="loader-text">سدرة ستور</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  CURSOR GLOW                                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  PARTICLES CANVAS                               -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  MAIN PAGE                                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <main id="main-content">
+
+    <!-- ─── HERO ─── -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-ambient" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <!-- Circular animated logo: image is STATIC, ring spins around it -->
+        <div class="logo-wrapper" aria-label="شعار سدرة ستور">
+
+          <!-- Static logo image (never rotates) -->
+          <div class="logo-ring-inner">
+            <img src="assets/logo.png" alt="Sedra Stores Logo" class="hero-logo" loading="eager" />
+          </div>
+
+          <!-- Spinning golden ring SVG (rotates via CSS) -->
+          <svg class="logo-ring-outer" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#D4AF37" stop-opacity="0"/>
+                <stop offset="60%"  stop-color="#D4AF37" stop-opacity="0.3"/>
+                <stop offset="85%"  stop-color="#EDD370" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#D4AF37" stop-opacity="0.1"/>
+              </linearGradient>
+            </defs>
+            <circle cx="95" cy="95" r="88"
+              fill="none"
+              stroke="url(#ringGrad)"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+            <!-- Fixed tick marks on the ring -->
+            <circle cx="95" cy="7"   r="2.5" fill="#D4AF37" opacity="0.9"/>
+            <circle cx="183" cy="95" r="1.5" fill="#D4AF37" opacity="0.4"/>
+            <circle cx="95" cy="183" r="1.5" fill="#D4AF37" opacity="0.4"/>
+            <circle cx="7"  cy="95"  r="1.5" fill="#D4AF37" opacity="0.4"/>
+          </svg>
+
+          <!-- Orbiting glowing dot -->
+          <div class="logo-orbit" aria-hidden="true">
+            <span class="orbit-dot"></span>
+          </div>
+        </div>
+
+        <h1 id="hero-title" class="hero-title">Sedra Stores</h1>
+        <p class="hero-tagline">«مصليات فاخرة تجمع بين الجودة، الراحة، والأناقة.»</p>
+        <p class="hero-subtitle">مصليات فاخرة مصممة لتمنح كل سجدة راحة وأناقة.</p>
+
+        <div class="hero-badges" role="list">
+          <div class="badge" role="listitem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#D4AF37" stroke-width="1.5" fill="rgba(212,175,55,0.15)"/>
+            </svg>
+            جودة عالية
+          </div>
+          <div class="badge" role="listitem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            شحن لجميع المحافظات
+          </div>
+          <div class="badge" role="listitem">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            دعم سريع
+          </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator" aria-label="مرر للأسفل">
+          <span class="scroll-line"></span>
+          <span class="scroll-label">اكتشف المزيد</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── ACTION CARDS ─── -->
+    <section class="cards-section" aria-labelledby="cards-title">
+      <h2 id="cards-title" class="section-title reveal">تواصل معنا</h2>
+      <p class="section-sub reveal">اختر الطريقة المناسبة للتواصل أو التسوق</p>
+
+      <div class="cards-grid" id="cards-container" role="list">
+        <!-- Cards injected by script.js -->
+      </div>
+    </section>
+
+    <!-- ─── WHY SEDRA ─── -->
+    <section class="why-section" aria-labelledby="why-title">
+      <div class="why-card glass-card reveal">
+        <div class="why-glow" aria-hidden="true"></div>
+        <h2 id="why-title" class="why-title">لماذا سدرة ستور؟</h2>
+        <div class="gold-divider" aria-hidden="true"></div>
+        <ul class="why-list" role="list">
+          <li class="why-item reveal" role="listitem">
+            <span class="why-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            خامات عالية الجودة
+          </li>
+          <li class="why-item reveal" role="listitem">
+            <span class="why-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            تصميمات حصرية
+          </li>
+          <li class="why-item reveal" role="listitem">
+            <span class="why-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            راحة فائقة أثناء الصلاة
+          </li>
+          <li class="why-item reveal" role="listitem">
+            <span class="why-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            تشطيب فاخر
+          </li>
+          <li class="why-item reveal" role="listitem">
+            <span class="why-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            شحن سريع
+          </li>
+          <li class="why-item reveal" role="listitem">
+            <span class="why-check" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#D4AF37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            خدمة عملاء ممتازة
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ─── TESTIMONIALS ─── -->
+    <section class="testimonials-section" aria-labelledby="testimonials-title">
+      <h2 id="testimonials-title" class="section-title reveal">آراء عملائنا</h2>
+      <p class="section-sub reveal">ثقة آلاف العملاء في جميع أنحاء مصر</p>
+
+      <div class="testimonials-grid">
+
+        <article class="testimonial-card glass-card reveal" aria-label="شهادة عميل">
+          <div class="stars" aria-label="5 نجوم من 5">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+          </div>
+          <blockquote class="testimonial-text">
+            جودة المصلية فاقت توقعاتي تمامًا. الخامة ناعمة جدًا والتصميم أنيق بشكل لافت. أنصح به بشدة.
+          </blockquote>
+          <cite class="testimonial-author">— نورا م.</cite>
+        </article>
+
+        <article class="testimonial-card glass-card reveal" aria-label="شهادة عميل">
+          <div class="stars" aria-label="5 نجوم من 5">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+          </div>
+          <blockquote class="testimonial-text">
+            استلمت الطلب في يومين وكان التغليف راقيًا جدًا. المصلية ذات جودة عالية وتستحق سعرها تمامًا.
+          </blockquote>
+          <cite class="testimonial-author">— أحمد ك.</cite>
+        </article>
+
+        <article class="testimonial-card glass-card reveal" aria-label="شهادة عميل">
+          <div class="stars" aria-label="5 نجوم من 5">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1l2.47 5.01 5.53.8-4 3.9.94 5.49L10 13.77l-4.94 2.6.94-5.49-4-3.9 5.53-.8L10 1z" fill="#D4AF37"/></svg>
+          </div>
+          <blockquote class="testimonial-text">
+            أهديت أمي مصلية من سدرة ستور وكانت سعيدة جدًا. الراحة والتصميم رائعان. سأعود للشراء مرة أخرى.
+          </blockquote>
+          <cite class="testimonial-author">— سارة ع.</cite>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer-logo">
+        <img src="assets/logo.png" alt="سدرة ستور" class="footer-logo-img" loading="lazy" />
+      </div>
+      <p class="footer-tagline">مصليات فاخرة تجمع بين الجودة، الراحة، والأناقة</p>
+      <div class="gold-divider" aria-hidden="true"></div>
+      <p class="footer-copy">© 2025 سدرة ستور. جميع الحقوق محفوظة.</p>
+    </footer>
+
+  </main>
+
+  <!-- ─── BACK TO TOP ─── -->
+  <button id="back-to-top" aria-label="العودة للأعلى" tabindex="0">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M18 15l-6-6-6 6" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

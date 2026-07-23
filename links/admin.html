@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>لوحة الإدارة – سدرة ستور</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ── LOGIN SCREEN ── -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">
+        <img src="assets/logo.png" alt="سدرة ستور" />
+      </div>
+      <h1 class="login-title">لوحة الإدارة</h1>
+      <p class="login-sub">أدخل كلمة المرور للمتابعة</p>
+      <div class="login-field">
+        <input
+          type="password"
+          id="password-input"
+          placeholder="كلمة المرور"
+          autocomplete="current-password"
+          aria-label="كلمة المرور"
+        />
+        <button id="login-btn" aria-label="دخول">دخول</button>
+      </div>
+      <p id="login-error" class="login-error" role="alert" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <!-- ── ADMIN PANEL ── -->
+  <div id="admin-panel" hidden>
+
+    <header class="admin-header">
+      <div class="admin-header-inner">
+        <img src="assets/logo.png" alt="سدرة ستور" class="admin-logo" />
+        <h1 class="admin-brand">سدرة ستور — لوحة الإدارة</h1>
+        <div class="admin-actions">
+          <a href="index.html" target="_blank" class="btn btn-outline" aria-label="معاينة الموقع">معاينة الموقع</a>
+          <button id="logout-btn" class="btn btn-ghost" aria-label="تسجيل الخروج">خروج</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+
+      <!-- ── LINKS SECTION ── -->
+      <section class="admin-section" aria-labelledby="links-title">
+        <h2 id="links-title" class="admin-section-title">الروابط الأساسية</h2>
+        <div class="links-grid">
+          <div class="input-group">
+            <label for="link-website">رابط الموقع</label>
+            <input type="url" id="link-website" placeholder="https://sedrastores.com" />
+          </div>
+          <div class="input-group">
+            <label for="link-whatsapp">رابط واتساب</label>
+            <input type="url" id="link-whatsapp" placeholder="https://wa.me/201033035681" />
+          </div>
+          <div class="input-group">
+            <label for="link-facebook">رابط فيسبوك</label>
+            <input type="url" id="link-facebook" placeholder="https://www.facebook.com/..." />
+          </div>
+        </div>
+        <button id="save-links-btn" class="btn btn-gold">حفظ الروابط</button>
+      </section>
+
+      <!-- ── BUTTONS SECTION ── -->
+      <section class="admin-section" aria-labelledby="buttons-title">
+        <div class="section-header">
+          <h2 id="buttons-title" class="admin-section-title">إدارة الأزرار</h2>
+          <button id="add-btn" class="btn btn-gold">+ إضافة زر</button>
+        </div>
+
+        <p class="drag-hint">اسحب للترتيب</p>
+
+        <div id="buttons-list" class="buttons-list" role="list" aria-label="قائمة الأزرار">
+          <!-- Injected by admin.js -->
+        </div>
+      </section>
+
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <!-- ── ADD / EDIT MODAL ── -->
+  <div id="modal-overlay" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <h3 id="modal-title" class="modal-title">إضافة / تعديل زر</h3>
+      <input type="hidden" id="modal-id" />
+
+      <div class="input-group">
+        <label for="modal-label">العنوان</label>
+        <input type="text" id="modal-label" placeholder="مثال: زيارة الموقع" />
+      </div>
+      <div class="input-group">
+        <label for="modal-description">الوصف</label>
+        <input type="text" id="modal-description" placeholder="مثال: تصفح جميع منتجاتنا" />
+      </div>
+      <div class="input-group">
+        <label for="modal-url">الرابط</label>
+        <input type="url" id="modal-url" placeholder="https://..." />
+      </div>
+      <div class="input-group">
+        <label for="modal-icon">أيقونة SVG (كود)</label>
+        <textarea id="modal-icon" rows="5" placeholder='<svg ...>...</svg>'></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button id="modal-save" class="btn btn-gold">حفظ</button>
+        <button id="modal-cancel" class="btn btn-ghost">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
