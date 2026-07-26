@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="سدرة أدمن">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>لوحة تحكم سدرة ستور</title>
+
+  <!-- PWA Manifest inline -->
+  <script>
+    const manifestData = {
+      name: "سدرة ستور - لوحة التحكم",
+      short_name: "سدرة أدمن",
+      start_url: "./admin.html",
+      display: "standalone",
+      background_color: "#0a0a0a",
+      theme_color: "#c9a84c",
+      orientation: "portrait-primary",
+      icons: [
+        { src: "logo.png", sizes: "192x192", type: "image/png" },
+        { src: "logo.png", sizes: "512x512", type: "image/png" }
+      ]
+    };
+    const blob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+    const manifestURL = URL.createObjectURL(blob);
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = manifestURL;
+    document.head.appendChild(link);
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --black-2: #111111;
+      --black-3: #1a1a1a;
+      --black-4: #222222;
+      --gold: #c9a84c;
+      --gold-light: #e8c96a;
+      --gold-dark: #a07c30;
+      --gold-shine: #f5e27a;
+      --white: #ffffff;
+      --white-dim: #f0ece0;
+      --text-muted: #888880;
+      --border-gold: rgba(201,168,76,0.3);
+      --border-gold-strong: rgba(201,168,76,0.6);
+      --font-ar: 'Cairo', sans-serif;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow-gold: 0 0 30px rgba(201,168,76,0.15);
+      --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-ar);
+      background: var(--black);
+      color: var(--white);
+      direction: rtl;
+      overflow-x: hidden;
+      line-height: 1.7;
+      min-height: 100dvh;
+    }
+    button { cursor: pointer; border: none; outline: none; font-family: var(--font-ar); }
+    input, select, textarea { font-family: var(--font-ar); }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black-2); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+    /* ===== LOGIN SCREEN ===== */
+    #login-screen {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(ellipse at center, #1a1200 0%, var(--black) 70%);
+    }
+    .login-box {
+      background: var(--black-2);
+      border: 1px solid var(--border-gold-strong);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 0 60px rgba(201,168,76,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .login-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+    }
+    .login-logo {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--gold);
+      margin: 0 auto 20px;
+      display: block;
+      filter: drop-shadow(0 0 12px rgba(201,168,76,0.5));
+    }
+    .login-box h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 6px; }
+    .login-box p { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 28px; }
+    .form-group { text-align: right; margin-bottom: 16px; }
+    .form-group label { font-size: 0.82rem; color: var(--white-dim); font-weight: 600; display: block; margin-bottom: 6px; }
+    .form-group input {
+      width: 100%;
+      background: var(--black-3);
+      border: 1px solid var(--border-gold);
+      color: var(--white);
+      padding: 11px 14px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .form-group input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+      color: var(--black);
+      font-weight: 800;
+      font-size: 1rem;
+      border-radius: var(--radius);
+      margin-top: 8px;
+      transition: var(--transition);
+    }
+    .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.4); }
+    .login-err {
+      background: rgba(231,76,60,0.1);
+      border: 1px solid rgba(231,76,60,0.3);
+      color: #e74c3c;
+      border-radius: var(--radius);
+      padding: 10px;
+      font-size: 0.82rem;
+      margin-bottom: 14px;
+      display: none;
+    }
+    .remember-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      text-align: right;
+    }
+    .remember-row label { font-size: 0.82rem; color: var(--gold-light); cursor: pointer; }
+    .remember-row input[type="checkbox"] { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; }
+    .install-hint {
+      margin-top: 20px;
+      padding: 12px;
+      background: rgba(201,168,76,0.08);
+      border: 1px dashed var(--border-gold);
+      border-radius: var(--radius);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: none;
+    }
+    .install-hint b { color: var(--gold-light); }
+    #btn-install {
+      margin-top: 10px;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+      color: var(--black);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 9px 20px;
+      border-radius: 50px;
+      width: 100%;
+      display: none;
+    }
+
+    /* ===== DASHBOARD ===== */
+    #dashboard { display: none; min-height: 100dvh; }
+
+    /* Top bar */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.97);
+      border-bottom: 1px solid var(--border-gold);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+    }
+    .top-bar h1 { font-size: 1rem; font-weight: 800; }
+    .top-bar h1 span { color: var(--gold-light); }
+    .btn-logout {
+      background: rgba(231,76,60,0.15);
+      border: 1px solid rgba(231,76,60,0.3);
+      color: #e74c3c;
+      padding: 7px 14px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-gold);
+      background: var(--black-2);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex: 1;
+      min-width: 80px;
+      padding: 13px 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      white-space: nowrap;
+      transition: var(--transition);
+      border-bottom: 2px solid transparent;
+    }
+    .tab-btn.active {
+      color: var(--gold-light);
+      border-bottom-color: var(--gold);
+      background: rgba(201,168,76,0.07);
+    }
+
+    /* Tab content */
+    .tab-pane { display: none; padding: 16px; }
+    .tab-pane.active { display: block; }
+
+    /* Stats cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: var(--black-2);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 16px 14px;
+    }
+    .stat-card-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; letter-spacing: 0.5px; }
+    .stat-card-value {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .stat-card-sub { font-size: 0.68rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* Orders */
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .export-row { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .btn-export {
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-export-excel { background: linear-gradient(135deg, #1d6f42, #2a9d5c); color: #fff; }
+    .btn-export-pdf { background: linear-gradient(135deg, #c0392b, #e74c3c); color: #fff; }
+    .btn-delete-all { background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3); color: #dc3545; padding: 9px 14px; border-radius: 8px; font-size: 0.78rem; }
+
+    .order-card {
+      background: var(--black-2);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .order-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .order-id { font-size: 0.78rem; font-weight: 800; color: var(--gold-light); }
+    .order-date { font-size: 0.68rem; color: var(--text-muted); }
+    .order-name { font-size: 0.9rem; font-weight: 700; }
+    .order-phone { font-size: 0.82rem; color: var(--gold); direction: ltr; display: inline-block; }
+    .order-designs {
+      margin: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .design-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--black-3);
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 5px 10px;
+      font-size: 0.72rem;
+    }
+    .design-chip img { width: 28px; height: 28px; border-radius: 5px; object-fit: cover; }
+    .order-info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      font-size: 0.75rem;
+      margin-top: 8px;
+    }
+    .order-info-item { color: var(--text-muted); }
+    .order-info-item span { color: var(--white-dim); font-weight: 600; }
+    .order-total { font-size: 1rem; font-weight: 900; color: var(--gold-light); }
+    .order-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+    .status-select {
+      background: var(--black-3);
+      border: 1px solid var(--border-gold);
+      color: var(--white);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-family: var(--font-ar);
+      flex: 1;
+    }
+    .map-btn {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* Products */
+    .product-form {
+      background: var(--black-3);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .product-form h4 { color: var(--gold-light); font-size: 0.92rem; margin-bottom: 16px; }
+    .form-group-admin { margin-bottom: 14px; }
+    .form-group-admin label { font-size: 0.8rem; color: var(--white-dim); font-weight: 600; display: block; margin-bottom: 5px; }
+    .form-group-admin input,
+    .form-group-admin select,
+    .form-group-admin textarea {
+      width: 100%;
+      background: var(--black-2);
+      border: 1px solid var(--border-gold);
+      color: var(--white);
+      padding: 10px 13px;
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      font-family: var(--font-ar);
+      transition: var(--transition);
+    }
+    .form-group-admin input:focus,
+    .form-group-admin select:focus,
+    .form-group-admin textarea:focus {
+      border-color: var(--gold);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(201,168,76,0.15);
+    }
+    .upload-area {
+      border: 2px dashed var(--border-gold-strong);
+      border-radius: var(--radius);
+      padding: 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--black-2);
+    }
+    .upload-area:hover { border-color: var(--gold); background: rgba(201,168,76,0.05); }
+    .upload-area .icon { font-size: 2rem; margin-bottom: 8px; }
+    .upload-area p { color: var(--text-muted); font-size: 0.82rem; }
+    #product-preview { max-width: 140px; max-height: 140px; margin: 12px auto; border-radius: var(--radius); display: none; border: 1px solid var(--border-gold); }
+    .btn-add-product {
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+      color: var(--black);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      width: 100%;
+      margin-top: 4px;
+    }
+    .btn-update-product {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      width: 100%;
+      margin-top: 4px;
+      display: none;
+    }
+    .btn-cancel-edit {
+      background: rgba(220,53,69,0.15);
+      border: 1px solid rgba(220,53,69,0.3);
+      color: #e74c3c;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      width: 100%;
+      margin-top: 8px;
+      font-size: 0.85rem;
+      display: none;
+    }
+    .admin-products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .admin-prod-card {
+      background: var(--black-3);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .admin-prod-img { width: 100%; height: 120px; object-fit: cover; }
+    .admin-prod-info { padding: 10px; }
+    .admin-prod-name { font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; }
+    .admin-prod-price { color: var(--gold); font-weight: 700; font-size: 0.9rem; }
+    .admin-prod-actions { display: flex; gap: 6px; padding: 8px 10px; border-top: 1px solid var(--border-gold); flex-wrap: wrap; }
+    .btn-edit-prod, .btn-oos-prod, .btn-del-prod {
+      flex: 1;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-family: var(--font-ar);
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .btn-edit-prod { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3); color: var(--gold-light); }
+    .btn-del-prod { background: rgba(220,53,69,0.12); border: 1px solid rgba(220,53,69,0.3); color: #dc3545; }
+    .btn-oos-prod { background: rgba(108,117,125,0.15); border: 1px solid rgba(108,117,125,0.3); color: #aaa; font-size: 0.62rem; }
+
+    /* Stats */
+    .device-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .device-label { font-size: 0.8rem; color: var(--white-dim); min-width: 70px; }
+    .device-bar-fill { height: 7px; border-radius: 4px; background: linear-gradient(90deg, var(--gold-dark), var(--gold-light)); transition: width 0.8s ease; }
+    .device-pct { font-size: 0.75rem; color: var(--gold-light); min-width: 35px; }
+    .top-products-list { margin-top: 10px; }
+
+    /* Toast */
+    .toast-msg {
+      position: fixed;
+      bottom: 24px;
+      right: 50%;
+      transform: translateX(50%);
+      z-index: 9999;
+      background: var(--black-2);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      padding: 12px 20px;
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      box-shadow: var(--shadow-gold);
+      max-width: 90vw;
+      text-align: center;
+      display: none;
+      white-space: nowrap;
+    }
+    .toast-msg.show { display: block; animation: toastIn 0.3s ease; }
+    @keyframes toastIn { from { opacity: 0; transform: translateX(50%) translateY(20px); } to { opacity: 1; transform: translateX(50%) translateY(0); } }
+
+    /* Loader */
+    #app-loader {
+      position: fixed; inset: 0; z-index: 9000;
+      background: var(--black);
+      display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px;
+    }
+    .loader-ring {
+      width: 50px; height: 50px; border-radius: 50%;
+      border: 3px solid rgba(201,168,76,0.2);
+      border-top-color: var(--gold);
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loader-text { color: var(--text-muted); font-size: 0.8rem; }
+
+    /* Refresh btn */
+    .btn-refresh {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 7px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 380px) {
+      .admin-products-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- App Loader -->
+<div id="app-loader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">جاري التحميل...</div>
+</div>
+
+<!-- Toast -->
+<div class="toast-msg" id="toast"></div>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="login-screen" style="display:none;">
+  <div class="login-box">
+    <img class="login-logo" src="logo.png" alt="سدرة ستور" onerror="this.style.display='none'">
+    <h2>🔐 لوحة التحكم</h2>
+    <p>سدرة ستور — أدمن</p>
+    <div class="login-err" id="login-err">❌ بيانات الدخول غلط</div>
+    <div class="form-group">
+      <label>اسم المستخدم</label>
+      <input type="text" id="login-user" placeholder="أدخل اسم المستخدم" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label>كلمة السر</label>
+      <input type="password" id="login-pass" placeholder="أدخل كلمة السر"
+             autocomplete="current-password"
+             onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="remember-row">
+      <input type="checkbox" id="remember-me" checked>
+      <label for="remember-me">ابقى مسجل دخول</label>
+    </div>
+    <button class="btn-login" onclick="doLogin()">دخول ←</button>
+
+    <div class="install-hint" id="install-hint">
+      <b>📲 تنصيب كأبلكيشن:</b><br>
+      iOS: شارك → "إضافة إلى الشاشة الرئيسية"<br>
+      Android: ⋮ القائمة → "تثبيت التطبيق"
+      <button id="btn-install" onclick="installPWA()">⬇ تثبيت الأبلكيشن</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard">
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <h1>لوحة التحكم — <span>سدرة</span></h1>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="btn-refresh" onclick="refreshData()">🔄 تحديث</button>
+      <button class="btn-logout" onclick="doLogout()">خروج</button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('orders')">📦 الأوردرات</button>
+    <button class="tab-btn" onclick="switchTab('products')">🏷️ المنتجات</button>
+    <button class="tab-btn" onclick="switchTab('stats')">📊 إحصائيات</button>
+  </div>
+
+  <!-- ===== ORDERS TAB ===== -->
+  <div class="tab-pane active" id="pane-orders">
+    <div class="stats-grid" id="quick-stats"></div>
+    <div class="export-row">
+      <button class="btn-export btn-export-excel" onclick="exportExcel()">📊 Excel</button>
+      <button class="btn-export btn-export-pdf" onclick="exportPDF()">📄 PDF</button>
+      <button class="btn-delete-all" onclick="deleteAllOrders()">🗑️ مسح الكل</button>
+    </div>
+    <div class="section-title">📦 الطلبات الواردة <span id="orders-badge" style="font-size:0.72rem;color:var(--text-muted);"></span></div>
+    <div id="orders-list"></div>
+  </div>
+
+  <!-- ===== PRODUCTS TAB ===== -->
+  <div class="tab-pane" id="pane-products">
+
+    <!-- Add / Edit Form -->
+    <div class="product-form">
+      <h4 id="form-title">➕ إضافة منتج جديد</h4>
+      <input type="hidden" id="edit-product-id">
+      <div class="form-group-admin">
+        <label>اسم المنتج *</label>
+        <input type="text" id="new-name" placeholder="مثال: مصلاية بيج كلاسيك">
+      </div>
+      <div class="form-group-admin">
+        <label>السعر (جنيه) *</label>
+        <input type="number" id="new-price" placeholder="450" min="0">
+      </div>
+      <div class="form-group-admin">
+        <label>وصف مختصر</label>
+        <input type="text" id="new-desc" placeholder="مثال: تصميم هندسي إسلامي">
+      </div>
+      <div class="form-group-admin">
+        <label>البادج (اختياري)</label>
+        <input type="text" id="new-badge" placeholder="مثال: الأكثر طلباً">
+      </div>
+      <div class="form-group-admin">
+        <label>صورة المنتج *</label>
+        <div class="upload-area" onclick="document.getElementById('img-input').click()">
+          <div class="icon">📷</div>
+          <p>اضغط أو اسحب صورة هنا</p>
+          <p style="font-size:0.72rem;margin-top:4px;">PNG، JPG، WEBP (حد أقصى 10MB)</p>
+          <input type="file" id="img-input" accept="image/*" style="display:none" onchange="handleImage(this)">
+        </div>
+        <img id="product-preview" alt="معاينة">
+      </div>
+      <button class="btn-add-product" id="btn-add" onclick="addProduct()">➕ إضافة المنتج</button>
+      <button class="btn-update-product" id="btn-update" onclick="updateProduct()">💾 حفظ التعديلات</button>
+      <button class="btn-cancel-edit" id="btn-cancel" onclick="cancelEdit()">✕ إلغاء التعديل</button>
+    </div>
+
+    <div class="section-title">📋 المنتجات الحالية <span id="prod-count" style="font-size:0.72rem;color:var(--text-muted);"></span></div>
+    <div class="admin-products-grid" id="admin-products-grid"></div>
+  </div>
+
+  <!-- ===== STATS TAB ===== -->
+  <div class="tab-pane" id="pane-stats">
+    <div class="stats-grid" id="stats-cards"></div>
+    <div class="section-title" style="margin-top:8px;">📱 نوع الأجهزة</div>
+    <div id="devices-chart"></div>
+    <div class="section-title" style="margin-top:20px;">🏆 أكتر التصاميم طلباً</div>
+    <div id="top-products-chart"></div>
+    <div class="section-title" style="margin-top:20px;">🧺 إضافات للسلة</div>
+    <div id="cart-adds-chart"></div>
+  </div>
+
+</div><!-- end dashboard -->
+
+<!-- ===== FIREBASE ===== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDdNmWIFS_GomYF2ODJifqWwg1sgQFjoNo",
+    authDomain: "sedra-store.firebaseapp.com",
+    projectId: "sedra-store",
+    storageBucket: "sedra-store.firebasestorage.app",
+    messagingSenderId: "1026526536859",
+    appId: "1:1026526536859:web:c883e3235574e33f35923e"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  async function fbGetProducts() {
+    try {
+      const snap = await getDocs(collection(db, "products"));
+      if (snap.empty) return null;
+      const products = [];
+      snap.forEach(d => products.push({ id: d.id, ...d.data() }));
+      products.sort((a,b) => (a.createdAt||'') < (b.createdAt||'') ? -1 : 1);
+      return products;
+    } catch(e) { return null; }
+  }
+  async function fbSaveProduct(product) {
+    try { await setDoc(doc(db, "products", String(product.id)), product); } catch(e) {}
+  }
+  async function fbDeleteProduct(productId) {
+    try { await deleteDoc(doc(db, "products", String(productId))); } catch(e) {}
+  }
+  async function fbSaveAllProducts(products) {
+    for (const p of products) await fbSaveProduct(p);
+  }
+  async function fbGetOrders() {
+    try {
+      const snap = await getDocs(collection(db, "orders"));
+      const orders = [];
+      snap.forEach(d => orders.push(d.data()));
+      orders.sort((a,b) => (b.ts||0) - (a.ts||0));
+      return orders;
+    } catch(e) { return []; }
+  }
+  async function fbUpdateOrderStatus(orderId, newStatus) {
+    try { await updateDoc(doc(db, "orders", orderId), { status: newStatus }); } catch(e) {}
+  }
+  async function fbDeleteAllOrders() {
+    try {
+      const snap = await getDocs(collection(db, "orders"));
+      const dels = [];
+      snap.forEach(d => dels.push(deleteDoc(d.ref)));
+      await Promise.all(dels);
+    } catch(e) {}
+  }
+  async function fbGetVisits() {
+    try {
+      const snap = await getDocs(collection(db, "visits"));
+      const visits = [];
+      snap.forEach(d => visits.push(d.data()));
+      return visits;
+    } catch(e) { return []; }
+  }
+  async function fbGetCartAdds() {
+    try {
+      const snap = await getDocs(collection(db, "cartAdds"));
+      const adds = [];
+      snap.forEach(d => adds.push(d.data()));
+      return adds;
+    } catch(e) { return []; }
+  }
+
+  window.FB = {
+    getProducts: fbGetProducts,
+    saveProduct: fbSaveProduct,
+    saveAllProducts: fbSaveAllProducts,
+    deleteProduct: fbDeleteProduct,
+    getOrders: fbGetOrders,
+    updateOrderStatus: fbUpdateOrderStatus,
+    deleteAllOrders: fbDeleteAllOrders,
+    getVisits: fbGetVisits,
+    getCartAdds: fbGetCartAdds,
+    ready: true
+  };
+
+  console.log("✅ Firebase connected!");
+  window.dispatchEvent(new Event('fb-ready'));
+</script>
+
+<script>
+// =============================================
+// SEDRA ADMIN PWA - Main Script
+// =============================================
+
+// ---- PWA Install ----
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('btn-install').style.display = 'block';
+  document.getElementById('install-hint').style.display = 'block';
+});
+function installPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+}
+// Always show install hint (iOS doesn't fire beforeinstallprompt)
+window.addEventListener('load', () => {
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+  if (!isStandalone) {
+    setTimeout(() => { document.getElementById('install-hint').style.display = 'block'; }, 1000);
+  }
+});
+
+// ---- Auth ----
+const ADMIN_USER = 'harby';
+const ADMIN_PASS = 'admin';
+
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value.trim();
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    const remember = document.getElementById('remember-me').checked;
+    if (remember) localStorage.setItem('sedra_admin_auth', '1');
+    else sessionStorage.setItem('sedra_admin_auth', '1');
+    showDashboard();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+    setTimeout(() => document.getElementById('login-err').style.display = 'none', 3000);
+  }
+}
+
+function doLogout() {
+  localStorage.removeItem('sedra_admin_auth');
+  sessionStorage.removeItem('sedra_admin_auth');
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+function isAuthed() {
+  return localStorage.getItem('sedra_admin_auth') === '1' ||
+         sessionStorage.getItem('sedra_admin_auth') === '1';
+}
+
+function showDashboard() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadAllData();
+}
+
+// ---- Boot ----
+window.addEventListener('fb-ready', () => {
+  if (window._bootDone) return;
+  window._bootDone = true;
+  boot();
+});
+// Fallback if Firebase takes too long
+setTimeout(() => {
+  if (window._bootDone) return;
+  window._bootDone = true;
+  boot();
+}, 4000);
+
+function boot() {
+  document.getElementById('app-loader').style.display = 'none';
+  if (isAuthed()) {
+    showDashboard();
+  } else {
+    document.getElementById('login-screen').style.display = 'flex';
+  }
+}
+
+// ---- Data ----
+let ordersDB = [];
+let productsDB = [];
+let visitsDB = [];
+let cartAddsDB = [];
+
+async function loadAllData() {
+  showToast('⏳ جاري تحميل البيانات...');
+  try {
+    const [orders, products, visits, cartAdds] = await Promise.all([
+      window.FB ? window.FB.getOrders() : Promise.resolve([]),
+      window.FB ? window.FB.getProducts() : Promise.resolve(null),
+      window.FB ? window.FB.getVisits() : Promise.resolve([]),
+      window.FB ? window.FB.getCartAdds() : Promise.resolve([])
+    ]);
+    ordersDB = orders || [];
+    productsDB = (products && products.length) ? products : getLocalProducts();
+    visitsDB = visits || [];
+    cartAddsDB = cartAdds || [];
+
+    // Cache locally
+    localStorage.setItem('sedra_orders', JSON.stringify(ordersDB));
+    localStorage.setItem('sedra_products', JSON.stringify(productsDB));
+    localStorage.setItem('sedra_visits', JSON.stringify(visitsDB));
+    localStorage.setItem('sedra_cart_adds', JSON.stringify(cartAddsDB));
+
+    renderOrders();
+    renderProducts();
+    renderStats();
+    showToast('✅ تم تحميل البيانات');
+  } catch(e) {
+    // Fallback to localStorage
+    ordersDB = JSON.parse(localStorage.getItem('sedra_orders') || '[]');
+    productsDB = getLocalProducts();
+    visitsDB = JSON.parse(localStorage.getItem('sedra_visits') || '[]');
+    cartAddsDB = JSON.parse(localStorage.getItem('sedra_cart_adds') || '[]');
+    renderOrders();
+    renderProducts();
+    renderStats();
+    showToast('⚠ تحميل من الذاكرة المحلية');
+  }
+}
+
+function getLocalProducts() {
+  try {
+    const s = localStorage.getItem('sedra_products');
+    if (s) { const p = JSON.parse(s); if (Array.isArray(p) && p.length) return p; }
+  } catch(e) {}
+  return [];
+}
+
+async function refreshData() {
+  await loadAllData();
+}
+
+// ---- TABS ----
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    const names = ['orders','products','stats'];
+    b.classList.toggle('active', names[i] === tab);
+  });
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById('pane-' + tab).classList.add('active');
+}
+
+// ---- ORDERS ----
+function renderOrders() {
+  // Quick stats
+  const today = ordersDB.filter(o => new Date(o.ts||o.date).toDateString() === new Date().toDateString()).length;
+  const revenue = ordersDB.filter(o=>o.status==='تم التسليم').reduce((s,o)=>s+(o.total||0),0);
+  document.getElementById('quick-stats').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-label">إجمالي الطلبات</div>
+      <div class="stat-card-value">${ordersDB.length}</div>
+      <div class="stat-card-sub">منذ إطلاق الموقع</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">طلبات اليوم</div>
+      <div class="stat-card-value">${today}</div>
+      <div class="stat-card-sub">آخر 24 ساعة</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">الإيرادات</div>
+      <div class="stat-card-value">${revenue.toLocaleString('ar-EG')}</div>
+      <div class="stat-card-sub">جنيه (المُسلَّمة فقط)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">إجمالي الزيارات</div>
+      <div class="stat-card-value">${visitsDB.length}</div>
+      <div class="stat-card-sub">كل الزيارات</div>
+    </div>`;
+
+  document.getElementById('orders-badge').textContent = ordersDB.length + ' طلب';
+  const list = document.getElementById('orders-list');
+
+  if (!ordersDB.length) {
+    list.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px 0;">لا توجد طلبات بعد</p>';
+    return;
+  }
+
+  list.innerHTML = [...ordersDB].sort((a,b)=>(b.ts||0)-(a.ts||0)).map(o => {
+    const designs = Array.isArray(o.designsMeta) && o.designsMeta.length ? o.designsMeta
+      : (Array.isArray(o.designs) ? o.designs.map(n=>({name:n,quantity:1})) : [{name:o.product||'—',quantity:o.quantity||1}]);
+
+    const designChips = designs.map(d => {
+      const name = d.name || d;
+      const qty = d.quantity || 1;
+      const img = d.imageData || '';
+      return `<div class="design-chip">
+        ${img ? `<img src="${img}" alt="${name}" onerror="this.style.display='none'">` : ''}
+        <span>${name}${qty>1?' ('+qty+')':''}</span>
+      </div>`;
+    }).join('');
+
+    const mapBtn = o.mapLink
+      ? `<a class="map-btn" href="${o.mapLink}" target="_blank" rel="noopener">📍 خريطة</a>`
+      : '';
+
+    return `
+    <div class="order-card">
+      <div class="order-card-top">
+        <div>
+          <div class="order-id">${o.id}</div>
+          <div class="order-date">${o.date||''}</div>
+        </div>
+        <div class="order-total">${o.total||o.price||450} ج</div>
+      </div>
+      <div class="order-name">${o.name}</div>
+      <div class="order-phone">${o.phone}</div>
+      <div class="order-designs">${designChips}</div>
+      <div class="order-info-row">
+        <div class="order-info-item">المحافظة: <span>${o.gov||'—'}</span></div>
+        <div class="order-info-item">المدينة: <span>${o.city||'—'}</span></div>
+        <div class="order-info-item" style="grid-column:1/-1;">العنوان: <span>${o.address||'—'}</span></div>
+        <div class="order-info-item">الدفع: <span>${o.payment||'—'}</span></div>
+        <div class="order-info-item">الكمية: <span>${o.quantity||1}</span></div>
+        ${o.notes ? `<div class="order-info-item" style="grid-column:1/-1;">ملاحظات: <span>${o.notes}</span></div>` : ''}
+      </div>
+      <div class="order-actions">
+        <select class="status-select" onchange="changeOrderStatus('${o.id}', this.value)">
+          <option value="جديد" ${o.status==='جديد'?'selected':''}>🆕 جديد</option>
+          <option value="قيد التجهيز" ${o.status==='قيد التجهيز'?'selected':''}>⚙ قيد التجهيز</option>
+          <option value="تم الشحن" ${o.status==='تم الشحن'?'selected':''}>🚚 تم الشحن</option>
+          <option value="تم التسليم" ${o.status==='تم التسليم'?'selected':''}>✅ تم التسليم</option>
+          <option value="مرتجع" ${o.status==='مرتجع'?'selected':''}>❌ مرتجع</option>
+        </select>
+        ${mapBtn}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function changeOrderStatus(orderId, newStatus) {
+  const idx = ordersDB.findIndex(o => o.id === orderId);
+  if (idx === -1) return;
+  ordersDB[idx].status = newStatus;
+  localStorage.setItem('sedra_orders', JSON.stringify(ordersDB));
+  if (window.FB && window.FB.ready) await window.FB.updateOrderStatus(orderId, newStatus);
+  showToast('✅ تم تحديث الحالة: ' + newStatus);
+}
+
+async function deleteAllOrders() {
+  if (!confirm('⚠️ هل أنت متأكد؟ سيتم حذف جميع الأوردرات بشكل نهائي!')) return;
+  if (!confirm('🔥 تأكيد نهائي: حذف جميع الأوردرات؟')) return;
+  ordersDB = [];
+  localStorage.removeItem('sedra_orders');
+  if (window.FB && window.FB.ready) await window.FB.deleteAllOrders();
+  renderOrders();
+  showToast('🗑️ تم حذف جميع الأوردرات');
+}
+
+// ---- PRODUCTS ----
+let selectedImg = null;
+
+function handleImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { showToast('⚠️ اختر ملف صورة'); return; }
+  if (file.size > 10 * 1024 * 1024) { showToast('⚠️ حجم الصورة أكبر من 10MB'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const MAX_W = 600;
+      const ratio = Math.min(1, MAX_W / img.width);
+      canvas.width = Math.round(img.width * ratio);
+      canvas.height = Math.round(img.height * ratio);
+      canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+      selectedImg = canvas.toDataURL('image/jpeg', 0.75);
+      const prev = document.getElementById('product-preview');
+      prev.src = selectedImg;
+      prev.style.display = 'block';
+      showToast('✅ تم اختيار الصورة');
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function addProduct() {
+  const name = document.getElementById('new-name').value.trim();
+  const price = parseInt(document.getElementById('new-price').value) || 450;
+  const desc = document.getElementById('new-desc').value.trim();
+  const badge = document.getElementById('new-badge').value.trim();
+  if (!name) { showToast('⚠️ أدخل اسم المنتج'); return; }
+  if (!selectedImg) { showToast('⚠️ اختر صورة للمنتج'); return; }
+  if (productsDB.some(p => p.name === name)) { showToast('⚠️ المنتج موجود بالفعل'); return; }
+
+  const newP = { id: Date.now(), name, sub: desc, badge, price, imageData: selectedImg, createdAt: new Date().toISOString() };
+  productsDB.push(newP);
+  localStorage.setItem('sedra_products', JSON.stringify(productsDB));
+  if (window.FB && window.FB.ready) await window.FB.saveProduct(newP);
+  resetForm();
+  renderProducts();
+  showToast('✅ تم إضافة المنتج');
+}
+
+async function updateProduct() {
+  const id = parseInt(document.getElementById('edit-product-id').value);
+  const name = document.getElementById('new-name').value.trim();
+  const price = parseInt(document.getElementById('new-price').value) || 450;
+  const desc = document.getElementById('new-desc').value.trim();
+  const badge = document.getElementById('new-badge').value.trim();
+  if (!name) { showToast('⚠️ أدخل اسم المنتج'); return; }
+  if (!selectedImg) { showToast('⚠️ اختر صورة للمنتج'); return; }
+
+  const idx = productsDB.findIndex(p => p.id === id);
+  if (idx === -1) { showToast('⚠️ المنتج غير موجود'); return; }
+  productsDB[idx] = { ...productsDB[idx], name, sub: desc, badge, price, imageData: selectedImg };
+  localStorage.setItem('sedra_products', JSON.stringify(productsDB));
+  if (window.FB && window.FB.ready) await window.FB.saveProduct(productsDB[idx]);
+  resetForm();
+  renderProducts();
+  showToast('✅ تم تحديث المنتج');
+}
+
+function editProductAdmin(id) {
+  const p = productsDB.find(x => x.id == id);
+  if (!p) return;
+  document.getElementById('edit-product-id').value = p.id;
+  document.getElementById('new-name').value = p.name || '';
+  document.getElementById('new-price').value = p.price || 450;
+  document.getElementById('new-desc').value = p.sub || '';
+  document.getElementById('new-badge').value = p.badge || '';
+  if (p.imageData) {
+    selectedImg = p.imageData;
+    document.getElementById('product-preview').src = p.imageData;
+    document.getElementById('product-preview').style.display = 'block';
+  }
+  document.getElementById('form-title').textContent = '✏️ تعديل المنتج';
+  document.getElementById('btn-add').style.display = 'none';
+  document.getElementById('btn-update').style.display = 'block';
+  document.getElementById('btn-cancel').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  switchTab('products');
+  showToast('✏️ تعديل المنتج: ' + p.name);
+}
+
+async function toggleOOS(id) {
+  const idx = productsDB.findIndex(p => p.id == id);
+  if (idx === -1) return;
+  productsDB[idx].outOfStock = !productsDB[idx].outOfStock;
+  localStorage.setItem('sedra_products', JSON.stringify(productsDB));
+  if (window.FB && window.FB.ready) await window.FB.saveProduct(productsDB[idx]);
+  renderProducts();
+  showToast(productsDB[idx].outOfStock ? '⛔ نفذت الكمية' : '✅ تم توفير المنتج');
+}
+
+async function deleteProductAdmin(id) {
+  if (!confirm('⚠️ هل تريد حذف هذا المنتج؟')) return;
+  productsDB = productsDB.filter(p => p.id != id);
+  localStorage.setItem('sedra_products', JSON.stringify(productsDB));
+  if (window.FB && window.FB.ready) {
+    await window.FB.deleteProduct(id);
+    await window.FB.saveAllProducts(productsDB);
+  }
+  renderProducts();
+  showToast('🗑️ تم حذف المنتج');
+}
+
+function cancelEdit() {
+  resetForm();
+  showToast('تم إلغاء التعديل');
+}
+
+function resetForm() {
+  ['new-name','new-price','new-desc','new-badge'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  document.getElementById('edit-product-id').value = '';
+  document.getElementById('img-input').value = '';
+  document.getElementById('product-preview').style.display = 'none';
+  document.getElementById('form-title').textContent = '➕ إضافة منتج جديد';
+  document.getElementById('btn-add').style.display = 'block';
+  document.getElementById('btn-update').style.display = 'none';
+  document.getElementById('btn-cancel').style.display = 'none';
+  selectedImg = null;
+}
+
+function renderProducts() {
+  const grid = document.getElementById('admin-products-grid');
+  const count = document.getElementById('prod-count');
+  count.textContent = productsDB.length + ' منتج';
+  if (!productsDB.length) {
+    grid.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:30px;grid-column:1/-1;">لا توجد منتجات — أضف من النموذج أعلاه</p>';
+    return;
+  }
+  grid.innerHTML = productsDB.map(p => {
+    const oos = p.outOfStock;
+    const img = p.imageData || 'logo.png';
+    return `
+    <div class="admin-prod-card" style="${oos ? 'opacity:0.6;filter:grayscale(40%);' : ''}">
+      <img class="admin-prod-img" src="${img}" alt="${p.name}" onerror="this.src='logo.png'">
+      <div class="admin-prod-info">
+        <div class="admin-prod-name">${p.name}${oos ? ' <span style="color:#e74c3c;font-size:0.6rem;">[نفذت]</span>' : ''}</div>
+        <div class="admin-prod-price">${p.price || 450} ج</div>
+      </div>
+      <div class="admin-prod-actions">
+        <button class="btn-edit-prod" onclick="editProductAdmin(${p.id})">✏️ تعديل</button>
+        <button class="btn-oos-prod" onclick="toggleOOS(${p.id})">${oos ? '✅ توفير' : '⛔ نفذت'}</button>
+        <button class="btn-del-prod" onclick="deleteProductAdmin(${p.id})">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ---- STATS ----
+function renderStats() {
+  const today = visitsDB.filter(v => v.time && new Date(v.time).toDateString() === new Date().toDateString()).length;
+  const todayOrders = ordersDB.filter(o => new Date(o.ts||0).toDateString() === new Date().toDateString()).length;
+  const revenue = ordersDB.filter(o=>o.status==='تم التسليم').reduce((s,o)=>s+(o.total||0),0);
+
+  document.getElementById('stats-cards').innerHTML = `
+    <div class="stat-card">
+      <div class="stat-card-label">إجمالي الزيارات</div>
+      <div class="stat-card-value">${visitsDB.length}</div>
+      <div class="stat-card-sub">كل الزيارات</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">زيارات اليوم</div>
+      <div class="stat-card-value">${today}</div>
+      <div class="stat-card-sub">آخر 24 ساعة</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">طلبات اليوم</div>
+      <div class="stat-card-value">${todayOrders}</div>
+      <div class="stat-card-sub">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-label">الإيرادات الكلية</div>
+      <div class="stat-card-value">${revenue.toLocaleString()}</div>
+      <div class="stat-card-sub">جنيه (المسلَّمة)</div>
+    </div>`;
+
+  // Devices
+  const devCount = {};
+  visitsDB.forEach(v => { if (v.device) devCount[v.device] = (devCount[v.device]||0)+1; });
+  const total = visitsDB.length || 1;
+  const devHtml = Object.entries(devCount).sort((a,b)=>b[1]-a[1]).map(([d,c]) => {
+    const pct = Math.round(c/total*100);
+    return `<div class="device-bar">
+      <span class="device-label">${d}</span>
+      <div style="flex:1;background:var(--black-3);border-radius:4px;height:7px;overflow:hidden;">
+        <div class="device-bar-fill" style="width:${pct}%"></div>
+      </div>
+      <span class="device-pct">${pct}%</span>
+    </div>`;
+  }).join('') || '<p style="color:var(--text-muted);font-size:0.8rem;">لا توجد بيانات بعد</p>';
+  document.getElementById('devices-chart').innerHTML = devHtml;
+
+  // Top products
+  const prodCount = {};
+  let totalUnits = 0;
+  ordersDB.forEach(o => {
+    const list = (Array.isArray(o.designsMeta) && o.designsMeta.length)
+      ? o.designsMeta : (Array.isArray(o.designs) ? o.designs.map(n=>({name:n,quantity:1})) : []);
+    list.forEach(item => {
+      const n = item && item.name ? item.name : item;
+      const q = (item && item.quantity) || 1;
+      if (!n) return;
+      prodCount[n] = (prodCount[n]||0) + q;
+      totalUnits += q;
+    });
+  });
+  const ranked = Object.entries(prodCount).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('top-products-chart').innerHTML = ranked.length
+    ? ranked.map(([n,c]) => {
+        const pct = totalUnits ? Math.round(c/totalUnits*100) : 0;
+        return `<div class="device-bar" style="margin-bottom:8px;">
+          <span class="device-label" style="min-width:140px;font-size:0.72rem;">${n}</span>
+          <div style="flex:1;background:var(--black-3);border-radius:4px;height:7px;overflow:hidden;">
+            <div class="device-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <span class="device-pct">${c} ق</span>
+        </div>`;
+      }).join('')
+    : '<p style="color:var(--text-muted);font-size:0.8rem;">لا توجد بيانات بعد</p>';
+
+  // Cart adds
+  const cartCount = {};
+  cartAddsDB.forEach(a => { if (a && a.name) cartCount[a.name] = (cartCount[a.name]||0)+1; });
+  const totalCart = cartAddsDB.length || 1;
+  const cartRanked = Object.entries(cartCount).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('cart-adds-chart').innerHTML = cartRanked.length
+    ? `<div style="margin-bottom:10px;font-size:0.75rem;color:var(--text-muted);">إجمالي مرات الإضافة: <b style="color:var(--gold-light)">${cartAddsDB.length}</b></div>` +
+      cartRanked.map(([n,c]) => {
+        const pct = Math.round(c/totalCart*100);
+        return `<div class="device-bar" style="margin-bottom:8px;">
+          <span class="device-label" style="min-width:140px;font-size:0.72rem;">${n}</span>
+          <div style="flex:1;background:var(--black-3);border-radius:4px;height:7px;overflow:hidden;">
+            <div class="device-bar-fill" style="width:${pct}%"></div>
+          </div>
+          <span class="device-pct">${c}</span>
+        </div>`;
+      }).join('')
+    : '<p style="color:var(--text-muted);font-size:0.8rem;">لا توجد بيانات بعد</p>';
+}
+
+// ---- EXPORT ----
+async function exportExcel() {
+  const orders = ordersDB;
+  if (!orders.length) { showToast('⚠ لا توجد طلبات'); return; }
+  const headers = ['رقم الطلب','الاسم','المنتج','الكمية','السعر','الإجمالي','المحافظة','المدينة','العنوان','الهاتف','الإيميل','الدفع','ملاحظات','الحالة','التاريخ'];
+  const rows = [...orders].reverse().map(o => [
+    o.id, o.name, o.product||'', o.quantity||1, o.price||450,
+    o.total||((o.price||450)+(o.shippingFee??100)),
+    o.gov||'', o.city||'', o.address||'', o.phone, o.email||'',
+    o.payment, o.notes||'', o.status, o.date
+  ]);
+  const BOM = '\uFEFF';
+  const csv = BOM + [headers,...rows].map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'سدرة-أوردرات-' + new Date().toLocaleDateString('ar-EG').replace(/\//g,'-') + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ تم تصدير Excel');
+}
+
+function exportPDF() {
+  const orders = ordersDB;
+  if (!orders.length) { showToast('⚠ لا توجد طلبات'); return; }
+  const win = window.open('','_blank');
+  const rows = [...orders].reverse().map((o,i) => `
+    <tr style="background:${i%2===0?'#f9f9f9':'#fff'}">
+      <td>${o.id}</td><td>${o.name}</td><td>${o.product||'-'}</td>
+      <td>${o.quantity||1}</td>
+      <td>${o.price||450} ج</td>
+      <td>${o.total||((o.price||450)+(o.shippingFee??100))} ج</td>
+      <td>${o.gov||'-'}</td><td>${o.city||'-'}</td><td>${o.address||'-'}</td>
+      <td dir="ltr">${o.phone}</td><td>${o.payment}</td><td>${o.status}</td>
+      <td style="font-size:10px">${o.date}</td>
+    </tr>`).join('');
+  win.document.write(`<!DOCTYPE html><html dir="rtl"><head><meta charset="UTF-8">
+    <title>أوردرات سدرة ستور</title>
+    <style>body{font-family:Tahoma,Arial;direction:rtl;font-size:11px;margin:15px}
+    h2{color:#c9a84c;text-align:center}table{width:100%;border-collapse:collapse}
+    th{background:#c9a84c;color:#000;padding:7px 5px;border:1px solid #ddd}
+    td{padding:5px;border:1px solid #ddd}@media print{body{margin:0}}</style></head><body>
+    <h2>سدرة ستور — قائمة الأوردرات</h2>
+    <p style="text-align:center;color:#666">تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')} | إجمالي: ${orders.length}</p>
+    <table><thead><tr>
+      <th>رقم الطلب</th><th>الاسم</th><th>المنتج</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th>
+      <th>المحافظة</th><th>المدينة</th><th>العنوان</th><th>الهاتف</th><th>الدفع</th><th>الحالة</th><th>التاريخ</th>
+    </tr></thead><tbody>${rows}</tbody></table></body></html>`);
+  win.document.close();
+  win.onload = () => win.print();
+  showToast('✅ تم فتح PDF');
+}
+
+// ---- TOAST ----
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._tTimer);
+  window._tTimer = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ---- Keyboard shortcuts ----
+document.addEventListener('keydown', e => {
+  if (document.getElementById('login-screen').style.display !== 'none') {
+    if (e.key === 'Enter') doLogin();
+  }
+});
+</script>
+
+<!-- Service Worker for offline support -->
+<script>
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'sedra-admin-v1';
+    const ASSETS = ['./', './admin.html', './logo.png'];
+    self.addEventListener('install', e => {
+      e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS).catch(()=>{})));
+      self.skipWaiting();
+    });
+    self.addEventListener('activate', e => {
+      e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))));
+      self.clients.claim();
+    });
+    self.addEventListener('fetch', e => {
+      if (!e.request.url.startsWith('http')) return;
+      e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+    });
+  `;
+  const swBlob = new Blob([swCode], { type: 'application/javascript' });
+  const swURL = URL.createObjectURL(swBlob);
+  navigator.serviceWorker.register(swURL).catch(() => {});
+}
+</script>
+
+</body>
+</html>
