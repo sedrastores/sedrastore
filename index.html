@@ -4843,6 +4843,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        // ✅ Expose db and onSnapshot globally for real-time product sync
+        window.db = db;
+        window._onSnapshot = onSnapshot;
+        window._collection = collection;
 
         // ===== PRODUCTS =====
         async function fbGetProducts() {
@@ -4972,6 +4976,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 if (!loaded) {
                     saveProducts(localProducts, { syncToFirebase: true });
                 }
+            }
+            // ✅ Start real-time listener so any stock change from admin appears instantly for all users
+            if (typeof startProductsRealtimeSync === 'function') {
+                startProductsRealtimeSync();
             }
         };
 
@@ -5197,9 +5205,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                         // Price migration: if version changed or any price < 450, reset prices
                         if (storedVersion !== PRODUCTS_VERSION) {
                             // Version mismatch - merge with DEFAULT_PRODUCTS prices
+                            // ✅ CRITICAL: preserve outOfStock — only update price
                             PRODUCTS = parsed.map(p => {
                                 const def = DEFAULT_PRODUCTS.find(d => d.id === p.id || d.name === p.name);
-                                return { ...p, price: def ? def.price : 450 };
+                                return { ...p, price: def ? def.price : 450, outOfStock: p.outOfStock || false };
                             });
                             localStorage.setItem('sedra_products', JSON.stringify(PRODUCTS));
                             localStorage.setItem('sedra_products_version', PRODUCTS_VERSION);
@@ -5232,19 +5241,22 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             try {
                 const fbProducts = await window.FB.getProducts();
                 if (Array.isArray(fbProducts) && fbProducts.length > 0) {
-                    // Price migration: update any product with old price to 450
                     let needsSync = false;
                     const migratedProducts = fbProducts.map(p => {
-                        if (p.price && p.price < 450) {
+                        let updated = { ...p };
+                        // ✅ IMPORTANT: outOfStock is always read directly from Firestore — never overwritten
+                        // Price migration only: fix old prices without touching outOfStock
+                        if (updated.price && updated.price < 450) {
                             needsSync = true;
-                            return { ...p, price: 450 };
+                            updated.price = 450;
                         }
-                        if (!p.price) {
+                        if (!updated.price) {
                             needsSync = true;
-                            return { ...p, price: 450 };
+                            updated.price = 450;
                         }
-                        return p;
+                        return updated;
                     });
+                    // syncToFirebase=false so we don't overwrite Firestore with stale localStorage data
                     saveProducts(migratedProducts, { syncToFirebase: needsSync });
                     if (typeof buildProductGrid === 'function') buildProductGrid();
                     if (typeof renderAdminProducts === 'function') renderAdminProducts();
@@ -5262,6 +5274,27 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         }
 
         window.syncProductsFromFirebase = syncProductsFromFirebase;
+
+        // ✅ REAL-TIME LISTENER: Subscribe to Firestore product changes using onSnapshot
+        // This ensures all users see stock changes immediately without refreshing
+        function startProductsRealtimeSync() {
+            if (!window.db || !window._onSnapshot || !window._collection) return;
+            try {
+                window._onSnapshot(window._collection(window.db, "products"), (snap) => {
+                    if (snap.empty) return;
+                    const fbProducts = [];
+                    snap.forEach(d => fbProducts.push({ id: d.id, ...d.data() }));
+                    fbProducts.sort((a, b) => (a.createdAt || '') < (b.createdAt || '') ? -1 : 1);
+                    // ✅ Preserve outOfStock from Firestore — write to localStorage WITHOUT syncing back to Firestore
+                    saveProducts(fbProducts, { syncToFirebase: false });
+                    if (typeof buildProductGrid === 'function') buildProductGrid();
+                    if (typeof renderAdminProducts === 'function') renderAdminProducts();
+                });
+            } catch(e) {
+                console.error('startProductsRealtimeSync error:', e);
+            }
+        }
+        window.startProductsRealtimeSync = startProductsRealtimeSync;
 
         PRODUCTS = getProducts();
 
@@ -5996,6 +6029,24 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             if (!phoneToValidate || !/^[0-9]{11}$/.test(phoneToValidate)) { showToast('⚠ أدخل رقم هاتف صحيح (11 رقم)'); document.getElementById('cust-phone').focus(); return; }
             document.getElementById('cust-phone').value = phoneToValidate;
             if (!selectedProducts.length) { showToast('⚠ اختر تصميم واحد على الأقل'); document.getElementById('picker-empty-btn')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+            // ✅ Final stock check before order submission — prevents orders on out-of-stock items
+            const currentProducts = getProducts();
+            const oosItems = selectedProducts.filter(name => {
+                const p = currentProducts.find(x => x.name === name);
+                return p && p.outOfStock;
+            });
+            if (oosItems.length > 0) {
+                showToast('⛔ بعض المنتجات نفدت من المخزون: ' + oosItems.join('، '));
+                // Remove OOS items from cart
+                selectedDesigns = selectedDesigns.filter(d => {
+                    const n = typeof d === 'string' ? d : d.name;
+                    return !oosItems.includes(n);
+                });
+                syncProductPickerUI();
+                updateOrderTotalUI();
+                buildProductGrid();
+                return;
+            }
             // If GPS was used, gov/city/address are all optional
             if (!gpsUsed) {
                 if (!gov) { showToast('⚠ اختر المحافظة'); document.getElementById('gov-select').focus(); return; }
