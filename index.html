@@ -4203,7 +4203,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <div class="cd-label">ثانية</div>
                 </div>
             </div>
-            <div class="offer-badge" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"
+            <div class="offer-badge" onclick="showOffersModal()"
                 style="cursor:pointer;">الحق عروض اليوم ←</div>
             <div style="margin-top:12px; font-size:0.82rem; color:var(--text-muted);">* مصاريف الشحن 100ج لجميع
                 المحافظات
@@ -4854,6 +4854,39 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         </div>
     </div>
 
+    <!-- OFFERS QUESTION MODAL: يظهر دايماً عند الضغط على "الحق عروض اليوم" -->
+    <div id="offers-question-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.80); z-index:9000; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeOffersModal()">
+        <div style="background:var(--black-2); border:1px solid var(--border-gold-strong); border-radius:24px; width:100%; max-width:440px; padding:32px 24px 28px; box-shadow:0 -10px 60px rgba(201,168,76,0.25); position:relative;">
+            <button onclick="closeOffersModal()" style="position:absolute;top:14px;left:14px;background:var(--black-3);border:1px solid var(--border-gold);color:var(--gold-light);border-radius:50%;width:34px;height:34px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</button>
+            <div style="text-align:center;margin-bottom:20px;">
+                <div style="font-size:0.72rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px;">عروض اليوم</div>
+                <div style="font-size:1.2rem;font-weight:900;color:var(--white);margin-bottom:6px;">تحب تتصفح إيه؟</div>
+                <div style="font-size:0.85rem;color:var(--text-muted);">اختار نوع المصلاية وهنوريك أحدث العروض</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+                <a href="sponge.html" onclick="closeOffersModal()" style="display:flex;align-items:center;gap:16px;padding:18px 20px;background:rgba(201,168,76,0.08);border:1px solid var(--border-gold-strong);border-radius:16px;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.08)'">
+                    <span style="font-size:2.2rem;flex-shrink:0;">🧽</span>
+                    <div>
+                        <div style="font-size:1rem;font-weight:800;color:var(--white);">مصليات الإسفنج</div>
+                        <div style="font-size:0.78rem;color:var(--gold-light);margin-top:3px;">سماكة 2.5 سم — راحة في كل سجدة</div>
+                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:4px;">450 ج <s style="color:#666;font-weight:400;font-size:0.72rem;">600 ج</s></div>
+                    </div>
+                    <span style="margin-right:auto;color:var(--gold);font-size:1.2rem;">←</span>
+                </a>
+                <a href="memory-foam.html" onclick="closeOffersModal()" style="display:flex;align-items:center;gap:16px;padding:18px 20px;background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.05));border:1px solid var(--gold);border-radius:16px;text-decoration:none;transition:all 0.25s;position:relative;" onmouseover="this.style.background='linear-gradient(135deg,rgba(201,168,76,0.22),rgba(201,168,76,0.1))'" onmouseout="this.style.background='linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.05))'">
+                    <div style="position:absolute;top:-10px;right:16px;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.65rem;font-weight:900;padding:3px 10px;border-radius:50px;">الأكثر طلباً ⭐</div>
+                    <span style="font-size:2.2rem;flex-shrink:0;">🦵</span>
+                    <div>
+                        <div style="font-size:1rem;font-weight:800;color:var(--white);">مصلية الركبة الميموري فوم</div>
+                        <div style="font-size:0.78rem;color:var(--gold-light);margin-top:3px;">ميموري فوم طبي يحمي ركبتيك</div>
+                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:4px;">950 ج</div>
+                    </div>
+                    <span style="margin-right:auto;color:var(--gold);font-size:1.2rem;">←</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Browse More Modal: ميموري ولا اسفنج؟ -->
     <div id="browse-more-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9000; align-items:flex-end; justify-content:center; padding:0;">
         <div style="background:var(--black-2); border-top:1px solid var(--border-gold-strong); border-radius:20px 20px 0 0; width:100%; max-width:520px; padding:28px 24px 40px; box-shadow:0 -10px 40px rgba(0,0,0,0.5);">
@@ -4861,16 +4894,16 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <div style="font-size:1.1rem;font-weight:800;color:var(--white);text-align:center;margin-bottom:6px;">عايز تضيف إيه؟</div>
             <div style="font-size:0.85rem;color:var(--text-muted);text-align:center;margin-bottom:22px;">التصاميم اللي اخترتها محفوظة — اختار صنف تاني تضيفه</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
-                <a href="sponge.html" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;background:rgba(201,168,76,0.07);border:1px solid var(--border-gold-strong);border-radius:14px;color:var(--white);transition:all 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.15)'" onmouseleave="this.style.background='rgba(201,168,76,0.07)'">
+                <button onclick="navigateWithDesigns('sponge.html')" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;background:rgba(201,168,76,0.07);border:1px solid var(--border-gold-strong);border-radius:14px;color:var(--white);transition:all 0.3s;cursor:pointer;font-family:var(--font-ar);" onmouseenter="this.style.background='rgba(201,168,76,0.15)'" onmouseleave="this.style.background='rgba(201,168,76,0.07)'">
                     <span style="font-size:2rem;">🧽</span>
                     <span style="font-size:0.95rem;font-weight:800;">مصليات إسفنج</span>
                     <span style="font-size:0.75rem;color:var(--gold-light);">ناعمة 2.5 سم</span>
-                </a>
-                <a href="memory-foam.html" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;background:rgba(201,168,76,0.07);border:1px solid var(--border-gold-strong);border-radius:14px;color:var(--white);transition:all 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.15)'" onmouseleave="this.style.background='rgba(201,168,76,0.07)'">
+                </button>
+                <button onclick="navigateWithDesigns('memory-foam.html')" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;background:rgba(201,168,76,0.07);border:1px solid var(--border-gold-strong);border-radius:14px;color:var(--white);transition:all 0.3s;cursor:pointer;font-family:var(--font-ar);" onmouseenter="this.style.background='rgba(201,168,76,0.15)'" onmouseleave="this.style.background='rgba(201,168,76,0.07)'">
                     <span style="font-size:2rem;">🧠</span>
                     <span style="font-size:0.95rem;font-weight:800;">ميموري فوم</span>
                     <span style="font-size:0.75rem;color:var(--gold-light);">حماية الركبة</span>
-                </a>
+                </button>
             </div>
             <button onclick="closeBrowseMoreModal()" style="width:100%;padding:12px;background:transparent;border:1px solid rgba(201,168,76,0.3);border-radius:50px;color:var(--text-muted);font-family:var(--font-ar);font-size:0.9rem;cursor:pointer;">إلغاء</button>
         </div>
@@ -5778,6 +5811,31 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
         }
 
+        // ✅ حفظ التصاميم الحالية قبل الانتقال لصفحة تانية
+        function savePendingBeforeLeave() {
+            if (!selectedDesigns.length) return;
+            // دمج مع اللي موجود في localStorage
+            let existing = [];
+            try { existing = JSON.parse(localStorage.getItem('sedra_pending_designs') || '[]'); } catch(e) {}
+            selectedDesigns.forEach(d => {
+                const name = typeof d === 'string' ? d : d.name;
+                const qty = typeof d === 'string' ? 1 : (d.quantity || 1);
+                const idx = existing.findIndex(x => x.name === name);
+                if (idx !== -1) {
+                    existing[idx].quantity = (existing[idx].quantity || 1) + qty;
+                } else {
+                    existing.push({ name, quantity: qty });
+                }
+            });
+            localStorage.setItem('sedra_pending_designs', JSON.stringify(existing));
+        }
+
+        // انتقل لصفحة مع حفظ التصاميم
+        function navigateWithDesigns(url) {
+            savePendingBeforeLeave();
+            window.location.href = url;
+        }
+
         // لما يدوس "تصفح أكتر" في الشريط — يتسأل ميموري ولا اسفنج
         function showBrowseMoreModal() {
             const modal = document.getElementById('browse-more-modal');
@@ -5789,6 +5847,22 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         function closeBrowseMoreModal() {
             const modal = document.getElementById('browse-more-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // دايماً يسأل "إسفنج ولا ميموري فوم؟" — مش مشروط بوجود سلة
+        function showOffersModal() {
+            const modal = document.getElementById('offers-question-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        function closeOffersModal() {
+            const modal = document.getElementById('offers-question-modal');
             if (modal) {
                 modal.style.display = 'none';
                 document.body.style.overflow = '';
@@ -6142,15 +6216,34 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         // READ PRODUCT FROM CATEGORY PAGES (sponge / memory-foam)
         // ====================================================
         function readCheckoutFromSession() {
-            const raw = sessionStorage.getItem('sedra_checkout_product');
-            if (!raw) return;
-            try {
-                const p = JSON.parse(raw);
-                sessionStorage.removeItem('sedra_checkout_product'); // clear after use
+            // ✅ قراءة القائمة المتراكمة من localStorage
+            const raw = localStorage.getItem('sedra_pending_designs');
+            // للتوافق مع الكود القديم — sessionStorage
+            const rawSession = sessionStorage.getItem('sedra_checkout_product');
 
+            let newDesigns = [];
+
+            if (raw) {
+                try {
+                    const arr = JSON.parse(raw);
+                    if (Array.isArray(arr) && arr.length) newDesigns = arr;
+                } catch(e) {}
+                localStorage.removeItem('sedra_pending_designs'); // امسح بعد القراءة
+            } else if (rawSession) {
+                // fallback للكود القديم
+                try {
+                    const p = JSON.parse(rawSession);
+                    if (p && p.name) newDesigns = [p];
+                } catch(e) {}
+                sessionStorage.removeItem('sedra_checkout_product');
+            }
+
+            if (!newDesigns.length) return;
+
+            // أضف كل منتج من القائمة الجديدة على selectedDesigns الموجودة
+            let addedNames = [];
+            newDesigns.forEach(p => {
                 if (!p || !p.name) return;
-
-                // 1. Add the product to selectedDesigns
                 const qty = p.quantity || 1;
                 const existingIndex = selectedDesigns.findIndex(d =>
                     (typeof d === 'string' ? d : d.name) === p.name
@@ -6162,24 +6255,25 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 } else {
                     selectedDesigns.push({ name: p.name, quantity: qty });
                 }
+                addedNames.push(p.name);
+            });
 
-                // 2. Update UI
-                syncProductPickerUI();
-                updateOrderTotalUI();
+            // Update UI
+            syncProductPickerUI();
+            updateOrderTotalUI();
 
-                // 3. Scroll to order form smoothly
-                setTimeout(() => {
-                    const orderSection = document.getElementById('order');
-                    if (orderSection) {
-                        orderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                    // Show toast
-                    showToast('✅ تم تحميل "' + p.name + '" — أكمل بيانات طلبك');
-                }, 400);
-
-            } catch(e) {
-                console.warn('sedra_checkout_product parse error:', e);
-            }
+            // Scroll to order form
+            setTimeout(() => {
+                const orderSection = document.getElementById('order');
+                if (orderSection) {
+                    orderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                if (addedNames.length === 1) {
+                    showToast('✅ تم تحميل "' + addedNames[0] + '" — أكمل بيانات طلبك');
+                } else {
+                    showToast('✅ تم تحميل ' + addedNames.length + ' تصاميم — أكمل بيانات طلبك');
+                }
+            }, 400);
         }
 
         function buildGovernorateSelect() {
