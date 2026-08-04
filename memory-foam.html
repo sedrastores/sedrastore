@@ -159,11 +159,13 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   min-height:2.4em;
 }
+.price-row-wrap{display:flex;align-items:baseline;gap:8px;margin-top:auto;flex-wrap:wrap;}
 .product-price{
-  font-size:1.1rem;font-weight:900;margin-top:auto;
+  font-size:1.1rem;font-weight:900;
   background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
+.price-old{font-size:0.78rem;color:#ef4444;text-decoration:line-through;font-weight:700;}
 .price-note{font-size:0.65rem;color:var(--text-muted);}
 .btn-order{
   background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
@@ -615,7 +617,10 @@ function renderGrid(products) {
       </div>
       <div class="product-info">
         <div class="product-name">${p.name}</div>
-        <div class="product-price">${p.price || 950} ج</div>
+        <div class="price-row-wrap">
+          <div class="product-price">${p.price || 950} ج</div>
+          <span class="price-old">1,300 ج</span>
+        </div>
         <div class="price-note">+ 100 ج شحن لجميع المحافظات</div>
         <button class="btn-order" ${p.outOfStock ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>${p.outOfStock ? 'نفذ المخزون' : 'أضف للعربة ←'}</button>
       </div>
