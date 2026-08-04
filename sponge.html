@@ -417,7 +417,7 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
     <!-- ملخص السعر -->
     <div class="cart-summary">
       <div class="cs-row"><span>سعر المنتجات</span><span id="cs-price">—</span></div>
-      <div class="cs-row"><span>مصاريف الشحن</span><span>100 ج</span></div>
+      <div class="cs-row"><span>مصاريف الشحن</span><span>75 ج</span></div>
       <div class="cs-row total"><span>الإجمالي</span><span id="cs-total">—</span></div>
     </div>
 
@@ -509,10 +509,10 @@ function getCartTotals() {
     mat += q * p;
   });
   // bundle pricing
-  if (qty === 2) mat = 850;
-  else if (qty === 3) mat = 1200;
-  else if (qty > 3) mat = 1200 + (qty - 3) * 400;
-  return { qty, mat, total: mat + 100 };
+  
+  
+  
+  return { qty, mat, total: mat + 75 };
 }
 
 /* ---- RENDER CART MODAL ---- */
@@ -697,7 +697,7 @@ function renderGrid(products) {
           <div class="product-price">${p.price || 450} ج</div>
           <span class="price-old">600 ج</span>
         </div>
-        <div class="price-note">+ 100 ج شحن لجميع المحافظات</div>
+        <div class="price-note">+ 75 ج شحن لجميع المحافظات</div>
         <button class="btn-order" ${p.outOfStock ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>${p.outOfStock ? 'نفذ المخزون' : 'أضف للعربة ←'}</button>
       </div>
     </div>`; }).join('');
