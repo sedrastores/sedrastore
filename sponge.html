@@ -277,6 +277,29 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
 }
 .qty-val{font-size:1.1rem;font-weight:800;color:var(--gold);min-width:26px;text-align:center;}
 
+/* ====== MULTI-CART ITEMS LIST ====== */
+.cart-items-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;max-height:220px;overflow-y:auto;}
+.cart-item-row{
+  display:flex;align-items:center;gap:10px;
+  background:var(--black-3);border:1px solid var(--border-gold);
+  border-radius:var(--radius);padding:8px 10px;
+}
+.ci-img{width:44px;height:44px;border-radius:8px;object-fit:cover;border:1px solid var(--border-gold);flex-shrink:0;}
+.ci-info{flex:1;min-width:0;}
+.ci-name{font-size:0.8rem;font-weight:700;color:var(--white-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ci-price{font-size:0.75rem;color:var(--gold);margin-top:2px;}
+.ci-qty-ctrl{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.ci-qty-btn{width:26px;height:26px;border-radius:50%;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:#e8c96a;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+.ci-qty-val{font-size:0.9rem;font-weight:800;color:var(--gold);min-width:20px;text-align:center;}
+.ci-remove{background:none;border:none;color:rgba(255,80,80,0.7);font-size:0.85rem;cursor:pointer;padding:0 2px;line-height:1;transition:color 0.2s;}
+.ci-remove:hover{color:rgba(255,80,80,1);}
+.btn-add-other{
+  background:rgba(201,168,76,0.08);border:1px solid var(--border-gold-strong);
+  color:var(--gold-light);font-family:var(--font-ar);font-weight:700;font-size:0.88rem;
+  padding:11px;border-radius:50px;cursor:pointer;width:100%;transition:all 0.2s;
+}
+.btn-add-other:hover{background:rgba(201,168,76,0.18);}
+
 /* ====== FLOATING CART ICON (top-right) ====== */
 #floating-cart-icon{
   position:fixed;top:80px;left:16px;z-index:998;
@@ -316,6 +339,37 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
   </div>
 </nav>
 
+<!-- SAVED DESIGNS BANNER -->
+<div id="saved-designs-banner" style="display:none; background:linear-gradient(90deg,#0d1a0d,#1a2e1a); border-bottom:1px solid rgba(40,167,69,0.4); padding:10px 5%; font-family:'Cairo',sans-serif; direction:rtl;">
+  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:1.2rem;">🛒</span>
+      <div>
+        <div style="font-size:0.85rem;font-weight:800;color:#4ade80;" id="saved-banner-text">لديك تصاميم محفوظة</div>
+        <div style="font-size:0.75rem;color:rgba(255,255,255,0.6);">اختار تصميم إضافي وقفّل الأوردر</div>
+      </div>
+    </div>
+    <a href="index.html#order" style="background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.82rem;padding:8px 18px;border-radius:50px;text-decoration:none;white-space:nowrap;">🔒 قفل الأوردر</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var pending = [];
+  try { pending = JSON.parse(localStorage.getItem('sedra_pending_designs') || '[]'); } catch(e){}
+  if (pending.length) {
+    var banner = document.getElementById('saved-designs-banner');
+    var txt = document.getElementById('saved-banner-text');
+    if (banner) banner.style.display = 'block';
+    if (txt) {
+      var total = pending.reduce(function(s,d){ return s+(d.quantity||1); }, 0);
+      var names = pending.map(function(d){ return d.name; }).join(' + ');
+      txt.textContent = total + ' مصلاية محفوظة: ' + names;
+    }
+  }
+})();
+</script>
+
 <!-- HERO -->
 <section class="cat-hero">
   <div class="cat-hero-inner">
@@ -352,25 +406,15 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
 <div class="cart-modal" id="cart-modal">
   <div class="cart-handle"></div>
   <div class="cart-header">
-    <span class="cart-title">🛒 أُضيف للعربة</span>
+    <span class="cart-title">🛒 العربة (<span id="cart-total-count">0</span>)</span>
     <button class="cart-close" onclick="closeCart()">✕</button>
   </div>
   <div class="cart-body">
-    <div class="cart-product">
-      <img id="cart-img" src="logo.png" alt="">
-      <div class="cart-product-info">
-        <div class="cp-name" id="cart-name">—</div>
-        <div class="cp-price" id="cart-price-display">—</div>
-      </div>
-    </div>
 
-    <div class="qty-row">
-      <span class="qty-label">الكمية:</span>
-      <button class="qty-btn" onclick="changeQty(-1)">−</button>
-      <span class="qty-val" id="cart-qty-val">1</span>
-      <button class="qty-btn" onclick="changeQty(1)">+</button>
-    </div>
+    <!-- قائمة المنتجات المتعددة -->
+    <div class="cart-items-list" id="cart-items-list"></div>
 
+    <!-- ملخص السعر -->
     <div class="cart-summary">
       <div class="cs-row"><span>سعر المنتجات</span><span id="cs-price">—</span></div>
       <div class="cs-row"><span>مصاريف الشحن</span><span>100 ج</span></div>
@@ -378,9 +422,10 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
     </div>
 
     <div class="cart-actions">
-      <button class="btn-checkout" onclick="goCheckout()">✅ قفّل الأوردر</button>
+      <button class="btn-checkout" onclick="goCheckout()">🔒 قفّل الأوردر وإتمام الطلب</button>
+      <button class="btn-add-other" onclick="closeCart(); document.getElementById('products-grid').scrollIntoView({behavior:'smooth'});">🖼 أضف تصميم إسفنج آخر</button>
+      <button class="btn-add-other" onclick="goToOtherCategory()" style="border-color:rgba(100,180,255,0.4);color:#90c8ff;">🧠 أضف ميموري فوم من صنف تاني</button>
       <button class="btn-continue" onclick="closeCart()">← كمّل تسوق</button>
-      <button class="btn-continue" onclick="closeCart(); document.getElementById('products-grid').scrollIntoView({behavior:'smooth'});" style="color:var(--gold-light);border-color:var(--gold);">🖼 اختر تصميم آخر</button>
     </div>
   </div>
 </div>
@@ -419,15 +464,21 @@ window._renderGrid(window._allProducts || []);
 </script>
 
 <script>
-let selectedProduct = null;
+// ============================================================
+// MULTI-CART ENGINE — سدرة ستور (sponge.html)
+// ============================================================
 let currentFilter = 'all';
+
+// السلة المحلية لهذه الصفحة (تعرض في المودال)
+// نقرأها من localStorage عشان لو رجع من صفحة تانية تتراكم
+let _localCart = [];
+try { _localCart = JSON.parse(localStorage.getItem('sedra_pending_designs') || '[]'); } catch(e) { _localCart = []; }
 
 function showToast(msg, dur=2800) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), dur);
 }
-
 
 /* ---- LIGHTBOX ---- */
 function openLightbox(src, alt) {
@@ -443,86 +494,125 @@ function closeLightbox() {
 }
 document.addEventListener('keydown', e => { if (e.key==='Escape') { closeLightbox(); closeCart(); } });
 
-/* ---- QUANTITY ---- */
-let _cartQty = 1;
-function changeQty(delta) {
-  _cartQty = Math.max(1, Math.min(_cartQty + delta, 20));
-  const el = document.getElementById('cart-qty-val');
-  if (el) el.textContent = _cartQty;
-  refreshCartSummary();
+/* ---- SAVE CART TO LOCALSTORAGE ---- */
+function saveCart() {
+  localStorage.setItem('sedra_pending_designs', JSON.stringify(_localCart));
 }
 
-function refreshCartSummary() {
-  if (!selectedProduct) return;
-  const price = selectedProduct.price || 450;
-  const total = price * _cartQty + 100;
-  const qtyDisplay = document.getElementById('cart-qty-val');
-  if (qtyDisplay) qtyDisplay.textContent = _cartQty;
+/* ---- CALC TOTALS ---- */
+function getCartTotals() {
+  let qty = 0, mat = 0;
+  _localCart.forEach(item => {
+    const q = item.quantity || 1;
+    const p = item.price || 450;
+    qty += q;
+    mat += q * p;
+  });
+  // bundle pricing
+  if (qty === 2) mat = 850;
+  else if (qty === 3) mat = 1200;
+  else if (qty > 3) mat = 1200 + (qty - 3) * 400;
+  return { qty, mat, total: mat + 100 };
+}
+
+/* ---- RENDER CART MODAL ---- */
+function renderCartModal() {
+  const listEl = document.getElementById('cart-items-list');
+  const countEl = document.getElementById('cart-total-count');
+  const { qty, mat, total } = getCartTotals();
+
+  if (countEl) countEl.textContent = qty;
+
+  if (!listEl) return;
+  if (_localCart.length === 0) {
+    listEl.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:0.85rem;padding:16px;">العربة فارغة — اختر تصميم</div>';
+  } else {
+    listEl.innerHTML = _localCart.map((item, i) => `
+      <div class="cart-item-row">
+        <img class="ci-img" src="${item.imageData || 'logo.png'}" alt="${item.name}" onclick="openLightbox(this.src,'${item.name.replace(/'/g,"\\'")}')">
+        <div class="ci-info">
+          <div class="ci-name">${item.name}</div>
+          <div class="ci-price">${item.price || 450} ج × ${item.quantity || 1}</div>
+        </div>
+        <div class="ci-qty-ctrl">
+          <button class="ci-qty-btn" onclick="changeItemQty(${i},-1)">−</button>
+          <span class="ci-qty-val">${item.quantity || 1}</span>
+          <button class="ci-qty-btn" onclick="changeItemQty(${i},1)">+</button>
+          <button class="ci-remove" onclick="removeItem(${i})" title="حذف">🗑</button>
+        </div>
+      </div>`).join('');
+  }
+
   const priceEl = document.getElementById('cs-price');
-  if (priceEl) priceEl.textContent = (price * _cartQty) + ' ج';
+  if (priceEl) priceEl.textContent = mat + ' ج';
   const totalEl = document.getElementById('cs-total');
   if (totalEl) totalEl.textContent = total + ' ج';
-  // update price-display too
-  const cprice = document.getElementById('cart-price-display');
-  if (cprice) cprice.textContent = (price * _cartQty) + ' ج';
+
+  // Floating icon badge
+  updateCartIcon();
+}
+
+/* ---- CHANGE ITEM QTY ---- */
+function changeItemQty(index, delta) {
+  if (!_localCart[index]) return;
+  const newQty = (_localCart[index].quantity || 1) + delta;
+  if (newQty < 1) {
+    removeItem(index);
+    return;
+  }
+  _localCart[index].quantity = newQty;
+  saveCart();
+  renderCartModal();
+  updateSavedBanner();
+}
+
+/* ---- REMOVE ITEM ---- */
+function removeItem(index) {
+  _localCart.splice(index, 1);
+  saveCart();
+  renderCartModal();
+  updateSavedBanner();
+  if (_localCart.length === 0) showToast('العربة فضية — اختار تصميم');
 }
 
 /* ---- FLOATING CART ICON ---- */
 function openCartFromIcon() {
-  if (selectedProduct) {
-    document.getElementById('cart-overlay').classList.add('open');
-    document.getElementById('cart-modal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+  openCartModal();
 }
 function updateCartIcon() {
   const icon = document.getElementById('floating-cart-icon');
   const badge = document.getElementById('cart-icon-badge');
-  if (selectedProduct && icon) {
+  const { qty } = getCartTotals();
+  if (_localCart.length > 0 && icon) {
     icon.classList.add('visible');
-    if (badge) badge.textContent = _cartQty;
+    if (badge) badge.textContent = qty;
   } else if (icon) {
     icon.classList.remove('visible');
   }
 }
 
-/* ---- GO CHECKOUT (FIXED) ---- */
-function goCheckout() {
-  if (!selectedProduct) return;
-  const data = { ...selectedProduct, quantity: _cartQty };
-  sessionStorage.setItem('sedra_checkout_product', JSON.stringify(data));
-  // ✅ FIX: الـ id الصح هو #order مش #order-section
-  window.location.href = 'index.html#order';
-}
-
-/* ---- OPEN CART (patched) ---- */
-function openCart(product) {
-  selectedProduct = product;
-  _cartQty = 1;
-  const price = product.price || 450;
-
-  // Set image — clickable to zoom
-  const imgEl = document.getElementById('cart-img');
-  imgEl.src = product.imageData || 'logo.png';
-  imgEl.style.cursor = 'zoom-in';
-  imgEl.title = 'اضغط لتكبير الصورة';
-  imgEl.onclick = () => openLightbox(imgEl.src, product.name);
-
-  document.getElementById('cart-name').textContent = product.name;
-  document.getElementById('cart-price-display').textContent = price + ' ج';
-  document.getElementById('cs-price').textContent = price + ' ج';
-  document.getElementById('cs-total').textContent = (price + 100) + ' ج';
-
-  // reset qty display
-  const qv = document.getElementById('cart-qty-val');
-  if (qv) qv.textContent = '1';
-
+/* ---- OPEN CART MODAL ---- */
+function openCartModal() {
+  renderCartModal();
   document.getElementById('cart-overlay').classList.add('open');
   document.getElementById('cart-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
+}
 
-  // Show floating icon
-  updateCartIcon();
+/* ---- OPEN CART FROM PRODUCT CARD (ADD + SHOW) ---- */
+function openCart(product) {
+  // أضف للسلة (أو زوّد الكمية لو موجود)
+  const existIdx = _localCart.findIndex(d => d.name === product.name);
+  if (existIdx !== -1) {
+    _localCart[existIdx].quantity = (_localCart[existIdx].quantity || 1) + 1;
+    showToast('✅ زادت الكمية: "' + product.name + '"');
+  } else {
+    _localCart.push({ name: product.name, price: product.price || 450, quantity: 1, imageData: product.imageData || null });
+    showToast('✅ أُضيف: "' + product.name + '"');
+  }
+  saveCart();
+  updateSavedBanner();
+  openCartModal();
 }
 
 /* ---- CLOSE CART ---- */
@@ -530,14 +620,43 @@ function closeCart() {
   document.getElementById('cart-overlay').classList.remove('open');
   document.getElementById('cart-modal').classList.remove('open');
   document.body.style.overflow = '';
-  // Keep floating icon visible
   updateCartIcon();
+}
+
+/* ---- GO CHECKOUT ---- */
+function goCheckout() {
+  if (!_localCart.length) { showToast('⚠ العربة فارغة!'); return; }
+  saveCart();
+  window.location.href = 'index.html#order';
+}
+
+/* ---- GO TO OTHER CATEGORY ---- */
+function goToOtherCategory() {
+  saveCart();
+  window.location.href = 'memory-foam.html';
+}
+
+/* ---- UPDATE SAVED BANNER ---- */
+function updateSavedBanner() {
+  const banner = document.getElementById('saved-designs-banner');
+  const txt = document.getElementById('saved-banner-text');
+  if (!banner) return;
+  if (_localCart.length > 0) {
+    banner.style.display = 'block';
+    const total = _localCart.reduce((s,d) => s+(d.quantity||1), 0);
+    const names = _localCart.map(d => d.name).join(' + ');
+    if (txt) txt.textContent = total + ' مصلاية في العربة: ' + names;
+  } else {
+    banner.style.display = 'none';
+  }
 }
 
 window.openCart = openCart;
 window.closeCart = closeCart;
 window.goCheckout = goCheckout;
+window.openCartFromIcon = openCartFromIcon;
 
+/* ---- FILTER & RENDER GRID ---- */
 function filterProducts(type, btn) {
   currentFilter = type;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -559,15 +678,17 @@ function renderGrid(products) {
     return;
   }
 
-  grid.innerHTML = filtered.map(p => `
-    <div class="product-card" onclick="${p.outOfStock ? '' : 'openCart(' + JSON.stringify(p).replace(/"/g,"&quot;") + ')'}">
+  grid.innerHTML = filtered.map(p => {
+    const safeP = JSON.stringify({name:p.name,price:p.price||450,imageData:p.imageData||null}).replace(/"/g,'&quot;');
+    return `
+    <div class="product-card" onclick="${p.outOfStock ? '' : 'openCart(' + safeP + ')'}">
       ${p.outOfStock ? '<div class="oos-overlay"><span class="oos-badge">نفذ المخزون</span></div>' : ''}
       ${p.badge ? '<div class="product-badge">' + p.badge + '</div>' : ''}
       <div class="product-img-wrap">
         <img src="${p.imageData || 'logo.png'}" alt="${p.name}"
           onload="this.classList.add('ready');this.closest('.product-img-wrap').classList.add('img-loaded')"
           onerror="this.src='logo.png';this.classList.add('ready');this.closest('.product-img-wrap').classList.add('img-loaded')"
-          onclick="event.stopPropagation(); openLightbox(this.src, '${p.name}')"
+          onclick="event.stopPropagation(); openLightbox(this.src, '${p.name.replace(/'/g,"\\'")}')"
           style="cursor:zoom-in;" title="اضغط لتكبير الصورة">
       </div>
       <div class="product-info">
@@ -579,10 +700,15 @@ function renderGrid(products) {
         <div class="price-note">+ 100 ج شحن لجميع المحافظات</div>
         <button class="btn-order" ${p.outOfStock ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>${p.outOfStock ? 'نفذ المخزون' : 'أضف للعربة ←'}</button>
       </div>
-    </div>
-  `).join('');
+    </div>`; }).join('');
 }
 window._renderGrid = renderGrid;
+
+// تحديث البانر والأيكون عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+  updateSavedBanner();
+  updateCartIcon();
+});
 </script>
 
 <!-- IMAGE LIGHTBOX -->
