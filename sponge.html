@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>سدرة ستور | مصليات الإسفنج</title>
+<title>مصليات الإسفنج | سدرة ستور</title>
+<link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -13,10 +14,20 @@
   --gold:#c9a84c;--gold-light:#e8c96a;--gold-dark:#a07c30;--gold-shine:#f5e27a;
   --white:#ffffff;--white-dim:#f0ece0;--text-muted:#888880;
   --border-gold:rgba(201,168,76,0.3);--border-gold-strong:rgba(201,168,76,0.6);
+  --green:#28a745;--red:#ef4444;
   --radius:12px;--radius-lg:20px;
   --font-ar:'Cairo',sans-serif;
 }
 body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-height:100vh;direction:rtl;}
+
+/* ====== TOP ANNOUNCEMENT BAR ====== */
+.announce-bar{
+  background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-dark));
+  color:var(--black);font-size:0.78rem;font-weight:800;
+  padding:8px 16px;text-align:center;letter-spacing:0.5px;
+  overflow:hidden;white-space:nowrap;
+}
+.announce-bar marquee{display:inline-block;}
 
 /* ====== TOP NAV ====== */
 .top-nav{
@@ -26,66 +37,189 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
   backdrop-filter:blur(12px);
 }
 .top-nav-inner{
-  max-width:900px;margin:0 auto;
-  display:flex;flex-direction:column;align-items:center;
-  padding:14px 20px 0;
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;gap:16px;
 }
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-bottom:10px;}
-.nav-logo img{height:40px;}
-.nav-tabs{
-  display:flex;align-items:center;gap:0;
-  border-top:1px solid var(--border-gold);
-  width:100%;justify-content:center;
+.nav-logo img{height:38px;}
+.nav-links{display:flex;align-items:center;gap:6px;list-style:none;}
+.nav-links a{
+  color:var(--text-muted);font-size:0.85rem;font-weight:600;
+  padding:7px 14px;border-radius:50px;text-decoration:none;transition:all 0.2s;
 }
-.nav-tab{
-  text-decoration:none;color:var(--text-muted);font-size:0.88rem;font-weight:600;
-  padding:12px 22px;display:flex;align-items:center;gap:6px;
-  border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,0.05);}
+.nav-links a.active{color:var(--gold-light);font-weight:800;}
+.nav-cart-btn{
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
+  color:var(--black);font-weight:800;font-size:0.82rem;
+  padding:8px 16px;border-radius:50px;border:none;
+  cursor:pointer;font-family:var(--font-ar);display:flex;align-items:center;gap:6px;
+  white-space:nowrap;
 }
-.nav-tab:hover{color:var(--white);}
-.nav-tab.active{color:var(--gold-light);font-weight:800;border-bottom-color:var(--gold-light);}
-@media(max-width:600px){
-  .nav-tab{font-size:0.78rem;padding:10px 14px;gap:4px;}
+.nav-cart-count{
+  background:var(--black);color:var(--gold);
+  width:20px;height:20px;border-radius:50%;
+  font-size:0.72rem;font-weight:900;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+@media(max-width:640px){
+  .top-nav-inner{padding:12px 16px;}
+  .nav-links{display:none;}
+  .nav-logo img{height:32px;}
 }
 
-/* ====== HERO ====== */
-.cat-hero{
-  background:linear-gradient(160deg,var(--black-2),var(--black-3));
+/* ====== BREADCRUMB ====== */
+.breadcrumb{
+  max-width:1100px;margin:0 auto;
+  padding:12px 24px;display:flex;align-items:center;gap:6px;
+  font-size:0.78rem;color:var(--text-muted);
+}
+.breadcrumb a{color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
+.breadcrumb a:hover{color:var(--gold);}
+.breadcrumb span{color:var(--gold-light);font-weight:700;}
+@media(max-width:640px){.breadcrumb{padding:10px 16px;}}
+
+/* ====== CATEGORY HEADER ====== */
+.cat-header{
+  background:linear-gradient(160deg,var(--black-2) 0%,var(--black-3) 100%);
   border-bottom:1px solid var(--border-gold);
-  padding:36px 20px 28px;
-  text-align:center;
+  padding:36px 24px 32px;
 }
-.cat-hero-inner{max-width:720px;margin:0 auto;}
-.cat-eyebrow{font-size:0.72rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px;}
-.cat-hero h1{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;color:var(--white);line-height:1.3;margin-bottom:12px;}
-.cat-hero h1 span{
-  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light),var(--gold-shine));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+.cat-header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+.cat-icon-wrap{
+  width:80px;height:80px;border-radius:20px;flex-shrink:0;
+  background:rgba(201,168,76,0.1);border:1px solid var(--border-gold-strong);
+  display:flex;align-items:center;justify-content:center;font-size:2.5rem;
 }
-.cat-hero-desc{color:var(--white-dim);font-size:0.92rem;line-height:1.8;max-width:600px;margin:0 auto 16px;}
-.cat-feats{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:4px;}
-.cat-feat{
+.cat-info{flex:1;min-width:220px;}
+.cat-eyebrow{font-size:0.7rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:6px;}
+.cat-info h1{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:900;color:var(--white);line-height:1.2;margin-bottom:10px;}
+.cat-info h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light),var(--gold-shine));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cat-desc{color:var(--white-dim);font-size:0.9rem;line-height:1.8;margin-bottom:14px;}
+.cat-badges{display:flex;flex-wrap:wrap;gap:8px;}
+.cat-badge{
   background:rgba(201,168,76,0.1);border:1px solid var(--border-gold);
-  color:var(--gold-light);font-size:0.75rem;font-weight:700;
+  color:var(--gold-light);font-size:0.73rem;font-weight:700;
   padding:5px 14px;border-radius:50px;
 }
+.cat-stats{display:flex;gap:24px;margin-top:8px;flex-wrap:wrap;}
+.cat-stat{text-align:center;}
+.cat-stat-val{font-size:1.4rem;font-weight:900;color:var(--gold-light);}
+.cat-stat-lbl{font-size:0.7rem;color:var(--text-muted);margin-top:2px;}
+@media(max-width:600px){.cat-icon-wrap{width:60px;height:60px;font-size:1.8rem;}}
 
-/* ====== PRODUCTS AREA ====== */
-.products-section{max-width:900px;margin:0 auto;padding:28px 20px 80px;}
-.products-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
-.products-header h2{font-size:1.15rem;font-weight:900;color:var(--white);}
-.products-count{font-size:0.8rem;color:var(--text-muted);background:var(--black-2);border:1px solid var(--border-gold);padding:5px 14px;border-radius:50px;}
-.filter-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;}
+/* ====== DEALS SECTION ====== */
+.deals-section{
+  background:linear-gradient(180deg,var(--black-3),var(--black));
+  border-bottom:1px solid var(--border-gold);
+  padding:32px 24px;
+}
+.deals-inner{max-width:1100px;margin:0 auto;}
+.section-title{
+  display:flex;align-items:center;gap:10px;
+  font-size:1.1rem;font-weight:900;color:var(--white);margin-bottom:20px;
+}
+.section-title-badge{
+  background:var(--red);color:#fff;
+  font-size:0.65rem;font-weight:800;letter-spacing:1px;
+  padding:3px 8px;border-radius:4px;text-transform:uppercase;
+  animation:pulse-badge 2s infinite;
+}
+@keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:0.7}}
+
+.deals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:700px){.deals-grid{grid-template-columns:1fr;gap:12px;}}
+@media(min-width:701px) and (max-width:900px){.deals-grid{grid-template-columns:repeat(3,1fr);}}
+
+.deal-card{
+  background:var(--black-2);
+  border:1px solid var(--border-gold);
+  border-radius:var(--radius-lg);
+  padding:20px;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;
+  display:flex;flex-direction:column;gap:10px;
+}
+.deal-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(201,168,76,0.25);border-color:var(--gold);}
+.deal-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,0.05) 0%,transparent 60%);
+  pointer-events:none;
+}
+.deal-card.featured{border-color:var(--gold);background:linear-gradient(160deg,#1a1600,var(--black-2));}
+.deal-card.featured::after{
+  content:'الأكثر طلباً';
+  position:absolute;top:12px;left:12px;
+  background:var(--gold);color:var(--black);
+  font-size:0.62rem;font-weight:900;padding:3px 10px;border-radius:50px;
+  letter-spacing:0.5px;
+}
+.deal-qty-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(201,168,76,0.15);border:2px solid var(--border-gold-strong);
+  font-size:1.3rem;font-weight:900;color:var(--gold-light);flex-shrink:0;
+  margin-bottom:4px;
+}
+.deal-title{font-size:0.95rem;font-weight:800;color:var(--white);}
+.deal-desc{font-size:0.78rem;color:var(--text-muted);line-height:1.6;}
+.deal-price-block{margin-top:auto;}
+.deal-price-main{
+  font-size:1.8rem;font-weight:900;
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;
+}
+.deal-price-main span{font-size:0.85rem;font-weight:600;opacity:0.8;}
+.deal-price-detail{font-size:0.75rem;color:var(--text-muted);margin-top:4px;}
+.deal-price-old{font-size:0.78rem;color:var(--red);text-decoration:line-through;margin-top:2px;}
+.deal-saving{
+  display:inline-block;
+  background:rgba(40,167,69,0.15);border:1px solid rgba(40,167,69,0.4);
+  color:#4ade80;font-size:0.72rem;font-weight:800;
+  padding:3px 10px;border-radius:50px;margin-top:6px;
+}
+.deal-btn{
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
+  color:var(--black);font-weight:900;font-size:0.85rem;
+  padding:11px;border-radius:50px;border:none;
+  font-family:var(--font-ar);cursor:pointer;width:100%;
+  transition:transform 0.2s,box-shadow 0.2s;margin-top:8px;
+}
+.deal-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(201,168,76,0.45);}
+
+/* ====== PRODUCTS SECTION ====== */
+.products-section{max-width:1100px;margin:0 auto;padding:28px 24px 100px;}
+@media(max-width:640px){.products-section{padding:20px 16px 100px;}}
+
+.toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;gap:12px;flex-wrap:wrap;
+}
+.toolbar-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.section-h2{font-size:1.05rem;font-weight:900;color:var(--white);}
+.products-count-badge{
+  font-size:0.78rem;color:var(--text-muted);
+  background:var(--black-2);border:1px solid var(--border-gold);
+  padding:4px 12px;border-radius:50px;
+}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;}
 .filter-btn{
   background:var(--black-2);border:1px solid var(--border-gold);
-  color:var(--text-muted);font-family:var(--font-ar);font-size:0.8rem;
-  padding:7px 16px;border-radius:50px;cursor:pointer;transition:all 0.2s;
+  color:var(--text-muted);font-family:var(--font-ar);font-size:0.78rem;
+  padding:6px 14px;border-radius:50px;cursor:pointer;transition:all 0.2s;
 }
-.filter-btn.active{background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);border-color:transparent;font-weight:700;}
+.filter-btn.active{
+  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
+  color:var(--black);border-color:transparent;font-weight:700;
+}
 
 /* ====== PRODUCT GRID ====== */
 .products-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
-@media(min-width:600px){.products-grid{grid-template-columns:repeat(3,1fr);gap:18px;}}
+@media(min-width:540px){.products-grid{grid-template-columns:repeat(3,1fr);gap:16px;}}
+@media(min-width:900px){.products-grid{grid-template-columns:repeat(4,1fr);gap:18px;}}
 @media(max-width:360px){.products-grid{gap:10px;}}
 
 /* ====== PRODUCT CARD ====== */
@@ -96,11 +230,8 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
   transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s;
 }
 .product-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(201,168,76,0.22);border-color:var(--gold);}
-
 .product-img-wrap{
-  position:relative;overflow:hidden;
-  aspect-ratio:3/4;
-  background:var(--black-3);
+  position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--black-3);
 }
 .product-img-wrap::before{
   content:'';position:absolute;inset:0;
@@ -118,285 +249,242 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
 .product-badge{
   position:absolute;top:10px;right:10px;z-index:3;
   background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
-  color:var(--black);font-size:0.68rem;font-weight:800;
-  padding:4px 11px;border-radius:50px;
+  color:var(--black);font-size:0.65rem;font-weight:800;padding:4px 10px;border-radius:50px;
 }
-.product-info{flex:1;display:flex;flex-direction:column;gap:6px;padding:12px;}
+.product-info{flex:1;display:flex;flex-direction:column;gap:5px;padding:11px;}
 .product-name{
-  font-size:0.87rem;font-weight:700;color:var(--white);line-height:1.4;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  min-height:2.4em;
+  font-size:0.85rem;font-weight:700;color:var(--white);line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.4em;
 }
 .price-row-wrap{display:flex;align-items:baseline;gap:7px;margin-top:auto;}
 .product-price{
-  font-size:1.1rem;font-weight:900;
+  font-size:1.05rem;font-weight:900;
   background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.price-old{font-size:0.72rem;color:#ef4444;text-decoration:line-through;}
-.price-note{font-size:0.65rem;color:var(--text-muted);}
-.btn-order{
+.price-old{font-size:0.7rem;color:var(--red);text-decoration:line-through;}
+.price-note{font-size:0.63rem;color:var(--text-muted);}
+.btn-add-cart{
   background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
-  color:var(--black);font-weight:800;font-size:0.82rem;
+  color:var(--black);font-weight:800;font-size:0.8rem;
   padding:9px;border-radius:50px;width:100%;margin-top:8px;
   cursor:pointer;border:none;font-family:var(--font-ar);
   transition:transform 0.2s,box-shadow 0.2s;
 }
-.btn-order:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(201,168,76,0.45);}
+.btn-add-cart:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(201,168,76,0.45);}
 .oos-overlay{position:absolute;inset:0;background:rgba(10,10,10,0.65);display:flex;align-items:center;justify-content:center;z-index:4;border-radius:var(--radius-lg);}
-.oos-badge{background:#222;border:1px solid #555;color:#aaa;font-size:0.82rem;font-weight:700;padding:8px 20px;border-radius:50px;}
+.oos-badge{background:#222;border:1px solid #555;color:#aaa;font-size:0.8rem;font-weight:700;padding:7px 18px;border-radius:50px;}
 
-/* ====== MINI CART MODAL ====== */
+/* ====== MINI CART ====== */
 .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;opacity:0;pointer-events:none;transition:opacity 0.3s;}
 .cart-overlay.open{opacity:1;pointer-events:all;}
-
 .cart-modal{
   position:fixed;bottom:0;left:0;right:0;
-  background:var(--black-2);
-  border-top:1px solid var(--border-gold-strong);
-  border-radius:24px 24px 0 0;
-  z-index:1001;
-  transform:translateY(100%);
-  transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);
-  max-height:88vh;overflow-y:auto;
-  padding-bottom:env(safe-area-inset-bottom,16px);
+  background:var(--black-2);border-top:1px solid var(--border-gold-strong);
+  border-radius:24px 24px 0 0;z-index:1001;
+  transform:translateY(100%);transition:transform 0.38s cubic-bezier(0.4,0,0.2,1);
+  max-height:88vh;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,16px);
 }
 .cart-modal.open{transform:translateY(0);}
-
-.cart-handle{
-  width:40px;height:4px;border-radius:2px;
-  background:var(--border-gold-strong);
-  margin:12px auto 0;
-}
+.cart-handle{width:40px;height:4px;border-radius:2px;background:var(--border-gold-strong);margin:12px auto 0;}
 .cart-header{
-  padding:16px 20px 14px;
-  border-bottom:1px solid var(--border-gold);
+  padding:16px 20px 14px;border-bottom:1px solid var(--border-gold);
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;background:var(--black-2);z-index:2;
 }
 .cart-title{font-size:1rem;font-weight:800;color:var(--gold-light);}
-.cart-close{
-  background:none;border:1px solid var(--border-gold);color:var(--text-muted);
-  width:32px;height:32px;border-radius:50%;font-size:1rem;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-}
-
+.cart-close{background:none;border:1px solid var(--border-gold);color:var(--text-muted);width:32px;height:32px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .cart-body{padding:16px 20px;}
-
-/* Product preview */
-.cart-product{
-  background:var(--black-3);border:1px solid var(--border-gold);
-  border-radius:var(--radius);padding:12px;
-  display:flex;gap:12px;align-items:center;
-  margin-bottom:16px;
-}
-.cart-product img{width:60px;height:60px;object-fit:cover;border-radius:8px;flex-shrink:0;}
-.cart-product-info .cp-name{font-size:0.9rem;font-weight:700;color:var(--white);}
-.cart-product-info .cp-price{
-  font-size:1rem;font-weight:900;margin-top:2px;
-  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-}
-
-/* Price summary */
-.cart-summary{
-  background:var(--black-3);border:1px solid var(--border-gold);
-  border-radius:var(--radius);padding:12px 14px;margin-bottom:18px;
-}
-.cs-row{display:flex;justify-content:space-between;font-size:0.85rem;padding:3px 0;color:var(--white-dim);}
-.cs-row.total{
-  border-top:1px solid var(--border-gold);margin-top:8px;padding-top:10px;
-  font-weight:900;font-size:1rem;color:var(--gold-light);
-}
-
-/* Action buttons */
-.cart-actions{display:flex;flex-direction:column;gap:10px;}
-.btn-checkout{
-  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
-  color:var(--black);font-weight:900;font-size:1rem;
-  padding:14px;border-radius:50px;border:none;
-  font-family:var(--font-ar);cursor:pointer;width:100%;
-  transition:transform 0.2s,box-shadow 0.2s;
-}
-.btn-checkout:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,0.5);}
-.btn-continue{
-  background:none;border:1px solid var(--border-gold);
-  color:var(--text-muted);font-family:var(--font-ar);
-  font-size:0.88rem;font-weight:600;padding:11px;
-  border-radius:50px;cursor:pointer;width:100%;
-  transition:all 0.2s;
-}
-.btn-continue:hover{color:var(--white);border-color:var(--gold);}
-
-/* ====== TOAST ====== */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;border:1px solid var(--gold);color:var(--gold-light);padding:12px 24px;border-radius:50px;font-size:0.88rem;z-index:9999;opacity:0;transition:all 0.35s;white-space:nowrap;}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.empty-state{text-align:center;padding:60px 20px;color:var(--text-muted);}
-.empty-state .es-icon{font-size:3rem;margin-bottom:16px;}
-.empty-state .es-title{font-size:1rem;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
-
-/* ====== IMAGE LIGHTBOX ====== */
-#img-lightbox{
-  display:none;position:fixed;inset:0;z-index:9999;
-  background:rgba(0,0,0,0.93);backdrop-filter:blur(8px);
-  align-items:center;justify-content:center;cursor:zoom-out;padding:20px;
-}
-#img-lightbox.open{display:flex;}
-#lightbox-img{
-  max-width:90vw;max-height:88vh;object-fit:contain;
-  border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,0.8);
-  animation:lb-in .22s ease;user-select:none;
-}
-@keyframes lb-in{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-#lightbox-close{
-  position:absolute;top:16px;right:16px;
-  width:42px;height:42px;border-radius:50%;
-  background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.5);
-  color:#e8c96a;font-size:1.2rem;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-}
-#lightbox-caption{
-  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
-  color:#e8c96a;font-size:.85rem;font-weight:600;
-  background:rgba(0,0,0,.6);padding:7px 18px;border-radius:50px;
-  white-space:nowrap;max-width:80vw;overflow:hidden;text-overflow:ellipsis;
-}
-
-/* ====== CART QUANTITY CONTROLS ====== */
-.qty-row{
-  display:flex;align-items:center;gap:12px;
-  background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.25);
-  border-radius:10px;padding:10px 14px;margin-bottom:14px;
-}
-.qty-label{font-size:.85rem;color:var(--text-muted);flex:1;}
-.qty-btn{
-  width:32px;height:32px;border-radius:50%;
-  background:rgba(201,168,76,.15);border:1px solid var(--gold);
-  color:#e8c96a;font-size:1.1rem;font-weight:700;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-}
-.qty-val{font-size:1.1rem;font-weight:800;color:var(--gold);min-width:26px;text-align:center;}
-
-/* ====== MULTI-CART ITEMS LIST ====== */
 .cart-items-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;max-height:220px;overflow-y:auto;}
-.cart-item-row{
-  display:flex;align-items:center;gap:10px;
-  background:var(--black-3);border:1px solid var(--border-gold);
-  border-radius:var(--radius);padding:8px 10px;
-}
+.cart-item-row{display:flex;align-items:center;gap:10px;background:var(--black-3);border:1px solid var(--border-gold);border-radius:var(--radius);padding:8px 10px;}
 .ci-img{width:44px;height:44px;border-radius:8px;object-fit:cover;border:1px solid var(--border-gold);flex-shrink:0;}
 .ci-info{flex:1;min-width:0;}
 .ci-name{font-size:0.8rem;font-weight:700;color:var(--white-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ci-price{font-size:0.75rem;color:var(--gold);margin-top:2px;}
 .ci-qty-ctrl{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.ci-qty-btn{width:26px;height:26px;border-radius:50%;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:#e8c96a;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;}
+.ci-qty-btn{width:26px;height:26px;border-radius:50%;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:#e8c96a;font-size:0.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;}
 .ci-qty-val{font-size:0.9rem;font-weight:800;color:var(--gold);min-width:20px;text-align:center;}
-.ci-remove{background:none;border:none;color:rgba(255,80,80,0.7);font-size:0.85rem;cursor:pointer;padding:0 2px;line-height:1;transition:color 0.2s;}
+.ci-remove{background:none;border:none;color:rgba(255,80,80,0.7);font-size:0.85rem;cursor:pointer;padding:0 2px;transition:color 0.2s;}
 .ci-remove:hover{color:rgba(255,80,80,1);}
-.btn-add-other{
-  background:rgba(201,168,76,0.08);border:1px solid var(--border-gold-strong);
-  color:var(--gold-light);font-family:var(--font-ar);font-weight:700;font-size:0.88rem;
-  padding:11px;border-radius:50px;cursor:pointer;width:100%;transition:all 0.2s;
-}
-.btn-add-other:hover{background:rgba(201,168,76,0.18);}
+.cart-summary{background:var(--black-3);border:1px solid var(--border-gold);border-radius:var(--radius);padding:12px 14px;margin-bottom:18px;}
+.cs-row{display:flex;justify-content:space-between;font-size:0.85rem;padding:3px 0;color:var(--white-dim);}
+.cs-row.total{border-top:1px solid var(--border-gold);margin-top:8px;padding-top:10px;font-weight:900;font-size:1rem;color:var(--gold-light);}
+.deal-applied-note{background:rgba(40,167,69,0.1);border:1px solid rgba(40,167,69,0.3);border-radius:8px;padding:8px 12px;font-size:0.78rem;color:#4ade80;margin-bottom:12px;text-align:center;}
+.cart-actions{display:flex;flex-direction:column;gap:10px;}
+.btn-checkout{background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-weight:900;font-size:1rem;padding:14px;border-radius:50px;border:none;font-family:var(--font-ar);cursor:pointer;width:100%;transition:transform 0.2s,box-shadow 0.2s;}
+.btn-checkout:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(201,168,76,0.5);}
+.btn-secondary{background:none;border:1px solid var(--border-gold);color:var(--gold-light);font-family:var(--font-ar);font-size:0.85rem;font-weight:700;padding:11px;border-radius:50px;cursor:pointer;width:100%;transition:all 0.2s;}
+.btn-secondary:hover{background:rgba(201,168,76,0.1);}
+.btn-continue{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text-muted);font-family:var(--font-ar);font-size:0.85rem;padding:10px;border-radius:50px;cursor:pointer;width:100%;transition:all 0.2s;}
+.btn-continue:hover{color:var(--white);}
 
-/* ====== FLOATING CART ICON (top-right) ====== */
-#floating-cart-icon{
-  position:fixed;bottom:100px;left:16px;z-index:998;
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));
-  box-shadow:0 4px 20px rgba(201,168,76,.45);
-  display:none;align-items:center;justify-content:center;
-  cursor:pointer;border:none;font-size:1.4rem;
-  transition:transform .2s;
-}
+/* ====== TOAST ====== */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;border:1px solid var(--gold);color:var(--gold-light);padding:12px 24px;border-radius:50px;font-size:0.88rem;z-index:9999;opacity:0;transition:all 0.35s;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ====== LIGHTBOX ====== */
+#img-lightbox{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.93);backdrop-filter:blur(8px);align-items:center;justify-content:center;cursor:zoom-out;padding:20px;}
+#img-lightbox.open{display:flex;}
+#lightbox-img{max-width:90vw;max-height:88vh;object-fit:contain;border-radius:12px;box-shadow:0 0 60px rgba(0,0,0,0.8);animation:lb-in .22s ease;}
+@keyframes lb-in{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+#lightbox-close{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(201,168,76,.2);border:1px solid rgba(201,168,76,.5);color:#e8c96a;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+#lightbox-caption{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#e8c96a;font-size:.85rem;font-weight:600;background:rgba(0,0,0,.6);padding:7px 18px;border-radius:50px;white-space:nowrap;max-width:80vw;overflow:hidden;text-overflow:ellipsis;}
+
+/* ====== FLOATING CART ICON ====== */
+#floating-cart-icon{position:fixed;bottom:100px;left:16px;z-index:998;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));box-shadow:0 4px 20px rgba(201,168,76,.45);display:none;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:1.4rem;transition:transform .2s;}
 #floating-cart-icon.visible{display:flex;}
 #floating-cart-icon:hover{transform:scale(1.08);}
-#cart-icon-badge{
-  position:absolute;top:-4px;right:-4px;
-  background:#e8c96a;color:#0a0a0a;
-  font-size:.65rem;font-weight:900;
-  width:20px;height:20px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  border:2px solid var(--black);
-}
+#cart-icon-badge{position:absolute;top:-4px;right:-4px;background:#e8c96a;color:#0a0a0a;font-size:.65rem;font-weight:900;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--black);}
 
+/* ====== SAVED BANNER ====== */
+#saved-designs-banner{display:none;background:linear-gradient(90deg,#0d1a0d,#1a2e1a);border-bottom:1px solid rgba(40,167,69,0.4);padding:10px 20px;}
+.saved-banner-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.saved-banner-text{font-size:0.85rem;font-weight:800;color:#4ade80;}
+.saved-banner-sub{font-size:0.75rem;color:rgba(255,255,255,0.6);}
+.btn-lock-order{background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-family:var(--font-ar);font-weight:800;font-size:0.82rem;padding:8px 18px;border-radius:50px;text-decoration:none;white-space:nowrap;border:none;cursor:pointer;}
+
+/* ====== EMPTY STATE ====== */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text-muted);grid-column:1/-1;}
+.empty-state .es-icon{font-size:3rem;margin-bottom:16px;}
+.empty-state .es-title{font-size:1rem;color:var(--gold-light);font-weight:700;margin-bottom:8px;}
+
+/* ====== FOOTER ====== */
+.cat-footer{background:var(--black-2);border-top:1px solid var(--border-gold);padding:24px;text-align:center;}
+.cat-footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:12px;}
+.cat-footer-links a{color:var(--text-muted);text-decoration:none;font-size:0.82rem;transition:color 0.2s;}
+.cat-footer-links a:hover{color:var(--gold);}
+.cat-footer-copy{font-size:0.75rem;color:var(--text-muted);}
 </style>
 </head>
 <body>
 
+<!-- ANNOUNCEMENT BAR -->
+<div class="announce-bar">
+  <marquee behavior="scroll" direction="right" scrollamount="4">
+    🚚 توصيل لجميع محافظات مصر بـ 75 جنيه فقط &nbsp;&nbsp;✨ عرض التلاتة مصليات بـ 1000 جنيه + الشحن &nbsp;&nbsp;🧽 أجود خامات إسفنج عالية الجودة &nbsp;&nbsp;🔒 دفع عند الاستلام متاح &nbsp;&nbsp;
+  </marquee>
+</div>
+
 <!-- TOP NAV -->
 <nav class="top-nav">
   <div class="top-nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="logo.png" alt="سدرة ستور">
-    </a>
-    <div class="nav-tabs">
-      <a href="index.html" class="nav-tab">🏠 الرئيسية</a>
-      <a href="sponge.html" class="nav-tab active">🧽 مصليات الإسفنج</a>
-      <a href="memory-foam.html" class="nav-tab">🧠 مصلية الميموري فوم</a>
-    </div>
+    <a href="index.html" class="nav-logo"><img src="logo.png" alt="سدرة ستور"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">🏠 الرئيسية</a></li>
+      <li><a href="sponge.html" class="active">🧽 مصليات الإسفنج</a></li>
+      <li><a href="memory-foam.html">🧠 ميموري فوم</a></li>
+    </ul>
+    <button class="nav-cart-btn" onclick="openCartModal()">
+      🛒 السلة
+      <span class="nav-cart-count" id="nav-cart-count">0</span>
+    </button>
   </div>
 </nav>
 
 <!-- SAVED DESIGNS BANNER -->
-<div id="saved-designs-banner" style="display:none; background:linear-gradient(90deg,#0d1a0d,#1a2e1a); border-bottom:1px solid rgba(40,167,69,0.4); padding:10px 5%; font-family:'Cairo',sans-serif; direction:rtl;">
-  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:1.2rem;">🛒</span>
-      <div>
-        <div style="font-size:0.85rem;font-weight:800;color:#4ade80;" id="saved-banner-text">لديك تصاميم محفوظة</div>
-        <div style="font-size:0.75rem;color:rgba(255,255,255,0.6);">اختار تصميم إضافي وقفّل الأوردر</div>
-      </div>
+<div id="saved-designs-banner">
+  <div class="saved-banner-inner">
+    <div>
+      <div class="saved-banner-text" id="saved-banner-text">لديك مصليات في العربة</div>
+      <div class="saved-banner-sub">اختار تصميم إضافي أو قفّل الأوردر</div>
     </div>
-    <a href="index.html#order" style="background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-family:'Cairo',sans-serif;font-weight:800;font-size:0.82rem;padding:8px 18px;border-radius:50px;text-decoration:none;white-space:nowrap;">🔒 قفل الأوردر</a>
+    <button class="btn-lock-order" onclick="goCheckout()">🔒 قفّل الأوردر</button>
   </div>
 </div>
 
-<script>
-(function(){
-  var pending = [];
-  try { pending = JSON.parse(localStorage.getItem('sedra_pending_designs') || '[]'); } catch(e){}
-  if (pending.length) {
-    var banner = document.getElementById('saved-designs-banner');
-    var txt = document.getElementById('saved-banner-text');
-    if (banner) banner.style.display = 'block';
-    if (txt) {
-      var total = pending.reduce(function(s,d){ return s+(d.quantity||1); }, 0);
-      var names = pending.map(function(d){ return d.name; }).join(' + ');
-      txt.textContent = total + ' مصلاية محفوظة: ' + names;
-    }
-  }
-})();
-</script>
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">الرئيسية</a>
+  <span>›</span>
+  <span>مصليات الإسفنج</span>
+</div>
 
-<!-- HERO -->
-<section class="cat-hero">
-  <div class="cat-hero-inner">
-    <div class="cat-eyebrow">مجموعة الإسفنج</div>
-    <h1>مصليات <span>الإسفنج</span></h1>
-    <p class="cat-hero-desc">
-      تصاميم راقية وألوان فاخرة — مصليات إسفنج عالية الجودة بأسعار منافسة، مع توصيل لجميع المحافظات.
-    </p>
-    <div class="cat-feats">
-      <span class="cat-feat">✓ إسفنج عالي الجودة</span>
-      <span class="cat-feat">✓ ظهر مانع للانزلاق</span>
-      <span class="cat-feat">✓ تصاميم متنوعة</span>
-      <span class="cat-feat">✓ توصيل لكل مصر</span>
+<!-- CATEGORY HEADER -->
+<div class="cat-header">
+  <div class="cat-header-inner">
+    <div class="cat-icon-wrap">🧽</div>
+    <div class="cat-info">
+      <div class="cat-eyebrow">مجموعة الإسفنج</div>
+      <h1>مصليات <em>الإسفنج</em></h1>
+      <p class="cat-desc">تصاميم راقية بخامات إسفنج عالية الجودة — سطح مانع للانزلاق، ألوان ثابتة، وتوصيل سريع لكل مصر.</p>
+      <div class="cat-badges">
+        <span class="cat-badge">✓ إسفنج 2.5 سم ناعم</span>
+        <span class="cat-badge">✓ مانع الانزلاق</span>
+        <span class="cat-badge">✓ تصاميم إسلامية</span>
+        <span class="cat-badge">✓ توصيل لكل مصر</span>
+        <span class="cat-badge">✓ دفع عند الاستلام</span>
+      </div>
     </div>
   </div>
-</section>
+</div>
+
+<!-- DEALS SECTION -->
+<div class="deals-section">
+  <div class="deals-inner">
+    <div class="section-title">
+      🔥 عروض الكمية
+      <span class="section-title-badge">وفّر أكتر</span>
+    </div>
+    <div class="deals-grid">
+
+      <!-- Deal 1: واحدة -->
+      <div class="deal-card" onclick="scrollToProducts()">
+        <div class="deal-qty-badge">1</div>
+        <div class="deal-title">مصلية واحدة</div>
+        <div class="deal-desc">اختار أي تصميم يعجبك من التشكيلة</div>
+        <div class="deal-price-block">
+          <div class="deal-price-main">395 <span>ج</span></div>
+          <div class="deal-price-detail">+ 75 ج شحن = <strong>470 ج إجمالي</strong></div>
+          <div class="deal-price-old">سعر قديم: 450 ج</div>
+          <span class="deal-saving">💰 وفّرت 55 ج</span>
+        </div>
+        <button class="deal-btn" onclick="event.stopPropagation(); scrollToProducts()">اختار تصميمك ←</button>
+      </div>
+
+      <!-- Deal 2: اتنين -->
+      <div class="deal-card featured" onclick="applyDeal(2)">
+        <div class="deal-qty-badge">2</div>
+        <div class="deal-title">مصليتين معاً</div>
+        <div class="deal-desc">اختار أي تصميمين من التشكيلة</div>
+        <div class="deal-price-block">
+          <div class="deal-price-main">750 <span>ج</span></div>
+          <div class="deal-price-detail">+ 75 ج شحن = <strong>825 ج إجمالي</strong></div>
+          <div class="deal-price-old">بدل: 790 ج</div>
+          <span class="deal-saving">💰 وفّرت 40 ج</span>
+        </div>
+        <button class="deal-btn" onclick="event.stopPropagation(); applyDeal(2)">اطلب العرض ←</button>
+      </div>
+
+      <!-- Deal 3: تلاتة -->
+      <div class="deal-card" onclick="applyDeal(3)">
+        <div class="deal-qty-badge">3</div>
+        <div class="deal-title">تلات مصليات</div>
+        <div class="deal-desc">أفضل قيمة — هدية أو للعيلة</div>
+        <div class="deal-price-block">
+          <div class="deal-price-main">1000 <span>ج</span></div>
+          <div class="deal-price-detail">+ 75 ج شحن = <strong>1075 ج إجمالي</strong></div>
+          <div class="deal-price-old">بدل: 1185 ج</div>
+          <span class="deal-saving">💰 وفّرت 185 ج</span>
+        </div>
+        <button class="deal-btn" onclick="event.stopPropagation(); applyDeal(3)">اطلب العرض ←</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- PRODUCTS -->
-<section class="products-section">
-  <div class="products-header">
-    <h2>🧽 المنتجات المتاحة</h2>
-    <span class="products-count" id="products-count">جاري التحميل...</span>
-  </div>
-  <div class="filter-row">
-    <button class="filter-btn active" onclick="filterProducts('all',this)">الكل</button>
-    <button class="filter-btn" onclick="filterProducts('available',this)">✅ المتاحة</button>
-    <button class="filter-btn" onclick="filterProducts('oos',this)">⏳ نفذت</button>
+<section class="products-section" id="products">
+  <div class="toolbar">
+    <div class="toolbar-right">
+      <h2 class="section-h2">🧽 كل التصاميم</h2>
+      <span class="products-count-badge" id="products-count">جاري التحميل...</span>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterProducts('all',this)">الكل</button>
+      <button class="filter-btn" onclick="filterProducts('available',this)">✅ المتاحة</button>
+      <button class="filter-btn" onclick="filterProducts('oos',this)">⏳ نفذت</button>
+    </div>
   </div>
   <div class="products-grid" id="products-grid"></div>
 </section>
@@ -410,25 +498,32 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
     <button class="cart-close" onclick="closeCart()">✕</button>
   </div>
   <div class="cart-body">
-
-    <!-- قائمة المنتجات المتعددة -->
     <div class="cart-items-list" id="cart-items-list"></div>
-
-    <!-- ملخص السعر -->
+    <div class="deal-applied-note" id="deal-note" style="display:none;"></div>
     <div class="cart-summary">
       <div class="cs-row"><span>سعر المنتجات</span><span id="cs-price">—</span></div>
       <div class="cs-row"><span>مصاريف الشحن</span><span>75 ج</span></div>
       <div class="cs-row total"><span>الإجمالي</span><span id="cs-total">—</span></div>
     </div>
-
     <div class="cart-actions">
       <button class="btn-checkout" onclick="goCheckout()">🔒 قفّل الأوردر وإتمام الطلب</button>
-      <button class="btn-add-other" onclick="closeCart(); document.getElementById('products-grid').scrollIntoView({behavior:'smooth'});">🖼 أضف تصميم إسفنج آخر</button>
-      <button class="btn-add-other" onclick="goToOtherCategory()" style="border-color:rgba(100,180,255,0.4);color:#90c8ff;">🧠 أضف ميموري فوم من صنف تاني</button>
+      <button class="btn-secondary" onclick="closeCart(); document.getElementById('products').scrollIntoView({behavior:'smooth'});">🖼 أضف تصميم إسفنج آخر</button>
+      <button class="btn-secondary" onclick="goToOtherCategory()" style="border-color:rgba(100,180,255,0.3);color:#90c8ff;">🧠 أضف ميموري فوم</button>
       <button class="btn-continue" onclick="closeCart()">← كمّل تسوق</button>
     </div>
   </div>
 </div>
+
+<!-- FOOTER -->
+<footer class="cat-footer">
+  <div class="cat-footer-links">
+    <a href="index.html">الرئيسية</a>
+    <a href="sponge.html">مصليات الإسفنج</a>
+    <a href="memory-foam.html">مصليات الميموري فوم</a>
+    <a href="index.html#about">من نحن</a>
+  </div>
+  <div class="cat-footer-copy">© 2025 سدرة ستور — جميع الحقوق محفوظة</div>
+</footer>
 
 <div class="toast" id="toast"></div>
 
@@ -436,7 +531,6 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyDdNmWIFS_GomYF2ODJifqWwg1sgQFjoNo",
   authDomain: "sedra-store.firebaseapp.com",
@@ -447,10 +541,6 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-window._db = db;
-window._collection = collection;
-window._getDocs = getDocs;
-
 try {
   const snap = await getDocs(collection(db, "products"));
   const all = [];
@@ -459,28 +549,46 @@ try {
 } catch(e) {
   try { window._allProducts = JSON.parse(localStorage.getItem('sedra_products') || '[]'); } catch(_){}
 }
-
 window._renderGrid(window._allProducts || []);
 </script>
 
+<!-- LIGHTBOX -->
+<div id="img-lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
+  <div id="lightbox-caption"></div>
+</div>
+
+<!-- FLOATING CART ICON -->
+<button id="floating-cart-icon" onclick="openCartModal()" title="السلة">
+  🛒
+  <span id="cart-icon-badge">0</span>
+</button>
+
 <script>
 // ============================================================
-// MULTI-CART ENGINE — سدرة ستور (sponge.html)
+// CART ENGINE — sponge.html
 // ============================================================
-let currentFilter = 'all';
+const SPONGE_BASE_PRICE = 395;
+const SHIPPING_FEE = 75;
 
-// السلة المحلية لهذه الصفحة (تعرض في المودال)
-// نقرأها من localStorage عشان لو رجع من صفحة تانية تتراكم
+// Deal pricing
+const DEAL_PRICES = { 1: null, 2: 750, 3: 1000 };
+
+let currentFilter = 'all';
+let _activeDeal = null; // null | 2 | 3
+
 let _localCart = [];
 try { _localCart = JSON.parse(localStorage.getItem('sedra_pending_designs') || '[]'); } catch(e) { _localCart = []; }
 
+// ---- TOAST ----
 function showToast(msg, dur=2800) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), dur);
 }
 
-/* ---- LIGHTBOX ---- */
+// ---- LIGHTBOX ----
 function openLightbox(src, alt) {
   document.getElementById('lightbox-img').src = src;
   document.getElementById('lightbox-caption').textContent = alt || '';
@@ -494,45 +602,58 @@ function closeLightbox() {
 }
 document.addEventListener('keydown', e => { if (e.key==='Escape') { closeLightbox(); closeCart(); } });
 
-/* ---- SAVE CART TO LOCALSTORAGE ---- */
+// ---- SCROLL TO PRODUCTS ----
+function scrollToProducts() {
+  document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ---- APPLY DEAL ----
+function applyDeal(qty) {
+  _activeDeal = qty;
+  showToast('🎉 عرض الـ' + qty + ' مصليات محفوظ — اختار تصاميمك!');
+  scrollToProducts();
+}
+
+// ---- SAVE CART ----
 function saveCart() {
   localStorage.setItem('sedra_pending_designs', JSON.stringify(_localCart));
 }
 
-/* ---- CALC TOTALS ---- */
+// ---- CALC TOTALS ----
 function getCartTotals() {
   let qty = 0, mat = 0;
   _localCart.forEach(item => {
     const q = item.quantity || 1;
-    const p = item.price || 450;
     qty += q;
-    mat += q * p;
+    mat += q * (item.price || SPONGE_BASE_PRICE);
   });
-  // bundle pricing
-  
-  
-  
-  return { qty, mat, total: mat + 75 };
+  // Apply deal pricing if eligible
+  let dealApplied = null;
+  if (_activeDeal === 3 && qty >= 3) { mat = DEAL_PRICES[3] + (qty - 3) * SPONGE_BASE_PRICE; dealApplied = 3; }
+  else if (_activeDeal === 2 && qty >= 2) { mat = DEAL_PRICES[2] + (qty - 2) * SPONGE_BASE_PRICE; dealApplied = 2; }
+  return { qty, mat, total: mat + SHIPPING_FEE, dealApplied };
 }
 
-/* ---- RENDER CART MODAL ---- */
+// ---- RENDER CART ----
 function renderCartModal() {
   const listEl = document.getElementById('cart-items-list');
   const countEl = document.getElementById('cart-total-count');
-  const { qty, mat, total } = getCartTotals();
+  const navCount = document.getElementById('nav-cart-count');
+  const { qty, mat, total, dealApplied } = getCartTotals();
 
   if (countEl) countEl.textContent = qty;
+  if (navCount) navCount.textContent = qty;
 
   if (!listEl) return;
   if (_localCart.length === 0) {
-    listEl.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:0.85rem;padding:16px;">العربة فارغة — اختر تصميم</div>';
+    listEl.innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:0.85rem;padding:16px;">العربة فارغة — اختار تصميم</div>';
   } else {
     listEl.innerHTML = _localCart.map((item, i) => `
       <div class="cart-item-row">
         <img class="ci-img" src="${item.imageData || 'logo.png'}" alt="${item.name}" onclick="openLightbox(this.src,'${item.name.replace(/'/g,"\\'")}')">
         <div class="ci-info">
           <div class="ci-name">${item.name}</div>
-          <div class="ci-price">${item.price || 450} ج × ${item.quantity || 1}</div>
+          <div class="ci-price">${item.price || SPONGE_BASE_PRICE} ج × ${item.quantity || 1}</div>
         </div>
         <div class="ci-qty-ctrl">
           <button class="ci-qty-btn" onclick="changeItemQty(${i},-1)">−</button>
@@ -543,55 +664,37 @@ function renderCartModal() {
       </div>`).join('');
   }
 
+  // Deal note
+  const dealNote = document.getElementById('deal-note');
+  if (dealApplied && dealNote) {
+    dealNote.style.display = 'block';
+    dealNote.textContent = '🎉 عرض الـ' + dealApplied + ' مصليات مطبّق — وفّرت فلوس!';
+  } else if (dealNote) {
+    dealNote.style.display = 'none';
+  }
+
   const priceEl = document.getElementById('cs-price');
   if (priceEl) priceEl.textContent = mat + ' ج';
   const totalEl = document.getElementById('cs-total');
   if (totalEl) totalEl.textContent = total + ' ج';
 
-  // Floating icon badge
   updateCartIcon();
 }
 
-/* ---- CHANGE ITEM QTY ---- */
 function changeItemQty(index, delta) {
   if (!_localCart[index]) return;
   const newQty = (_localCart[index].quantity || 1) + delta;
-  if (newQty < 1) {
-    removeItem(index);
-    return;
-  }
+  if (newQty < 1) { removeItem(index); return; }
   _localCart[index].quantity = newQty;
-  saveCart();
-  renderCartModal();
-  updateSavedBanner();
+  saveCart(); renderCartModal(); updateSavedBanner();
 }
 
-/* ---- REMOVE ITEM ---- */
 function removeItem(index) {
   _localCart.splice(index, 1);
-  saveCart();
-  renderCartModal();
-  updateSavedBanner();
+  saveCart(); renderCartModal(); updateSavedBanner();
   if (_localCart.length === 0) showToast('العربة فضية — اختار تصميم');
 }
 
-/* ---- FLOATING CART ICON ---- */
-function openCartFromIcon() {
-  openCartModal();
-}
-function updateCartIcon() {
-  const icon = document.getElementById('floating-cart-icon');
-  const badge = document.getElementById('cart-icon-badge');
-  const { qty } = getCartTotals();
-  if (_localCart.length > 0 && icon) {
-    icon.classList.add('visible');
-    if (badge) badge.textContent = qty;
-  } else if (icon) {
-    icon.classList.remove('visible');
-  }
-}
-
-/* ---- OPEN CART MODAL ---- */
 function openCartModal() {
   renderCartModal();
   document.getElementById('cart-overlay').classList.add('open');
@@ -599,23 +702,18 @@ function openCartModal() {
   document.body.style.overflow = 'hidden';
 }
 
-/* ---- OPEN CART FROM PRODUCT CARD (ADD + SHOW) ---- */
 function openCart(product) {
-  // أضف للسلة (أو زوّد الكمية لو موجود)
   const existIdx = _localCart.findIndex(d => d.name === product.name);
   if (existIdx !== -1) {
     _localCart[existIdx].quantity = (_localCart[existIdx].quantity || 1) + 1;
     showToast('✅ زادت الكمية: "' + product.name + '"');
   } else {
-    _localCart.push({ name: product.name, price: product.price || 450, quantity: 1, imageData: product.imageData || null });
+    _localCart.push({ name: product.name, price: product.price || SPONGE_BASE_PRICE, quantity: 1, imageData: product.imageData || null });
     showToast('✅ أُضيف: "' + product.name + '"');
   }
-  saveCart();
-  updateSavedBanner();
-  openCartModal();
+  saveCart(); updateSavedBanner(); openCartModal();
 }
 
-/* ---- CLOSE CART ---- */
 function closeCart() {
   document.getElementById('cart-overlay').classList.remove('open');
   document.getElementById('cart-modal').classList.remove('open');
@@ -623,20 +721,33 @@ function closeCart() {
   updateCartIcon();
 }
 
-/* ---- GO CHECKOUT ---- */
 function goCheckout() {
   if (!_localCart.length) { showToast('⚠ العربة فارغة!'); return; }
+  // Pass deal info to index
+  if (_activeDeal) localStorage.setItem('sedra_active_deal', JSON.stringify({ type: 'sponge', qty: _activeDeal, price: DEAL_PRICES[_activeDeal] }));
   saveCart();
   window.location.href = 'index.html#order';
 }
 
-/* ---- GO TO OTHER CATEGORY ---- */
 function goToOtherCategory() {
   saveCart();
   window.location.href = 'memory-foam.html';
 }
 
-/* ---- UPDATE SAVED BANNER ---- */
+function updateCartIcon() {
+  const icon = document.getElementById('floating-cart-icon');
+  const badge = document.getElementById('cart-icon-badge');
+  const navCount = document.getElementById('nav-cart-count');
+  const { qty } = getCartTotals();
+  if (_localCart.length > 0 && icon) {
+    icon.classList.add('visible');
+    if (badge) badge.textContent = qty;
+  } else if (icon) {
+    icon.classList.remove('visible');
+  }
+  if (navCount) navCount.textContent = qty;
+}
+
 function updateSavedBanner() {
   const banner = document.getElementById('saved-designs-banner');
   const txt = document.getElementById('saved-banner-text');
@@ -651,19 +762,13 @@ function updateSavedBanner() {
   }
 }
 
-window.openCart = openCart;
-window.closeCart = closeCart;
-window.goCheckout = goCheckout;
-window.openCartFromIcon = openCartFromIcon;
-
-/* ---- FILTER & RENDER GRID ---- */
+// ---- FILTER & RENDER GRID ----
 function filterProducts(type, btn) {
   currentFilter = type;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   renderGrid(window._allProducts || []);
 }
-window.filterProducts = filterProducts;
 
 function renderGrid(products) {
   const grid = document.getElementById('products-grid');
@@ -674,55 +779,58 @@ function renderGrid(products) {
   document.getElementById('products-count').textContent = filtered.length + ' منتج';
 
   if (!filtered.length) {
-    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🕌</div><div class="es-title">لا توجد منتجات</div><p>لا توجد منتجات في هذا القسم حالياً</p></div>';
+    grid.innerHTML = '<div class="empty-state"><div class="es-icon">🕌</div><div class="es-title">لا توجد منتجات</div><p>لا توجد منتجات في هذا القسم حالياً</p></div>';
     return;
   }
 
   grid.innerHTML = filtered.map(p => {
-    const safeP = JSON.stringify({name:p.name,price:p.price||450,imageData:p.imageData||null}).replace(/"/g,'&quot;');
+    const price = p.price || SPONGE_BASE_PRICE;
+    const safeP = JSON.stringify({name:p.name, price, imageData:p.imageData||null}).replace(/"/g,'&quot;');
+    const oos = p.outOfStock;
     return `
-    <div class="product-card" onclick="${p.outOfStock ? '' : 'openCart(' + safeP + ')'}">
-      ${p.outOfStock ? '<div class="oos-overlay"><span class="oos-badge">نفذ المخزون</span></div>' : ''}
+    <div class="product-card" onclick="${oos ? '' : 'openCart(' + safeP + ')'}">
+      ${oos ? '<div class="oos-overlay"><span class="oos-badge">نفذ المخزون</span></div>' : ''}
       ${p.badge ? '<div class="product-badge">' + p.badge + '</div>' : ''}
       <div class="product-img-wrap">
         <img src="${p.imageData || 'logo.png'}" alt="${p.name}"
           onload="this.classList.add('ready');this.closest('.product-img-wrap').classList.add('img-loaded')"
           onerror="this.src='logo.png';this.classList.add('ready');this.closest('.product-img-wrap').classList.add('img-loaded')"
-          onclick="event.stopPropagation(); openLightbox(this.src, '${p.name.replace(/'/g,"\\'")}')"
+          onclick="event.stopPropagation(); openLightbox(this.src, '${p.name.replace(/'/g,"\\'")}') "
           style="cursor:zoom-in;" title="اضغط لتكبير الصورة">
       </div>
       <div class="product-info">
         <div class="product-name">${p.name}</div>
         <div class="price-row-wrap">
-          <div class="product-price">${p.price || 450} ج</div>
-          <span class="price-old">600 ج</span>
+          <div class="product-price">${price} ج</div>
+          <span class="price-old">450 ج</span>
         </div>
         <div class="price-note">+ 75 ج شحن لجميع المحافظات</div>
-        <button class="btn-order" ${p.outOfStock ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>${p.outOfStock ? 'نفذ المخزون' : 'أضف للعربة ←'}</button>
+        <button class="btn-add-cart" ${oos ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+          ${oos ? 'نفذ المخزون' : '+ أضف للعربة'}
+        </button>
       </div>
-    </div>`; }).join('');
+    </div>`;
+  }).join('');
 }
-window._renderGrid = renderGrid;
 
-// تحديث البانر والأيكون عند تحميل الصفحة
+window._renderGrid = renderGrid;
+window.filterProducts = filterProducts;
+window.openCart = openCart;
+window.closeCart = closeCart;
+window.openCartModal = openCartModal;
+window.goCheckout = goCheckout;
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
+window.scrollToProducts = scrollToProducts;
+window.applyDeal = applyDeal;
+window.changeItemQty = changeItemQty;
+window.removeItem = removeItem;
+
 document.addEventListener('DOMContentLoaded', function() {
   updateSavedBanner();
   updateCartIcon();
 });
 </script>
-
-<!-- IMAGE LIGHTBOX -->
-<div id="img-lightbox" onclick="closeLightbox()">
-  <button id="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()">
-  <div id="lightbox-caption"></div>
-</div>
-
-<!-- FLOATING CART ICON -->
-<button id="floating-cart-icon" onclick="openCartFromIcon()" title="السلة">
-  🛒
-  <span id="cart-icon-badge">0</span>
-</button>
 
 </body>
 </html>
