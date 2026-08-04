@@ -424,7 +424,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             position: relative;
             overflow: hidden;
             background: var(--black);
-            padding-top: 104px;
+            padding-top: 136px;
             padding-bottom: 20px;
         }
 
@@ -1310,6 +1310,99 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         .modal-info-imgs img:hover {
             transform: scale(1.05);
             border-color: var(--gold);
+        }
+
+        /* --- Other type inline question in order form --- */
+        .form-other-type-box {
+            display: none;
+            margin-top: 12px;
+            padding: 14px 16px;
+            border: 1px solid rgba(201,168,76,0.3);
+            border-radius: 14px;
+            background: rgba(201,168,76,0.05);
+            animation: fadeInUp 0.3s ease;
+        }
+        .form-other-type-box.visible {
+            display: block;
+        }
+        .form-other-type-label {
+            font-size: 0.88rem;
+            color: var(--gold-light);
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .form-other-type-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .form-other-type-btns a {
+            flex: 1;
+            display: block;
+            text-align: center;
+            padding: 11px 10px;
+            border-radius: 50px;
+            font-family: var(--font-ar);
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: var(--transition);
+            line-height: 1.4;
+        }
+        .form-other-type-btns a.sponge-btn {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+            color: var(--black);
+        }
+        .form-other-type-btns a.memory-btn {
+            background: var(--black-3);
+            border: 1px solid var(--border-gold-strong);
+            color: var(--gold-light);
+        }
+        .form-other-type-btns a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(201,168,76,0.25);
+        }
+
+        /* --- Other type selector inside product modal --- */
+        .modal-other-type-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+            margin-bottom: 4px;
+        }
+        .modal-type-btn {
+            flex: 1;
+            padding: 11px 10px;
+            border-radius: 50px;
+            border: 1px solid var(--border-gold);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: var(--font-ar);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            line-height: 1.4;
+        }
+        .modal-type-btn.active,
+        .modal-type-btn:hover {
+            background: rgba(201,168,76,0.15);
+            border-color: var(--gold);
+            color: var(--gold-light);
+        }
+        .modal-type-btn.alt-active {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
+            border-color: transparent;
+            color: var(--black);
+        }
+        .modal-alt-type-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+            margin-bottom: 2px;
+            text-align: center;
+            letter-spacing: 0.5px;
         }
 
         .modal-order-btn {
@@ -3874,7 +3967,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         /* ========== MOBILE FIXES ========== */
         @media (max-width: 480px) {
             #hero {
-                padding-top: 90px;
+                padding-top: 118px;
                 padding-bottom: 10px;
             }
 
@@ -4048,8 +4141,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <!-- COUNTDOWN -->
     <section style="padding: 60px 5% 20px; background: var(--black);">
         <div id="countdown-section" class="fade-in">
-            <div class="countdown-label">⏳ العرض ينتهي قريباً</div>
-            <div class="countdown-title">عرض خاص لمدة 48 ساعة فقط — المصلاية بـ 450ج بدلاً من 600ج!</div>
+            <div class="countdown-label">🔥 الأسعار الحالية لمدة 48 ساعة فقط</div>
+            <div class="countdown-title">الوقت بيعدي — الأسعار دي مش هتفضل كده بعد 48 ساعة!</div>
             <div class="countdown-boxes">
                 <div class="cd-box">
                     <div class="cd-num" id="cd-days">00</div>
@@ -4072,7 +4165,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 </div>
             </div>
             <div class="offer-badge" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"
-                style="cursor:pointer;">احصل على المصلاية الآن بسعر 450ج بدلاً من 600ج!</div>
+                style="cursor:pointer;">الحق عروض اليوم ←</div>
             <div style="margin-top:12px; font-size:0.82rem; color:var(--text-muted);">* مصاريف الشحن 100ج لجميع
                 المحافظات
             </div>
@@ -4438,6 +4531,22 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                             onclick="openCategoryModal()">
                             اختر تصميم آخر
                         </button>
+
+                        <!-- Other type question — appears after at least one design is chosen -->
+                        <div class="form-other-type-box" id="form-other-type-box">
+                            <div class="form-other-type-label">🤔 عايز شكل/صنف تاني؟</div>
+                            <div class="form-other-type-btns">
+                                <a href="sponge.html" class="sponge-btn">
+                                    🧽 إسفنج
+                                    <div style="font-size:0.7rem;font-weight:500;opacity:0.75;margin-top:2px;">2.5 سم ناعم</div>
+                                </a>
+                                <a href="memory-foam.html" class="memory-btn">
+                                    🧠 ميموري فوم
+                                    <div style="font-size:0.7rem;font-weight:500;opacity:0.75;margin-top:2px;">حماية الركبة</div>
+                                </a>
+                            </div>
+                        </div>
+
                         <p class="multi-designs-note">يمكنك اختيار أكثر من تصميم واحد، ثم أرسل الطلب مباشرة.</p>
                     </div>
                 </div>
@@ -5563,6 +5672,15 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             document.body.style.overflow = '';
         }
 
+        function goToOtherType(type) {
+            closeProductModalDirect();
+            if (type === 'sponge') {
+                window.location.href = 'sponge.html';
+            } else {
+                window.location.href = 'memory-foam.html';
+            }
+        }
+
         // ESC key closes modal
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape') closeProductModalDirect();
@@ -5782,15 +5900,18 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const listEl = document.getElementById('selected-designs-list');
             const countEl = document.getElementById('picker-filled-count');
             if (!emptyBtn || !filled || !listEl || !countEl) return;
+            const otherTypeBox = document.getElementById('form-other-type-box');
             if (selectedDesigns.length === 0) {
                 emptyBtn.style.display = 'block';
                 filled.style.display = 'none';
                 listEl.innerHTML = '';
                 countEl.textContent = '';
+                if (otherTypeBox) otherTypeBox.classList.remove('visible');
                 return;
             }
             emptyBtn.style.display = 'none';
             filled.style.display = 'flex';
+            if (otherTypeBox) otherTypeBox.classList.add('visible');
 
             // Calculate total unique designs
             const totalCount = selectedDesigns.reduce((sum, d) => {
@@ -7651,7 +7772,22 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <button onclick="changeModalQty(1)" style="width:32px;height:32px;border-radius:50%;background:rgba(201,168,76,0.15);border:1px solid var(--gold);color:var(--gold-light);font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
                 </div>
 
-                <button class="modal-order-btn" id="modal-order-btn">🛒 أضف للطلب</button>
+                <!-- Other type selector: shown above main order button, doesn't replace it -->
+                <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(201,168,76,0.15);">
+                    <div class="modal-alt-type-label">عايز صنف تاني؟</div>
+                    <div class="modal-other-type-row">
+                        <button class="modal-type-btn" id="modal-alt-sponge" onclick="goToOtherType('sponge')">
+                            🧽 مصليات الإسفنج
+                            <div style="font-size:0.7rem;font-weight:500;opacity:0.75;margin-top:2px;">سماكة 2.5 سم</div>
+                        </button>
+                        <button class="modal-type-btn" id="modal-alt-memory" onclick="goToOtherType('memory')">
+                            🧠 ميموري فوم
+                            <div style="font-size:0.7rem;font-weight:500;opacity:0.75;margin-top:2px;">حماية الركبة</div>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="modal-order-btn" id="modal-order-btn" style="margin-top:10px;">🛒 أضف للطلب</button>
                 <!-- Checkout button — appears after user adds this product -->
                 <button id="modal-checkout-btn" onclick="closeProductModalDirect(); scrollToOrderForm();"
                     style="display:none;width:100%;margin-top:10px;padding:14px;border-radius:50px;background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-family:var(--font-ar);font-weight:800;font-size:1rem;cursor:pointer;border:none;box-shadow:0 4px 15px rgba(40,167,69,0.3);">
