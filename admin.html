@@ -621,6 +621,13 @@
         <input type="text" id="new-badge" placeholder="مثال: الأكثر طلباً">
       </div>
       <div class="form-group-admin">
+        <label>الصنف (الكاتيجوري) *</label>
+        <select id="new-category" style="width:100%; background:var(--black-3); border:1px solid var(--border-gold); color:var(--white); padding:10px 14px; border-radius:var(--radius); font-size:0.9rem; font-family:var(--font-ar);">
+          <option value="sponge">مصليات إسفنج</option>
+          <option value="memory_foam">مصليات ميموري فوم</option>
+        </select>
+      </div>
+      <div class="form-group-admin">
         <label>صورة المنتج *</label>
         <div class="upload-area" onclick="document.getElementById('img-input').click()">
           <div class="icon">📷</div>
@@ -1033,11 +1040,12 @@ async function addProduct() {
   const price = parseInt(document.getElementById('new-price').value) || 450;
   const desc = document.getElementById('new-desc').value.trim();
   const badge = document.getElementById('new-badge').value.trim();
+  const category = document.getElementById('new-category').value || 'sponge';
   if (!name) { showToast('⚠️ أدخل اسم المنتج'); return; }
   if (!selectedImg) { showToast('⚠️ اختر صورة للمنتج'); return; }
   if (productsDB.some(p => p.name === name)) { showToast('⚠️ المنتج موجود بالفعل'); return; }
 
-  const newP = { id: Date.now(), name, sub: desc, badge, price, imageData: selectedImg, createdAt: new Date().toISOString() };
+  const newP = { id: Date.now(), name, sub: desc, badge, price, category, imageData: selectedImg, createdAt: new Date().toISOString() };
   productsDB.push(newP);
   localStorage.setItem('sedra_products', JSON.stringify(productsDB));
   if (window.FB && window.FB.ready) await window.FB.saveProduct(newP);
@@ -1052,12 +1060,13 @@ async function updateProduct() {
   const price = parseInt(document.getElementById('new-price').value) || 450;
   const desc = document.getElementById('new-desc').value.trim();
   const badge = document.getElementById('new-badge').value.trim();
+  const category = document.getElementById('new-category').value || 'sponge';
   if (!name) { showToast('⚠️ أدخل اسم المنتج'); return; }
   if (!selectedImg) { showToast('⚠️ اختر صورة للمنتج'); return; }
 
   const idx = productsDB.findIndex(p => p.id === id);
   if (idx === -1) { showToast('⚠️ المنتج غير موجود'); return; }
-  productsDB[idx] = { ...productsDB[idx], name, sub: desc, badge, price, imageData: selectedImg };
+  productsDB[idx] = { ...productsDB[idx], name, sub: desc, badge, price, category, imageData: selectedImg };
   localStorage.setItem('sedra_products', JSON.stringify(productsDB));
   if (window.FB && window.FB.ready) await window.FB.saveProduct(productsDB[idx]);
   resetForm();
@@ -1073,6 +1082,7 @@ function editProductAdmin(id) {
   document.getElementById('new-price').value = p.price || 450;
   document.getElementById('new-desc').value = p.sub || '';
   document.getElementById('new-badge').value = p.badge || '';
+  document.getElementById('new-category').value = p.category || 'sponge';
   if (p.imageData) {
     selectedImg = p.imageData;
     document.getElementById('product-preview').src = p.imageData;
@@ -1118,6 +1128,8 @@ function resetForm() {
   ['new-name','new-price','new-desc','new-badge'].forEach(id => {
     const el = document.getElementById(id); if (el) el.value = '';
   });
+  const catEl = document.getElementById('new-category');
+  if (catEl) catEl.value = 'sponge';
   document.getElementById('edit-product-id').value = '';
   document.getElementById('img-input').value = '';
   document.getElementById('product-preview').style.display = 'none';
@@ -1136,23 +1148,44 @@ function renderProducts() {
     grid.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:30px;grid-column:1/-1;">لا توجد منتجات — أضف من النموذج أعلاه</p>';
     return;
   }
-  grid.innerHTML = productsDB.map(p => {
-    const oos = p.outOfStock;
-    const img = p.imageData || 'logo.png';
-    return `
-    <div class="admin-prod-card" style="${oos ? 'opacity:0.6;filter:grayscale(40%);' : ''}">
-      <img class="admin-prod-img" src="${img}" alt="${p.name}" onerror="this.src='logo.png'">
-      <div class="admin-prod-info">
-        <div class="admin-prod-name">${p.name}${oos ? ' <span style="color:#e74c3c;font-size:0.6rem;">[نفذت]</span>' : ''}</div>
-        <div class="admin-prod-price">${p.price || 450} ج</div>
-      </div>
-      <div class="admin-prod-actions">
-        <button class="btn-edit-prod" onclick="editProductAdmin(${p.id})">✏️ تعديل</button>
-        <button class="btn-oos-prod" onclick="toggleOOS(${p.id})">${oos ? '✅ توفير' : '⛔ نفذت'}</button>
-        <button class="btn-del-prod" onclick="deleteProductAdmin(${p.id})">🗑️</button>
-      </div>
-    </div>`;
-  }).join('');
+
+  const catLabels = { sponge: '🧽 مصليات إسفنج', memory_foam: '🧠 مصليات ميموري فوم' };
+  const catColors = { sponge: 'var(--gold-light)', memory_foam: '#a855f7' };
+  const groups = { sponge: [], memory_foam: [] };
+
+  productsDB.forEach(p => {
+    const cat = p.category || 'sponge';
+    if (!groups[cat]) groups[cat] = [];
+    groups[cat].push(p);
+  });
+
+  let html = '';
+  for (const [cat, prods] of Object.entries(groups)) {
+    if (!prods.length) continue;
+    html += `<div style="grid-column:1/-1; margin:16px 0 8px; padding:10px 14px; background:rgba(201,168,76,0.08); border:1px solid var(--border-gold); border-radius:var(--radius); font-size:0.85rem; font-weight:700; color:${catColors[cat] || 'var(--gold-light)'};">${catLabels[cat] || cat} — ${prods.length} منتج</div>`;
+    html += prods.map(p => {
+      const oos = p.outOfStock;
+      const img = p.imageData || 'logo.png';
+      const catBadge = p.category === 'memory_foam'
+        ? '<span style="background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.4);color:#c084fc;font-size:0.6rem;padding:2px 7px;border-radius:50px;margin-right:4px;">ميموري فوم</span>'
+        : '<span style="background:rgba(201,168,76,0.15);border:1px solid var(--border-gold);color:var(--gold-light);font-size:0.6rem;padding:2px 7px;border-radius:50px;margin-right:4px;">إسفنج</span>';
+      return `
+      <div class="admin-prod-card" style="${oos ? 'opacity:0.6;filter:grayscale(40%);' : ''}">
+        <img class="admin-prod-img" src="${img}" alt="${p.name}" onerror="this.src='logo.png'">
+        <div class="admin-prod-info">
+          <div class="admin-prod-name">${p.name}${oos ? ' <span style="color:#e74c3c;font-size:0.6rem;">[نفذت]</span>' : ''}</div>
+          <div style="margin:3px 0;">${catBadge}</div>
+          <div class="admin-prod-price">${p.price || 450} ج</div>
+        </div>
+        <div class="admin-prod-actions">
+          <button class="btn-edit-prod" onclick="editProductAdmin(${p.id})">✏️ تعديل</button>
+          <button class="btn-oos-prod" onclick="toggleOOS(${p.id})">${oos ? '✅ توفير' : '⛔ نفذت'}</button>
+          <button class="btn-del-prod" onclick="deleteProductAdmin(${p.id})">🗑️</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  grid.innerHTML = html;
 }
 
 // ---- STATS ----
