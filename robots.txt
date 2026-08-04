@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://sedrastores.com/sitemap.xml
+
