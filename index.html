@@ -1336,12 +1336,15 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             display: flex;
             gap: 10px;
         }
-        .form-other-type-btns a {
+        .form-other-type-btns a,
+        .form-other-type-btns button {
             flex: 1;
             display: block;
             text-align: center;
             padding: 11px 10px;
             border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-ar);
             font-family: var(--font-ar);
             font-weight: 800;
             font-size: 0.85rem;
@@ -1349,16 +1352,20 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             transition: var(--transition);
             line-height: 1.4;
         }
-        .form-other-type-btns a.sponge-btn {
+        .form-other-type-btns a.sponge-btn,
+        .form-other-type-btns button.sponge-btn {
             background: linear-gradient(135deg, var(--gold-dark), var(--gold-light));
             color: var(--black);
+            border: none;
         }
-        .form-other-type-btns a.memory-btn {
+        .form-other-type-btns a.memory-btn,
+        .form-other-type-btns button.memory-btn {
             background: var(--black-3);
             border: 1px solid var(--border-gold-strong);
             color: var(--gold-light);
         }
-        .form-other-type-btns a:hover {
+        .form-other-type-btns a:hover,
+        .form-other-type-btns button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 15px rgba(201,168,76,0.25);
         }
@@ -1421,6 +1428,19 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         .modal-order-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(201, 168, 76, 0.5);
+        }
+
+        #modal-after-add-actions {
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 620px) {
@@ -3886,6 +3906,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         }
 
         .cart-bar-more,
+        .cart-bar-other,
         .cart-bar-checkout {
             font-family: var(--font-ar);
             font-size: 0.82rem;
@@ -3903,6 +3924,16 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         .cart-bar-more:hover {
             background: rgba(201, 168, 76, 0.1);
+        }
+
+        .cart-bar-other {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--white-dim);
+        }
+
+        .cart-bar-other:hover {
+            background: rgba(255,255,255,0.07);
         }
 
         .cart-bar-checkout {
@@ -3928,6 +3959,14 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 font-size: 0.8rem;
             }
             .cart-bar-more { display: none; }
+            .cart-bar-other {
+                font-size: 0.75rem;
+                padding: 8px 12px;
+            }
+            .cart-bar-checkout {
+                font-size: 0.78rem;
+                padding: 9px 14px;
+            }
         }
 
         /* ========== TOAST ========== */
@@ -4251,7 +4290,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
                     <img src="category-sponge.jpg" alt="مصليات إسفنج" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
                     <div class="category-card-overlay" style="padding:24px;">
-                        <h3 style="font-size:1.6rem;">مصليات الإسفنج</h3>
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">راحة ونعومة في كل سجدة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
                             <span>تصفح المجموعة</span>
@@ -4266,7 +4304,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
                     <img src="category-memory-foam.jpg" alt="مصلية الركبة الميموري فوم" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
                     <div class="category-card-overlay" style="padding:24px;">
-                        <h3 style="font-size:1.6rem;">مصلية الركبة الميموري فوم</h3>
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">ميموري فوم طبي يحمي ركبتيك في كل سجدة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
                             <span>تصفح المجموعة</span>
@@ -4536,14 +4573,14 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                         <div class="form-other-type-box" id="form-other-type-box">
                             <div class="form-other-type-label">🤔 عايز شكل/صنف تاني؟</div>
                             <div class="form-other-type-btns">
-                                <a href="sponge.html" class="sponge-btn">
+                                <button type="button" class="sponge-btn" onclick="showBrowseMoreModal()">
                                     🧽 إسفنج
                                     <div style="font-size:0.7rem;font-weight:500;opacity:0.75;margin-top:2px;">2.5 سم ناعم</div>
-                                </a>
-                                <a href="memory-foam.html" class="memory-btn">
+                                </button>
+                                <button type="button" class="memory-btn" onclick="showBrowseMoreModal()">
                                     🧠 ميموري فوم
                                     <div style="font-size:0.7rem;font-weight:500;opacity:0.75;margin-top:2px;">حماية الركبة</div>
-                                </a>
+                                </button>
                             </div>
                         </div>
 
@@ -4808,11 +4845,34 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <div id="floating-cart-bar">
         <div class="cart-bar-info">
             <span class="cart-bar-icon">🛒</span>
-            <span>مُضاف للسلة: <b id="cart-bar-qty">0</b> مصلاية — <b id="cart-bar-total">0 ج</b></span>
+            <span><b id="cart-bar-qty">0</b> مصلاية — <b id="cart-bar-total">0 ج</b></span>
         </div>
         <div class="cart-bar-actions">
-            <button class="cart-bar-more" onclick="document.getElementById('products')?.scrollIntoView({behavior:'smooth'})">تصفح أكتر</button>
-            <button class="cart-bar-checkout" onclick="scrollToOrderForm()">استكمل الطلب ←</button>
+            <button class="cart-bar-more" onclick="showBrowseMoreModal()">تصفح أكتر</button>
+            <button class="cart-bar-other" onclick="hideCartBarAndBrowse()">شكل تاني</button>
+            <button class="cart-bar-checkout" onclick="scrollToOrderForm()">🔒 قفل الأوردر</button>
+        </div>
+    </div>
+
+    <!-- Browse More Modal: ميموري ولا اسفنج؟ -->
+    <div id="browse-more-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:9000; align-items:flex-end; justify-content:center; padding:0;">
+        <div style="background:var(--black-2); border-top:1px solid var(--border-gold-strong); border-radius:20px 20px 0 0; width:100%; max-width:520px; padding:28px 24px 40px; box-shadow:0 -10px 40px rgba(0,0,0,0.5);">
+            <div style="width:40px;height:4px;background:rgba(201,168,76,0.3);border-radius:2px;margin:0 auto 20px;"></div>
+            <div style="font-size:1.1rem;font-weight:800;color:var(--white);text-align:center;margin-bottom:6px;">عايز تضيف إيه؟</div>
+            <div style="font-size:0.85rem;color:var(--text-muted);text-align:center;margin-bottom:22px;">التصاميم اللي اخترتها محفوظة — اختار صنف تاني تضيفه</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                <a href="sponge.html" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;background:rgba(201,168,76,0.07);border:1px solid var(--border-gold-strong);border-radius:14px;color:var(--white);transition:all 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.15)'" onmouseleave="this.style.background='rgba(201,168,76,0.07)'">
+                    <span style="font-size:2rem;">🧽</span>
+                    <span style="font-size:0.95rem;font-weight:800;">مصليات إسفنج</span>
+                    <span style="font-size:0.75rem;color:var(--gold-light);">ناعمة 2.5 سم</span>
+                </a>
+                <a href="memory-foam.html" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;background:rgba(201,168,76,0.07);border:1px solid var(--border-gold-strong);border-radius:14px;color:var(--white);transition:all 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.15)'" onmouseleave="this.style.background='rgba(201,168,76,0.07)'">
+                    <span style="font-size:2rem;">🧠</span>
+                    <span style="font-size:0.95rem;font-weight:800;">ميموري فوم</span>
+                    <span style="font-size:0.75rem;color:var(--gold-light);">حماية الركبة</span>
+                </a>
+            </div>
+            <button onclick="closeBrowseMoreModal()" style="width:100%;padding:12px;background:transparent;border:1px solid rgba(201,168,76,0.3);border-radius:50px;color:var(--text-muted);font-family:var(--font-ar);font-size:0.9rem;cursor:pointer;">إلغاء</button>
         </div>
     </div>
 
@@ -5563,6 +5623,12 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const p = products.find(x => x.id === productId) || products[0];
             if (!p) return;
 
+            // Reset modal state on every open
+            const _orderBtnReset = document.getElementById('modal-order-btn');
+            if (_orderBtnReset) { _orderBtnReset.style.display = ''; _orderBtnReset.style.background = ''; }
+            const _afterAddReset = document.getElementById('modal-after-add-actions');
+            if (_afterAddReset) _afterAddReset.style.display = 'none';
+
             // Main image
             const mainImg = document.getElementById('modal-main-img');
             const mainSrc = getProductImageForDisplay(p);
@@ -5618,9 +5684,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             // Store current product name for qty buttons
             window._modalCurrentProduct = p.name;
 
-            // Hide checkout button initially
-            const checkoutBtn = document.getElementById('modal-checkout-btn');
-            if (checkoutBtn) checkoutBtn.style.display = 'none';
+            // Hide after-add actions initially
+            const afterAddActions = document.getElementById('modal-after-add-actions');
+            if (afterAddActions) afterAddActions.style.display = 'none';
 
             // Qty row
             const qtyRow = document.getElementById('modal-qty-row');
@@ -5638,15 +5704,17 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 orderBtn.disabled = false;
                 orderBtn.style.opacity = '1';
                 orderBtn.style.cursor = 'pointer';
+                orderBtn.style.background = '';
                 if (qtyRow) qtyRow.style.display = 'flex';
                 orderBtn.onclick = () => {
                     const qty = parseInt(document.getElementById('modal-qty-val')?.textContent || '1', 10);
                     // Add or update product with specified quantity
                     addProductWithQty(p.name, qty);
-                    // Show checkout button
-                    if (checkoutBtn) checkoutBtn.style.display = 'block';
-                    orderBtn.textContent = '✓ تم الإضافة — أضف المزيد';
-                    orderBtn.style.background = 'linear-gradient(135deg,#28a745,#20c997)';
+                    // Show after-add actions (قفل الأوردر + اختر تصميم آخر)
+                    if (afterAddActions) afterAddActions.style.display = 'flex';
+                    // Hide the add button itself
+                    orderBtn.style.display = 'none';
+                    if (qtyRow) qtyRow.style.display = 'none';
                 };
             }
 
@@ -5671,6 +5739,71 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             document.getElementById('product-modal-overlay').classList.remove('open');
             document.body.style.overflow = '';
         }
+
+        // لما يدوس "اختر تصميم آخر" في المودال — يقفل المودال ويوطي الشريط ويرجع للمنتجات
+        function closeProductModalAndBrowse() {
+            closeProductModalDirect();
+            // إخفاء الشريط مؤقتاً عشان يتصفح براحة
+            const bar = document.getElementById('floating-cart-bar');
+            if (bar) {
+                bar.classList.remove('show');
+                document.body.classList.remove('has-cart-bar');
+                // الشريط يرجع تاني بعد اختيار تصميم جديد — بيرجع تلقائي من updateFloatingCart
+                // بس لو مادوسش على حاجة، خليه يرجع بعد 8 ثواني
+                window._browseHideTimer = setTimeout(() => {
+                    if (selectedDesigns.length > 0) {
+                        bar.classList.add('show');
+                        document.body.classList.add('has-cart-bar');
+                    }
+                }, 8000);
+            }
+            // scroll للمنتجات
+            document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // لما يدوس "شكل تاني" في الشريط
+        function hideCartBarAndBrowse() {
+            const bar = document.getElementById('floating-cart-bar');
+            if (bar) {
+                bar.classList.remove('show');
+                document.body.classList.remove('has-cart-bar');
+                clearTimeout(window._browseHideTimer);
+                window._browseHideTimer = setTimeout(() => {
+                    if (selectedDesigns.length > 0) {
+                        bar.classList.add('show');
+                        document.body.classList.add('has-cart-bar');
+                    }
+                }, 8000);
+            }
+            document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // لما يدوس "تصفح أكتر" في الشريط — يتسأل ميموري ولا اسفنج
+        function showBrowseMoreModal() {
+            const modal = document.getElementById('browse-more-modal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeBrowseMoreModal() {
+            const modal = document.getElementById('browse-more-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        // إغلاق browse-more-modal لما يدوس برا
+        document.addEventListener('DOMContentLoaded', function() {
+            const browseModal = document.getElementById('browse-more-modal');
+            if (browseModal) {
+                browseModal.addEventListener('click', function(e) {
+                    if (e.target === browseModal) closeBrowseMoreModal();
+                });
+            }
+        });
 
         function goToOtherType(type) {
             closeProductModalDirect();
@@ -5764,6 +5897,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             }
             document.getElementById('cart-bar-qty').textContent = qty;
             document.getElementById('cart-bar-total').textContent = total + ' ج';
+            // لما يضاف تصميم جديد، ألغي مؤقت الإخفاء وارجع الشريط
+            if (window._browseHideTimer) {
+                clearTimeout(window._browseHideTimer);
+                window._browseHideTimer = null;
+            }
             bar.classList.add('show');
             document.body.classList.add('has-cart-bar');
         }
@@ -7788,11 +7926,17 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 </div>
 
                 <button class="modal-order-btn" id="modal-order-btn" style="margin-top:10px;">🛒 أضف للطلب</button>
-                <!-- Checkout button — appears after user adds this product -->
-                <button id="modal-checkout-btn" onclick="closeProductModalDirect(); scrollToOrderForm();"
-                    style="display:none;width:100%;margin-top:10px;padding:14px;border-radius:50px;background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-family:var(--font-ar);font-weight:800;font-size:1rem;cursor:pointer;border:none;box-shadow:0 4px 15px rgba(40,167,69,0.3);">
-                    ✅ أتمّم الطلب الآن ←
-                </button>
+                <!-- After-add actions: appear after user adds this product -->
+                <div id="modal-after-add-actions" style="display:none; margin-top:10px; display:none; flex-direction:column; gap:8px;">
+                    <button id="modal-lock-btn" onclick="closeProductModalDirect(); scrollToOrderForm();"
+                        style="width:100%;padding:13px;border-radius:50px;background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-family:var(--font-ar);font-weight:800;font-size:0.95rem;cursor:pointer;border:none;box-shadow:0 4px 15px rgba(40,167,69,0.3);">
+                        🔒 قفل الأوردر وإتمام الطلب
+                    </button>
+                    <button id="modal-add-another-btn" onclick="closeProductModalAndBrowse();"
+                        style="width:100%;padding:13px;border-radius:50px;background:transparent;border:1px solid var(--border-gold-strong);color:var(--gold-light);font-family:var(--font-ar);font-weight:700;font-size:0.9rem;cursor:pointer;">
+                        🖼️ اختر تصميم آخر
+                    </button>
+                </div>
             </div>
         </div>
     </div>
