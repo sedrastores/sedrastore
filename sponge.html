@@ -358,11 +358,53 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR -->
-<div class="announce-bar">
-  <marquee behavior="scroll" direction="right" scrollamount="4">
-    🚚 توصيل لجميع محافظات مصر بـ 75 جنيه فقط &nbsp;&nbsp;✨ عرض التلاتة مصليات بـ 1000 جنيه + الشحن &nbsp;&nbsp;🧽 أجود خامات إسفنج عالية الجودة &nbsp;&nbsp;🔒 دفع عند الاستلام متاح &nbsp;&nbsp;
-  </marquee>
+<!-- PROMO BAR -->
+<style>
+.top-promo-bar{
+  position:relative;height:36px;
+  background:linear-gradient(90deg,#0d0b00 0%,#1e1600 30%,#1a1209 50%,#1e1600 70%,#0d0b00 100%);
+  border-bottom:1px solid rgba(201,168,76,0.5);
+  overflow:hidden;display:flex;align-items:center;
+  box-shadow:0 2px 12px rgba(201,168,76,0.12);
+}
+.top-promo-bar::before,.top-promo-bar::after{
+  content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;
+}
+.top-promo-bar::before{left:0;background:linear-gradient(to right,#0d0b00,transparent);}
+.top-promo-bar::after{right:0;background:linear-gradient(to left,#0d0b00,transparent);}
+.top-promo-track{
+  display:flex;gap:0;
+  animation:promo-scroll 55s linear infinite;
+  white-space:nowrap;will-change:transform;
+}
+.top-promo-track:hover{animation-play-state:paused;}
+.top-promo-item{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:0.72rem;font-weight:700;color:var(--gold-light);
+  letter-spacing:0.6px;padding:0 30px;
+  font-family:var(--font-ar);text-shadow:0 0 8px rgba(201,168,76,0.3);
+}
+.top-promo-sep{color:var(--gold);font-size:0.6rem;opacity:0.8;animation:sep-pulse 2s ease-in-out infinite;}
+@keyframes sep-pulse{0%,100%{opacity:0.5}50%{opacity:1;text-shadow:0 0 6px var(--gold);}}
+@keyframes promo-scroll{0%{transform:translateX(0)}100%{transform:translateX(50%);}}
+</style>
+<div class="top-promo-bar">
+  <div class="top-promo-track">
+    <span class="top-promo-item">🧽 مصليات إسفنج عالية الجودة <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">🔥 3 مصليات بـ 1000ج بدل 2250ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">🚚 توصيل لجميع محافظات مصر بـ 75ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">💛 مصلية واحدة بـ 395ج بدل 750ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">✓ سطح مانع للانزلاق <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">💳 الدفع عند الاستلام أو المحفظة <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">⭐ جودة مضمونة 100% <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">🧽 مصليات إسفنج عالية الجودة <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">🔥 3 مصليات بـ 1000ج بدل 2250ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">🚚 توصيل لجميع محافظات مصر بـ 75ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">💛 مصلية واحدة بـ 395ج بدل 750ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">✓ سطح مانع للانزلاق <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">💳 الدفع عند الاستلام أو المحفظة <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">⭐ جودة مضمونة 100% <span class="top-promo-sep">◆</span></span>
+  </div>
 </div>
 
 <!-- TOP NAV -->
