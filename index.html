@@ -4083,29 +4083,65 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
     <!-- OFFERS -->
     <section id="offers" style="padding: 20px 5% 40px;">
-        <div class="offers-grid" style="grid-template-columns: repeat(3, 1fr);">
-            <div class="offer-card">
-                <div class="offer-card-icon">🛒</div>
-                <h3>مصلاية واحدة</h3>
-                <p>المصلاية بـ <strong style="color:var(--gold-light);font-size:1.1rem;">450 جنيه</strong> بدلاً من <s style="color:#ef4444;">600 جنيه</s> — + 100 جنيه شحن لكل المحافظات.</p>
-                <button class="offer-card-btn"
-                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب الآن ←</button>
-            </div>
-            <div class="offer-card" style="border-color: var(--gold); box-shadow: 0 0 30px rgba(201,168,76,0.3); position:relative;">
-                <div style="position:absolute;top:-12px;right:50%;transform:translateX(50%);background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;">الأكثر طلباً ⭐</div>
-                <div class="offer-card-icon">🚚</div>
-                <h3>مصليتين — عرض خاص</h3>
-                <p>اطلب مصليتين بـ <strong style="color:var(--gold-light);font-size:1.1rem;">850 جنيه</strong> لجميع المحافظات!</p>
-                <button class="offer-card-btn"
-                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اختر تصميمينك ←</button>
-            </div>
-            <div class="offer-card">
-                <div class="offer-card-icon">🎁</div>
-                <h3>3 مصليات — عرض خاص</h3>
-                <p>اطلب 3 مصليات بـ <strong style="color:var(--gold-light);font-size:1.1rem;">1,200 جنيه</strong> + هدية مجانية مع كل طلب!</p>
-                <button class="offer-card-btn"
-                    onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">اطلب 3 مصليات ←</button>
-            </div>
+        <div class="offers-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 900px; margin: 0 auto;">
+
+            <!-- كارت الإسفنج -->
+            <a href="sponge.html" style="text-decoration:none;">
+                <div class="offer-card" style="height:100%; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 0 30px rgba(201,168,76,0.25)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                    <div>
+                        <div class="offer-card-icon">🧽</div>
+                        <h3 style="margin-bottom:12px;">مصليات الإسفنج</h3>
+                        <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin-bottom:16px;">
+                            هل تحس بعدم الراحة على المصلاية العادية؟<br>
+                            مصليات الإسفنج بتاعتنا <strong style="color:var(--gold-light);">بسماكة 2.5 سم</strong> من السفنج والفايبر — خفيفة، ناعمة، وبتخلي الصلاة تجربة مريحة من أول سجدة لآخر سجدة.
+                        </p>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+                                <span style="color:var(--gold-light);">✓</span> سفنج عالي الكثافة — مريح ودايم
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+                                <span style="color:var(--gold-light);">✓</span> خفيفة وسهلة الحمل في أي مكان
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+                                <span style="color:var(--gold-light);">✓</span> تصاميم إسلامية حصرية بخامات فاخرة
+                            </div>
+                        </div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--gold-light); margin-bottom:4px;">450 جنيه <s style="color:#666; font-size:0.85rem; font-weight:400;">600ج</s></div>
+                        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">+ 100ج شحن لجميع المحافظات</div>
+                    </div>
+                    <button class="offer-card-btn" style="width:100%;">تصفح مصليات الإسفنج ←</button>
+                </div>
+            </a>
+
+            <!-- كارت الميموري فوم -->
+            <a href="memory-foam.html" style="text-decoration:none;">
+                <div class="offer-card" style="height:100%; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; border-color:var(--gold); box-shadow:0 0 30px rgba(201,168,76,0.2); position:relative; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 0 40px rgba(201,168,76,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 0 30px rgba(201,168,76,0.2)'">
+                    <div style="position:absolute;top:-12px;right:50%;transform:translateX(50%);background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap;">الأكثر طلباً ⭐</div>
+                    <div>
+                        <div class="offer-card-icon">🦵</div>
+                        <h3 style="margin-bottom:12px;">مصليات الميموري فوم</h3>
+                        <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin-bottom:16px;">
+                            بتعاني من آلام الركبة أثناء الصلاة؟<br>
+                            مصليات الميموري فوم بتاعتنا فيها <strong style="color:var(--gold-light);">طبقة ميموري فوم طبية في منطقة الركبة تحديداً</strong> — بتوزع الضغط وبتحمي مفاصلك، عشان تصلي براحة تامة بدون أي ألم.
+                        </p>
+                        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+                                <span style="color:var(--gold-light);">✓</span> ميموري فوم طبي في منطقة الركبة فقط
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+                                <span style="color:var(--gold-light);">✓</span> يقلل الضغط على المفاصل أثناء السجود
+                            </div>
+                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
+                                <span style="color:var(--gold-light);">✓</span> خامات فاخرة تدوم طويلاً
+                            </div>
+                        </div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--gold-light); margin-bottom:4px;">950 جنيه</div>
+                        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">+ 100ج شحن لجميع المحافظات</div>
+                    </div>
+                    <button class="offer-card-btn" style="width:100%;">تصفح مصليات الميموري فوم ←</button>
+                </div>
+            </a>
+
         </div>
     </section>
 
@@ -4124,7 +4160,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
                     <img src="category-sponge.jpg" alt="مصليات إسفنج" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
                     <div class="category-card-overlay" style="padding:24px;">
-                        <div style="display:inline-block; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); color:var(--black); font-size:0.7rem; font-weight:800; padding:4px 14px; border-radius:50px; margin-bottom:10px;">مصليات إسفنج</div>
                         <h3 style="font-size:1.6rem;">مصليات الإسفنج</h3>
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">راحة ونعومة في كل سجدة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
@@ -4140,7 +4175,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
                     <img src="category-memory-foam.jpg" alt="مصليات ميموري فوم" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
                     <div class="category-card-overlay" style="padding:24px;">
-                        <div style="display:inline-block; background:linear-gradient(135deg,#7c3aed,#a855f7); color:#fff; font-size:0.7rem; font-weight:800; padding:4px 14px; border-radius:50px; margin-bottom:10px;">مصليات ميموري فوم</div>
                         <h3 style="font-size:1.6rem;">مصليات الميموري فوم</h3>
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">راحة استثنائية للركبتين أثناء الصلاة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
