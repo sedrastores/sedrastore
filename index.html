@@ -4385,7 +4385,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <h3 class="gold-text">🛒 تأكيد الطلب</h3>
                 <p class="order-sub">أكمل البيانات التالية وسيتواصل معك فريقنا في أقرب وقت</p>
 
-                <div class="price-display">
+                <div class="price-display" id="price-display-section" style="display:none;">
                     <div class="pd-item">
                         <div class="pd-label">سعر المصليات</div>
                         <div style="display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap;">
@@ -4404,11 +4404,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 </div>
                 <div id="pd-free-shipping-note" style="display:none;text-align:center;margin-top:8px;color:#28a745;font-size:0.85rem;font-weight:700;">
                     🎉 مبروك! حصلت على عرض خاص
-                </div>
-
-                <!-- Offers reminder -->
-                <div class="offer-mini-banner">
-                    🎁 هدية مجانية مع كل طلب &nbsp;|&nbsp; 🚚 مصليتين بـ 850ج عرض خاص &nbsp;|&nbsp; 🏆 3 مصليات بـ 1,200ج عرض خاص
                 </div>
 
                 <!-- Product Selection -->
@@ -4448,13 +4443,13 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 </div>
 
                 <!-- Quantity: تُحسب تلقائيًا من عدد المصليات المختارة أعلاه (بدون تحكم يدوي منفصل لمنع التكرار) -->
-                <div class="form-group">
+                <div class="form-group" id="qty-display-group" style="display:none;">
                     <label>الكمية الإجمالية</label>
                     <div style="display:flex; align-items:center; gap:12px;">
                         <span id="order-quantity"
                             style="font-size:1.1rem;font-weight:bold;color:var(--gold);min-width:30px;text-align:center;">1</span>
                         <span id="order-total-price"
-                            style="color:var(--gold-light);font-size:0.95rem;margin-right:8px;">الإجمالي: 450 ج</span>
+                            style="color:var(--gold-light);font-size:0.95rem;margin-right:8px;">الإجمالي: 550 ج</span>
                     </div>
                 </div>
 
@@ -5414,7 +5409,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
           </div>
           <div class="product-price-note">+ 100 ج شحن للاستلام</div>
         </div>
-        <button class="btn-order" ${oos ? 'disabled style="opacity:0.5;cursor:not-allowed;background:linear-gradient(135deg,#555,#777);"' : `onclick="selectProduct('${p.name}')"`}>${oos ? '⛔ نفذت الكمية' : 'اطلب هذا التصميم ←'}</button>
+        <button class="btn-order" ${oos ? 'disabled style="opacity:0.5;cursor:not-allowed;background:linear-gradient(135deg,#555,#777);"' : `onclick="openProductModal(${pid})"`}>${oos ? '⛔ نفذت الكمية' : 'اطلب هذا التصميم ←'}</button>
       </div>
     </div>
   `;
@@ -5507,6 +5502,19 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 infoEl.style.display = 'none';
             }
 
+            // Reset modal qty to 1
+            const modalQtyVal = document.getElementById('modal-qty-val');
+            if (modalQtyVal) modalQtyVal.textContent = '1';
+            // Store current product name for qty buttons
+            window._modalCurrentProduct = p.name;
+
+            // Hide checkout button initially
+            const checkoutBtn = document.getElementById('modal-checkout-btn');
+            if (checkoutBtn) checkoutBtn.style.display = 'none';
+
+            // Qty row
+            const qtyRow = document.getElementById('modal-qty-row');
+
             // Order button
             const orderBtn = document.getElementById('modal-order-btn');
             if (p.outOfStock) {
@@ -5514,12 +5522,22 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 orderBtn.disabled = true;
                 orderBtn.style.opacity = '0.5';
                 orderBtn.style.cursor = 'not-allowed';
+                if (qtyRow) qtyRow.style.display = 'none';
             } else {
-                orderBtn.textContent = 'اطلب هذا التصميم ←';
+                orderBtn.textContent = '🛒 أضف للطلب';
                 orderBtn.disabled = false;
                 orderBtn.style.opacity = '1';
                 orderBtn.style.cursor = 'pointer';
-                orderBtn.onclick = () => { closeProductModalDirect(); selectProduct(p.name); };
+                if (qtyRow) qtyRow.style.display = 'flex';
+                orderBtn.onclick = () => {
+                    const qty = parseInt(document.getElementById('modal-qty-val')?.textContent || '1', 10);
+                    // Add or update product with specified quantity
+                    addProductWithQty(p.name, qty);
+                    // Show checkout button
+                    if (checkoutBtn) checkoutBtn.style.display = 'block';
+                    orderBtn.textContent = '✓ تم الإضافة — أضف المزيد';
+                    orderBtn.style.background = 'linear-gradient(135deg,#28a745,#20c997)';
+                };
             }
 
             document.getElementById('product-modal-overlay').classList.add('open');
@@ -5584,6 +5602,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const shippingFee = SHIPPING_FEE;
             const total = materialsTotal + shippingFee;
 
+            const hasSelection = selectedDesigns.length > 0;
+
             const qtyEl = document.getElementById('order-quantity');
             if (qtyEl) qtyEl.textContent = totalQuantity;
 
@@ -5599,8 +5619,15 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const pdTotalEl = document.getElementById('pd-total');
             if (pdTotalEl) pdTotalEl.textContent = total + ' جنيه';
 
+            // Show/hide price display and qty row based on whether user has selected anything
+            const priceDisplaySection = document.getElementById('price-display-section');
+            if (priceDisplaySection) priceDisplaySection.style.display = hasSelection ? 'flex' : 'none';
+
+            const qtyGroup = document.getElementById('qty-display-group');
+            if (qtyGroup) qtyGroup.style.display = hasSelection ? 'block' : 'none';
+
             const freeShippingNote = document.getElementById('pd-free-shipping-note');
-            if (freeShippingNote) freeShippingNote.style.display = totalQuantity >= 2 ? 'block' : 'none';
+            if (freeShippingNote) freeShippingNote.style.display = (hasSelection && totalQuantity >= 2) ? 'block' : 'none';
 
             updateFloatingCart(totalQuantity, total);
         }
@@ -5796,6 +5823,55 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             } else {
                 design.quantity++;
             }
+            syncProductPickerUI();
+            updateOrderTotalUI();
+        }
+
+        // ---- MODAL QUANTITY CONTROL ----
+        function changeModalQty(delta) {
+            const el = document.getElementById('modal-qty-val');
+            if (!el) return;
+            let val = parseInt(el.textContent, 10) || 1;
+            val = Math.max(1, Math.min(val + delta, 20));
+            el.textContent = val;
+        }
+
+        // Add a product with a specific quantity (used from modal)
+        function addProductWithQty(name, qty) {
+            if (!name || qty < 1) return;
+            const product = getProducts().find(p => p.name === name);
+            if (product && product.outOfStock) {
+                showToast('⛔ هذا المنتج نفذت كميته حالياً');
+                return;
+            }
+            const existingIndex = selectedDesigns.findIndex(d =>
+                (typeof d === 'string' ? d : d.name) === name
+            );
+            if (existingIndex !== -1) {
+                const existing = selectedDesigns[existingIndex];
+                const currentQty = typeof existing === 'string' ? 1 : (existing.quantity || 1);
+                selectedDesigns[existingIndex] = { name, quantity: currentQty + qty };
+                showToast('✅ تم زيادة الكمية لـ "' + name + '" (الكمية: ' + (currentQty + qty) + ')');
+            } else {
+                selectedDesigns.push({ name, quantity: qty });
+                showToast('✅ أضيف "' + name + '" × ' + qty);
+            }
+            // Meta Pixel: AddToCart
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'AddToCart', {
+                    content_name: name,
+                    content_ids: [name],
+                    content_type: 'product',
+                    currency: 'EGP',
+                    value: product ? (product.price || BASE_PRICE) : BASE_PRICE
+                });
+            }
+            const cartAddData = { name, time: new Date().toISOString(), device: getDeviceType() };
+            let cartAdds = JSON.parse(localStorage.getItem('sedra_cart_adds') || '[]');
+            cartAdds.push(cartAddData);
+            if (cartAdds.length > 1000) cartAdds = cartAdds.slice(-1000);
+            localStorage.setItem('sedra_cart_adds', JSON.stringify(cartAdds));
+            if (window.FB && window.FB.ready) window.FB.trackCartAdd(cartAddData);
             syncProductPickerUI();
             updateOrderTotalUI();
         }
@@ -7521,7 +7597,20 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <p style="font-size:0.75rem;color:var(--text-muted);margin-top:6px;line-height:1.6;">* الصور توضيحية
                     لعرض التصميم، وقد تختلف الإضاءة والألوان قليلًا حسب الشاشة.</p>
 
-                <button class="modal-order-btn" id="modal-order-btn">اطلب هذا التصميم ←</button>
+                <!-- Quantity selector inside modal -->
+                <div id="modal-qty-row" style="display:flex;align-items:center;gap:12px;margin-top:14px;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:10px 14px;">
+                    <span style="font-size:0.88rem;color:var(--text-muted);flex:1;">الكمية:</span>
+                    <button onclick="changeModalQty(-1)" style="width:32px;height:32px;border-radius:50%;background:rgba(201,168,76,0.15);border:1px solid var(--gold);color:var(--gold-light);font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">−</button>
+                    <span id="modal-qty-val" style="font-size:1.1rem;font-weight:800;color:var(--gold);min-width:28px;text-align:center;">1</span>
+                    <button onclick="changeModalQty(1)" style="width:32px;height:32px;border-radius:50%;background:rgba(201,168,76,0.15);border:1px solid var(--gold);color:var(--gold-light);font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
+                </div>
+
+                <button class="modal-order-btn" id="modal-order-btn">🛒 أضف للطلب</button>
+                <!-- Checkout button — appears after user adds this product -->
+                <button id="modal-checkout-btn" onclick="closeProductModalDirect(); scrollToOrderForm();"
+                    style="display:none;width:100%;margin-top:10px;padding:14px;border-radius:50px;background:linear-gradient(135deg,#28a745,#20c997);color:#fff;font-family:var(--font-ar);font-weight:800;font-size:1rem;cursor:pointer;border:none;box-shadow:0 4px 15px rgba(40,167,69,0.3);">
+                    ✅ أتمّم الطلب الآن ←
+                </button>
             </div>
         </div>
     </div>
@@ -7529,5 +7618,3 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 </body>
 
 </html>
-
-
