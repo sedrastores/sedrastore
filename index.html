@@ -3991,7 +3991,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <ul class="nav-links">
                 <li><a href="#products">المنتجات</a></li>
                 <li><a href="#about">من نحن</a></li>
-                <li><a href="#specs">المواصفات</a></li>
                 <li><a href="#testimonials">آراء العملاء</a></li>
                 <li><a href="#order" class="nav-cta">اطلب الآن</a></li>
             </ul>
@@ -4003,7 +4002,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <button class="drawer-close" onclick="closeMenu()" aria-label="إغلاق القائمة">✕</button>
             <a href="#products" onclick="closeMenu()">المنتجات</a>
             <a href="#about" onclick="closeMenu()">من نحن</a>
-            <a href="#specs" onclick="closeMenu()">المواصفات</a>
             <a href="#testimonials" onclick="closeMenu()">آراء العملاء</a>
             <a href="#order" onclick="closeMenu()"
                 style="color: var(--gold-light); font-weight:700;background:rgba(201,168,76,0.1);">🛒 اطلب الآن</a>
@@ -4329,48 +4327,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         </div>
     </section>
 
-    <!-- SPECS -->
-    <section id="specs">
-        <div class="specs-inner">
-            <div class="section-title fade-in">
-                <div class="eyebrow">المواصفات الفنية</div>
-                <h2>تفاصيل <span>تصنع الفرق</span></h2>
-            </div>
-            <div class="specs-grid fade-in">
-                <div class="spec-card">
-                    <div class="spec-card-icon">📐</div>
-                    <div class="spec-card-value">68 × 120 سم</div>
-                    <div class="spec-card-label">المقاس الكامل</div>
-                </div>
-                <div class="spec-card">
-                    <div class="spec-card-icon">📏</div>
-                    <div class="spec-card-value">2.5 سم</div>
-                    <div class="spec-card-label">سماكة البطانة (سفنج + فايبر)</div>
-                </div>
-                <div class="spec-card">
-                    <div class="spec-card-icon">🛡️</div>
-                    <div class="spec-card-value">ظهر أسود مانع انزلاق</div>
-                    <div class="spec-card-label">قاعدة ثابتة ومظهر نظيف دائم مع الاستخدام</div>
-                </div>
-                <div class="spec-card">
-                    <div class="spec-card-icon">👜</div>
-                    <div class="spec-card-value">شنطة حافظة</div>
-                    <div class="spec-card-label">وش مشمع + ظهر قماش فاخر</div>
-                </div>
-                <div class="spec-card">
-                    <div class="spec-card-icon">🎨</div>
-                    <div class="spec-card-value"><span id="specs-designs-count">8</span> تصاميم</div>
-                    <div class="spec-card-label">ألوان وأنماط متنوعة</div>
-                </div>
-                <div class="spec-card">
-                    <div class="spec-card-icon">✨</div>
-                    <div class="spec-card-value">طباعة عالية</div>
-                    <div class="spec-card-label">ألوان ثابتة لا تبهت</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- TESTIMONIALS -->
     <section id="testimonials">
         <div class="section-title fade-in">
@@ -4473,7 +4429,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
                     <!-- Empty state: prompts user to pick a design from the gallery -->
                     <button type="button" id="picker-empty-btn" class="design-picker-btn"
-                        onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                        onclick="openCategoryModal()">
                         🖼️ اختر تصميمك من معرض التصاميم
                     </button>
 
@@ -4484,7 +4440,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                         </div>
                         <div id="selected-designs-list" class="multi-designs-container"></div>
                         <button type="button" class="add-design-btn"
-                            onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+                            onclick="openCategoryModal()">
                             اختر تصميم آخر
                         </button>
                         <p class="multi-designs-note">يمكنك اختيار أكثر من تصميم واحد، ثم أرسل الطلب مباشرة.</p>
@@ -4626,7 +4582,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <ul>
                     <li><a href="#products">المنتجات</a></li>
                     <li><a href="#about">من نحن</a></li>
-                    <li><a href="#specs">المواصفات</a></li>
                     <li><a href="#order">اطلب الآن</a></li>
                 </ul>
             </div>
@@ -4721,6 +4676,26 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <div id="review-success-msg" style="margin-top:8px; font-size:0.8rem; color:var(--gold-light);"></div>
             </div>
             <button class="modal-close-btn" onclick="closeModal()" style="margin-top:14px;">🛍 متابعة التسوق</button>
+        </div>
+    </div>
+
+    <!-- CATEGORY CHOICE MODAL -->
+    <div id="category-modal" style="display:none; position:fixed; inset:0; z-index:4500; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px;">
+        <div style="background:var(--black-2); border:1px solid var(--border-gold-strong); border-radius:var(--radius-lg); padding:36px 28px; max-width:440px; width:100%; text-align:center; position:relative; box-shadow:0 0 60px rgba(201,168,76,0.25); animation:modal-in 0.3s cubic-bezier(0.4,0,0.2,1);">
+            <button onclick="closeCategoryModal()" style="position:absolute; top:14px; left:14px; background:var(--black-3); border:1px solid var(--border-gold); color:var(--gold-light); border-radius:50%; width:34px; height:34px; font-size:1.1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:var(--transition);">✕</button>
+            <div style="font-size:0.75rem; letter-spacing:3px; color:var(--gold); margin-bottom:10px; font-weight:700; text-transform:uppercase;">اختر النوع</div>
+            <h3 style="font-size:1.3rem; font-weight:800; color:var(--white); margin-bottom:8px;">عايز تصاميم إيه؟</h3>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:28px; line-height:1.6;">اختار نوع المصلاية وهنوريك التصاميم المتاحة</p>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+                <a href="sponge.html" style="display:block; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); color:var(--black); font-weight:800; font-size:1rem; padding:16px 24px; border-radius:50px; text-decoration:none; transition:var(--transition);">
+                    🧽 مصليات الإسفنج
+                    <div style="font-size:0.75rem; font-weight:500; opacity:0.75; margin-top:3px;">راحة ونعومة — سماكة 2.5 سم</div>
+                </a>
+                <a href="memory-foam.html" style="display:block; background:var(--black-3); border:1px solid var(--border-gold-strong); color:var(--gold-light); font-weight:800; font-size:1rem; padding:16px 24px; border-radius:50px; text-decoration:none; transition:var(--transition);">
+                    🧠 مصلية الركبة الميموري فوم
+                    <div style="font-size:0.75rem; font-weight:500; opacity:0.7; margin-top:3px;">ميموري فوم طبي يحمي ركبتيك</div>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -5646,6 +5621,31 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             bar.classList.add('show');
             document.body.classList.add('has-cart-bar');
         }
+
+        // ===== CATEGORY CHOICE MODAL =====
+        function openCategoryModal() {
+            const modal = document.getElementById('category-modal');
+            if (!modal) return;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCategoryModal() {
+            const modal = document.getElementById('category-modal');
+            if (!modal) return;
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on backdrop click
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('category-modal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) closeCategoryModal();
+                });
+            }
+        });
 
         function scrollToOrderForm() {
             // ===== Meta Pixel: InitiateCheckout =====
@@ -7529,3 +7529,5 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 </body>
 
 </html>
+
+
