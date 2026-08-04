@@ -4265,7 +4265,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                                 <span style="color:var(--gold-light);">✓</span> خامات فاخرة تدوم طويلاً
                             </div>
                         </div>
-                        <div style="font-size:1.3rem; font-weight:800; color:var(--gold-light); margin-bottom:4px;">950 جنيه</div>
+                        <div style="font-size:1.3rem; font-weight:800; color:var(--gold-light); margin-bottom:4px;">975 جنيه</div>
                         <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">+ 100ج شحن لجميع المحافظات</div>
                     </div>
                     <button class="offer-card-btn" style="width:100%;">اطلب مصلية الركبة الميموري فوم ←</button>
@@ -4879,7 +4879,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <div>
                         <div style="font-size:1rem;font-weight:800;color:var(--white);">مصلية الركبة الميموري فوم</div>
                         <div style="font-size:0.78rem;color:var(--gold-light);margin-top:3px;">ميموري فوم طبي يحمي ركبتيك</div>
-                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:4px;">950 ج</div>
+                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:4px;">975 ج</div>
                     </div>
                     <span style="margin-right:auto;color:var(--gold);font-size:1.2rem;">←</span>
                 </a>
@@ -5920,11 +5920,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         function updateOrderTotalUI() {
             const totalQuantity = getTotalSelectedQuantity();
-            let materialsTotal = getMaterialsTotal();
-            // Bundle pricing: 1 = 450 (+100 shipping), 2 = 850, 3 = 1200, 4+ = 1200 + 400 لكل مصلاية زيادة عن التلاتة
-            if (totalQuantity === 2) materialsTotal = 850;
-            else if (totalQuantity === 3) materialsTotal = 1200;
-            else if (totalQuantity > 3) materialsTotal = 1200 + (totalQuantity - 3) * 400;
+            const materialsTotal = getMaterialsTotal();
             const shippingFee = SHIPPING_FEE;
             const total = materialsTotal + shippingFee;
 
@@ -6649,11 +6645,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             // الكمية الإجمالية = مجموع كميات كل التصاميم المختارة فقط (بدون أي مضاعفة إضافية)
             const productCount = selectedProductsMeta.reduce((sum, item) => sum + (item.quantity || 1), 0);
             // إجمالي سعر المصليات الفعلي = مجموع (سعر كل تصميم × كميته)
-            let materialsTotal = selectedProductsMeta.reduce((sum, item) => sum + ((item.price || BASE_PRICE) * (item.quantity || 1)), 0);
-            // Bundle pricing: 1 = 450 (+100 shipping), 2 = 850, 3 = 1200, 4+ = 1200 + 400 لكل مصلاية زيادة عن التلاتة
-            if (productCount === 2) materialsTotal = 850;
-            else if (productCount === 3) materialsTotal = 1200;
-            else if (productCount > 3) materialsTotal = 1200 + (productCount - 3) * 400;
+            const materialsTotal = selectedProductsMeta.reduce((sum, item) => sum + ((item.price || BASE_PRICE) * (item.quantity || 1)), 0);
             const shippingFee = SHIPPING_FEE;
             const orderTotal = materialsTotal + shippingFee;
 
@@ -8038,12 +8030,3 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
