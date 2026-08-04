@@ -532,12 +532,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             background: linear-gradient(to left, var(--black-2), transparent);
         }
 
-
-        @keyframes lightbox-in {
-            from { opacity:0; transform:scale(0.88); }
-            to   { opacity:1; transform:scale(1); }
-        }
-
         @keyframes marquee {
             from {
                 transform: translateX(0)
@@ -3998,7 +3992,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <li><a href="#products">المنتجات</a></li>
                 <li><a href="#about">من نحن</a></li>
                 <li><a href="#testimonials">آراء العملاء</a></li>
-                <li><a href="#order" class="nav-cta" onclick="event.preventDefault(); scrollToOrderForm();">اطلب الآن</a></li>
+                <li><a href="#order" class="nav-cta">اطلب الآن</a></li>
             </ul>
             <button class="nav-hamburger" id="hamburger" aria-label="القائمة">
                 <span></span><span></span><span></span>
@@ -4009,7 +4003,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <a href="#products" onclick="closeMenu()">المنتجات</a>
             <a href="#about" onclick="closeMenu()">من نحن</a>
             <a href="#testimonials" onclick="closeMenu()">آراء العملاء</a>
-            <a href="#order" onclick="event.preventDefault(); closeMenu(); scrollToOrderForm();" style="color: var(--gold-light); font-weight:700;background:rgba(201,168,76,0.1);">🛒 اطلب الآن</a>
+            <a href="#order" onclick="closeMenu()"
+                style="color: var(--gold-light); font-weight:700;background:rgba(201,168,76,0.1);">🛒 اطلب الآن</a>
         </div>
     </nav>
     <!-- Drawer backdrop -->
@@ -4582,7 +4577,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 <ul>
                     <li><a href="#products">المنتجات</a></li>
                     <li><a href="#about">من نحن</a></li>
-                    <li><a href="#order" onclick="event.preventDefault(); scrollToOrderForm();">اطلب الآن</a></li>
+                    <li><a href="#order">اطلب الآن</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -4702,40 +4697,13 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <!-- TOAST -->
     <!-- FLOATING CART BAR -->
     <div id="floating-cart-bar">
-        <div class="cart-bar-info" onclick="toggleCartPreview()" style="cursor:pointer; flex:1;">
+        <div class="cart-bar-info">
             <span class="cart-bar-icon">🛒</span>
-            <span>السلة: <b id="cart-bar-qty">0</b> مصلاية — <b id="cart-bar-total">0 ج</b></span>
-            <span style="font-size:0.75rem; color:var(--text-muted); margin-right:4px;">▲ عرض</span>
+            <span>مُضاف للسلة: <b id="cart-bar-qty">0</b> مصلاية — <b id="cart-bar-total">0 ج</b></span>
         </div>
         <div class="cart-bar-actions">
             <button class="cart-bar-more" onclick="document.getElementById('products')?.scrollIntoView({behavior:'smooth'})">تصفح أكتر</button>
-            <button class="cart-bar-checkout" onclick="scrollToOrderForm()">✅ أتمّم الطلب ←</button>
-        </div>
-        <!-- Mini cart preview popup -->
-        <div id="cart-mini-preview" style="
-            display:none; position:absolute; bottom:100%; right:5%; left:5%;
-            background:var(--black-2); border:1px solid var(--border-gold-strong);
-            border-radius:14px 14px 0 0; padding:16px; max-height:280px;
-            overflow-y:auto; box-shadow:0 -10px 30px rgba(0,0,0,0.5);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                <span style="font-weight:700; color:var(--gold-light); font-size:0.95rem;">🛒 السلة</span>
-                <button onclick="toggleCartPreview()" style="background:none; border:none; color:var(--text-muted); font-size:1rem; cursor:pointer;">✕</button>
-            </div>
-            <div id="cart-mini-items" style="display:flex; flex-direction:column; gap:10px;"></div>
-            <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border-gold); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                <span style="font-size:0.85rem; color:var(--text-muted);">الإجمالي مع الشحن:</span>
-                <span id="cart-mini-total" style="font-size:1.1rem; font-weight:800; color:var(--gold-light);"></span>
-            </div>
-            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-                <button onclick="toggleCartPreview(); document.getElementById('products')?.scrollIntoView({behavior:'smooth'});"
-                    style="flex:1; padding:9px; background:transparent; border:1px solid var(--border-gold); color:var(--gold-light); border-radius:50px; font-family:var(--font-ar); font-size:0.8rem; font-weight:700; cursor:pointer; min-width:100px;">
-                    + إضافة منتج
-                </button>
-                <button onclick="toggleCartPreview(); scrollToOrderForm();"
-                    style="flex:2; padding:9px; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); border:none; color:var(--black); border-radius:50px; font-family:var(--font-ar); font-size:0.9rem; font-weight:800; cursor:pointer; min-width:140px;">
-                    ✅ أتمّم الطلب ←
-                </button>
-            </div>
+            <button class="cart-bar-checkout" onclick="scrollToOrderForm()">استكمل الطلب ←</button>
         </div>
     </div>
 
@@ -5247,6 +5215,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             loadAdminStats();
             setDeliveryDateMin();
             syncProductPickerUI();
+            readCheckoutFromSession(); // ← read from category pages
         });
 
         // ---- PRODUCTS (Dynamic from localStorage) ----
@@ -5569,28 +5538,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     if (checkoutBtn) checkoutBtn.style.display = 'block';
                     orderBtn.textContent = '✓ تم الإضافة — أضف المزيد';
                     orderBtn.style.background = 'linear-gradient(135deg,#28a745,#20c997)';
-                    // Update cart indicator
-                    const cartIndicator = document.getElementById('modal-cart-indicator');
-                    if (cartIndicator) {
-                        const newExists = selectedDesigns.find(d => (typeof d === 'string' ? d : d.name) === p.name);
-                        const newQty = newExists ? (typeof newExists === 'string' ? 1 : (newExists.quantity || 1)) : qty;
-                        cartIndicator.textContent = '🛒 هذا التصميم في سلتك (الكمية: ' + newQty + ')';
-                        cartIndicator.style.display = 'block';
-                    }
                 };
-            }
-
-            // ✅ FIX: Show cart indicator if product already in cart
-            const cartIndicator = document.getElementById('modal-cart-indicator');
-            const existsInCart = selectedDesigns.find(d => (typeof d === 'string' ? d : d.name) === p.name);
-            if (cartIndicator) {
-                if (existsInCart) {
-                    const qty = typeof existsInCart === 'string' ? 1 : (existsInCart.quantity || 1);
-                    cartIndicator.textContent = '🛒 هذا التصميم في سلتك بالفعل (الكمية: ' + qty + ')';
-                    cartIndicator.style.display = 'block';
-                } else {
-                    cartIndicator.style.display = 'none';
-                }
             }
 
             document.getElementById('product-modal-overlay').classList.add('open');
@@ -5702,113 +5650,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             document.body.classList.add('has-cart-bar');
         }
 
-
-        // ===== IMAGE LIGHTBOX =====
-        function openImageLightbox(src, alt) {
-            const lb = document.getElementById('img-lightbox');
-            const img = document.getElementById('lightbox-img');
-            const cap = document.getElementById('lightbox-caption');
-            if (!lb || !img) return;
-            img.src = src;
-            img.alt = alt || '';
-            if (cap) cap.textContent = alt || '';
-            lb.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeImageLightbox() {
-            const lb = document.getElementById('img-lightbox');
-            if (lb) lb.style.display = 'none';
-            // Only restore scroll if product modal is also closed
-            if (!document.getElementById('product-modal-overlay')?.classList.contains('open')) {
-                document.body.style.overflow = '';
-            }
-        }
-        // ESC closes lightbox too
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeImageLightbox();
-        });
-        // Also make modal info images zoomable
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('#modal-info-imgs') && e.target.tagName === 'IMG') {
-                openImageLightbox(e.target.src, e.target.alt);
-            }
-        });
-
-
-
-        // ===== CART MINI PREVIEW =====
-        let _cartPreviewOpen = false;
-        function toggleCartPreview() {
-            const preview = document.getElementById('cart-mini-preview');
-            if (!preview) return;
-            _cartPreviewOpen = !_cartPreviewOpen;
-            if (_cartPreviewOpen) {
-                updateCartMiniItems();
-                preview.style.display = 'block';
-                // Update the toggle label
-                const lbl = document.querySelector('#floating-cart-bar .cart-bar-info span:last-child');
-                if (lbl) lbl.textContent = '▼ إخفاء';
-            } else {
-                preview.style.display = 'none';
-                const lbl = document.querySelector('#floating-cart-bar .cart-bar-info span:last-child');
-                if (lbl) lbl.textContent = '▲ عرض';
-            }
-        }
-
-        function updateCartMiniItems() {
-            const itemsEl = document.getElementById('cart-mini-items');
-            const totalEl = document.getElementById('cart-mini-total');
-            if (!itemsEl) return;
-
-            if (!selectedDesigns.length) {
-                itemsEl.innerHTML = '<p style="color:var(--text-muted); text-align:center; font-size:0.85rem; padding:10px 0;">السلة فارغة</p>';
-                if (totalEl) totalEl.textContent = '';
-                return;
-            }
-
-            const products = getProducts();
-            let grandTotal = 0;
-            const totalQty = getTotalSelectedQuantity();
-
-            // Bundle pricing
-            let materialsTotal = getMaterialsTotal();
-            if (totalQty === 2) materialsTotal = 850;
-            else if (totalQty === 3) materialsTotal = 1200;
-            else if (totalQty > 3) materialsTotal = 1200 + (totalQty - 3) * 400;
-            grandTotal = materialsTotal + 100; // + shipping
-
-            itemsEl.innerHTML = selectedDesigns.map((design, i) => {
-                const name = typeof design === 'string' ? design : design.name;
-                const qty = (typeof design === 'string' ? 1 : design.quantity) || 1;
-                const img = getProductImageUrl(name) || IMG_LOGO;
-                return `
-                    <div style="display:flex; align-items:center; gap:10px; padding:8px; background:var(--black-3); border-radius:10px; border:1px solid var(--border-gold);">
-                        <img src="${img}" alt="${name}" style="width:48px; height:48px; object-fit:cover; border-radius:8px; border:1px solid var(--border-gold); flex-shrink:0;"
-                            onerror="this.src='logo.png'" onclick="openImageLightbox(this.src, '${name}');" title="اضغط للتكبير" style="cursor:zoom-in;">
-                        <div style="flex:1; min-width:0;">
-                            <div style="font-size:0.82rem; font-weight:700; color:var(--white); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${name}</div>
-                            <div style="font-size:0.75rem; color:var(--gold); margin-top:2px;">الكمية: ${qty}</div>
-                        </div>
-                        <div style="display:flex; flex-direction:column; gap:4px; align-items:center;">
-                            <button onclick="incrementDesignQty(${i}); updateCartMiniItems();" 
-                                style="width:26px;height:26px;border-radius:50%;background:rgba(40,167,69,0.15);border:1px solid rgba(40,167,69,0.4);color:#28a745;font-size:0.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
-                            <button onclick="removeSelectedDesign(${i}); updateCartMiniItems();" 
-                                style="width:26px;height:26px;border-radius:50%;background:rgba(220,53,69,0.12);border:1px solid rgba(220,53,69,0.3);color:#dc3545;font-size:0.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">−</button>
-                        </div>
-                    </div>`;
-            }).join('');
-
-            if (totalEl) totalEl.textContent = grandTotal + ' جنيه';
-        }
-
-        // Override updateFloatingCart to also refresh mini preview if open
-        const _origUpdateFloatingCart = updateFloatingCart;
-        function updateFloatingCart(qty, total) {
-            _origUpdateFloatingCart(qty, total);
-            if (_cartPreviewOpen) updateCartMiniItems();
-        }
-
-
         // ===== CATEGORY CHOICE MODAL =====
         function openCategoryModal() {
             const modal = document.getElementById('category-modal');
@@ -5836,6 +5677,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         function scrollToOrderForm() {
             // ===== Meta Pixel: InitiateCheckout =====
+            // بيقول لفيسبوك إن العميل بدأ خطوات إتمام الطلب — مهم جدًا لمتابعة نسبة
+            // اللي بيوصلوا للفورم من اللي بيدخلوا الموقع (Funnel)
             if (typeof fbq !== 'undefined' && selectedDesigns.length) {
                 const total = selectedDesigns.reduce((sum, d) => {
                     const qty = (typeof d === 'string' ? 1 : (d.quantity || 1));
@@ -5849,40 +5692,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     num_items: selectedDesigns.reduce((s, d) => s + (typeof d === 'string' ? 1 : (d.quantity || 1)), 0)
                 });
             }
-
-            // ✅ FIX: إذا مفيش تصميم متاختار، وديه للـ order form عشان يختار أول
-            // وإذا فيه تصميم مختار، وديه للفورم مباشرة
-            const orderSection = document.getElementById('order');
-            if (!orderSection) return;
-
-            if (!selectedDesigns.length) {
-                // لو مفيش اختيار — وديه لفورم الطلب وبعدين highlight مكان الاختيار
-                orderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                setTimeout(() => {
-                    const pickerBtn = document.getElementById('picker-empty-btn');
-                    if (pickerBtn) {
-                        pickerBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        // Flash animation to grab attention
-                        pickerBtn.style.transition = 'all 0.15s ease';
-                        pickerBtn.style.boxShadow = '0 0 0 4px rgba(201,168,76,0.6), 0 0 30px rgba(201,168,76,0.4)';
-                        pickerBtn.style.transform = 'scale(1.04)';
-                        setTimeout(() => {
-                            pickerBtn.style.boxShadow = '';
-                            pickerBtn.style.transform = '';
-                        }, 1800);
-                    }
-                }, 500);
-            } else {
-                // لو فيه اختيار — وديه مباشرة لفورم إتمام الطلب
-                orderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                // Highlight the submit button area
-                setTimeout(() => {
-                    const submitBtn = document.querySelector('#order .btn-submit') || document.querySelector('#order button[type="button"]:last-of-type');
-                    if (submitBtn) {
-                        submitBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }, 600);
-            }
+            document.getElementById('order')?.scrollIntoView({ behavior: 'smooth' });
         }
 
         function selectProduct(name) {
@@ -6068,6 +5878,51 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         }
 
         // ---- GOVERNORATES ----
+
+        // ====================================================
+        // READ PRODUCT FROM CATEGORY PAGES (sponge / memory-foam)
+        // ====================================================
+        function readCheckoutFromSession() {
+            const raw = sessionStorage.getItem('sedra_checkout_product');
+            if (!raw) return;
+            try {
+                const p = JSON.parse(raw);
+                sessionStorage.removeItem('sedra_checkout_product'); // clear after use
+
+                if (!p || !p.name) return;
+
+                // 1. Add the product to selectedDesigns
+                const qty = p.quantity || 1;
+                const existingIndex = selectedDesigns.findIndex(d =>
+                    (typeof d === 'string' ? d : d.name) === p.name
+                );
+                if (existingIndex !== -1) {
+                    const existing = selectedDesigns[existingIndex];
+                    const curQty = typeof existing === 'string' ? 1 : (existing.quantity || 1);
+                    selectedDesigns[existingIndex] = { name: p.name, quantity: curQty + qty };
+                } else {
+                    selectedDesigns.push({ name: p.name, quantity: qty });
+                }
+
+                // 2. Update UI
+                syncProductPickerUI();
+                updateOrderTotalUI();
+
+                // 3. Scroll to order form smoothly
+                setTimeout(() => {
+                    const orderSection = document.getElementById('order');
+                    if (orderSection) {
+                        orderSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    // Show toast
+                    showToast('✅ تم تحميل "' + p.name + '" — أكمل بيانات طلبك');
+                }, 400);
+
+            } catch(e) {
+                console.warn('sedra_checkout_product parse error:', e);
+            }
+        }
+
         function buildGovernorateSelect() {
             const sel = document.getElementById('gov-select');
             if (!sel || typeof EGYPT_DATA === 'undefined') return;
@@ -7752,12 +7607,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
             <!-- Left: image -->
             <div class="modal-img-col">
-                <img class="modal-main-img" id="modal-main-img" src="" alt="" onerror="this.src='logo.png'"
-                    onclick="openImageLightbox(this.src, this.alt)"
-                    style="cursor:zoom-in;"
-                    title="اضغط لتكبير الصورة">
+                <img class="modal-main-img" id="modal-main-img" src="" alt="" onerror="this.src='logo.png'">
                 <div class="modal-thumbs" id="modal-thumbs"></div>
-                <div style="text-align:center;margin-top:6px;padding-bottom:6px;font-size:0.72rem;color:var(--text-muted);opacity:0.7;">🔍 اضغط على الصورة لتكبيرها</div>
             </div>
 
             <!-- Right: info -->
@@ -7800,10 +7651,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <button onclick="changeModalQty(1)" style="width:32px;height:32px;border-radius:50%;background:rgba(201,168,76,0.15);border:1px solid var(--gold);color:var(--gold-light);font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">+</button>
                 </div>
 
-                <div id="modal-cart-indicator" style="
-                    display:none; background:rgba(40,167,69,0.12); border:1px solid rgba(40,167,69,0.35);
-                    color:#28a745; padding:8px 14px; border-radius:8px; font-size:0.82rem; font-weight:700;
-                    text-align:center; margin-bottom:4px;">🛒 هذا التصميم في سلتك بالفعل</div>
                 <button class="modal-order-btn" id="modal-order-btn">🛒 أضف للطلب</button>
                 <!-- Checkout button — appears after user adds this product -->
                 <button id="modal-checkout-btn" onclick="closeProductModalDirect(); scrollToOrderForm();"
@@ -7812,32 +7659,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 </button>
             </div>
         </div>
-    </div>
-
-
-    <!-- ===== IMAGE LIGHTBOX ===== -->
-    <div id="img-lightbox" onclick="closeImageLightbox()" style="
-        display:none; position:fixed; inset:0; z-index:9999;
-        background:rgba(0,0,0,0.93); backdrop-filter:blur(8px);
-        align-items:center; justify-content:center; cursor:zoom-out;
-        padding:20px;">
-        <button onclick="closeImageLightbox()" style="
-            position:absolute; top:20px; right:20px; z-index:10001;
-            width:44px; height:44px; border-radius:50%;
-            background:rgba(201,168,76,0.2); border:1px solid var(--border-gold-strong);
-            color:var(--gold-light); font-size:1.3rem; cursor:pointer;
-            display:flex; align-items:center; justify-content:center;
-            transition:var(--transition);">✕</button>
-        <img id="lightbox-img" src="" alt="" style="
-            max-width:90vw; max-height:90vh; object-fit:contain;
-            border-radius:12px; box-shadow:0 0 60px rgba(0,0,0,0.8);
-            animation: lightbox-in 0.25s ease; user-select:none;" onclick="event.stopPropagation()">
-        <div id="lightbox-caption" style="
-            position:absolute; bottom:24px; left:50%; transform:translateX(-50%);
-            color:var(--gold-light); font-size:0.9rem; font-weight:600;
-            background:rgba(0,0,0,0.6); padding:8px 20px; border-radius:50px;
-            backdrop-filter:blur(4px); border:1px solid var(--border-gold);
-            white-space:nowrap; max-width:80vw; overflow:hidden; text-overflow:ellipsis;"></div>
     </div>
 
 </body>
