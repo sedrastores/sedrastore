@@ -4066,6 +4066,58 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 padding: 8px 16px;
             }
         }
+
+        /* ========== WHATSAPP CONFIRM ========== */
+        .whatsapp-confirm-section {
+            margin-top: 20px;
+            padding: 18px 16px;
+            background: rgba(37, 211, 102, 0.07);
+            border: 1px solid rgba(37, 211, 102, 0.25);
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .whatsapp-confirm-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            line-height: 1.6;
+        }
+
+        .whatsapp-confirm-hint {
+            font-size: 0.78rem;
+            color: rgba(37, 211, 102, 0.7);
+            margin-bottom: 14px;
+            line-height: 1.5;
+        }
+
+        .whatsapp-confirm-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            font-family: var(--font-ar);
+            font-size: 1rem;
+            font-weight: 800;
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+            width: 100%;
+            justify-content: center;
+        }
+
+        .whatsapp-confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
+        }
+
+        .whatsapp-confirm-btn svg {
+            flex-shrink: 0;
+        }
 </style>
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -4803,6 +4855,19 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     style="margin-top:10px; padding:12px 24px;">إرسال التقييم</button>
                 <div id="review-success-msg" style="margin-top:8px; font-size:0.8rem; color:var(--gold-light);"></div>
             </div>
+            <!-- WhatsApp Confirmation -->
+            <div class="whatsapp-confirm-section">
+                <p class="whatsapp-confirm-label">📦 لضمان وصول طلبك وأولوية التنفيذ</p>
+                <p class="whatsapp-confirm-hint">اضغط الزرار وهيتفتحلك واتساب برسالة فيها كل تفاصيل طلبك جاهزة، بس ابعتها!</p>
+                <button class="whatsapp-confirm-btn" onclick="sendOrderWhatsApp()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.855L0 24l6.335-1.506A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.374l-.36-.214-3.733.888.936-3.618-.235-.372A9.818 9.818 0 1112 21.818z"/>
+                    </svg>
+                    تأكيد طلبك عبر واتساب
+                </button>
+            </div>
+
             <button class="modal-close-btn" onclick="closeModal()" style="margin-top:14px;">🛍 متابعة التسوق</button>
         </div>
     </div>
@@ -6713,6 +6778,53 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         function closeModal() {
             document.getElementById('success-modal').classList.remove('open');
+        }
+
+        function sendOrderWhatsApp() {
+            // جمع بيانات آخر طلب من ordersDB
+            const order = ordersDB[ordersDB.length - 1] || {};
+
+            const name      = order.name     || '';
+            const phone     = order.phone    || '';
+            const gov       = order.gov      || '';
+            const city      = order.city     || '';
+            const address   = order.address  || '';
+            const notes     = order.notes    || '';
+            const orderId   = order.id       || latestOrderId || '';
+            const payment   = order.payment  || 'عند الاستلام';
+            const total     = order.total    || '';
+            const shipping  = order.shippingFee || '';
+            const designs   = order.designSummary || (order.designs ? order.designs.join(' • ') : '');
+            const qty       = order.quantity || 1;
+            const delivDate = order.delivDate || '';
+            const delivTime = order.delivTime || '';
+            const mapLink   = order.mapLink  || '';
+
+            let msg = `🌿 *طلب جديد - سدرة ستور*\n`;
+            msg += `━━━━━━━━━━━━━━━\n`;
+            msg += `🔖 *رقم الطلب:* ${orderId}\n`;
+            msg += `👤 *الاسم:* ${name}\n`;
+            msg += `📞 *الهاتف:* ${phone}\n`;
+            msg += `━━━━━━━━━━━━━━━\n`;
+            msg += `📍 *العنوان:* ${gov} - ${city}\n`;
+            if (address) msg += `🏠 *التفاصيل:* ${address}\n`;
+            if (mapLink)  msg += `🗺 *الموقع:* ${mapLink}\n`;
+            msg += `━━━━━━━━━━━━━━━\n`;
+            msg += `🛒 *المنتجات:*\n${designs}\n`;
+            msg += `🔢 *الكمية:* ${qty}\n`;
+            msg += `💳 *الدفع:* ${payment}\n`;
+            if (shipping) msg += `🚚 *الشحن:* ${shipping} جنيه\n`;
+            msg += `💰 *الإجمالي:* ${total} جنيه\n`;
+            if (delivDate) msg += `📅 *موعد التسليم:* ${delivDate}`;
+            if (delivTime) msg += ` - ${delivTime}`;
+            if (delivDate || delivTime) msg += `\n`;
+            if (notes)     msg += `📝 *ملاحظات:* ${notes}\n`;
+            msg += `━━━━━━━━━━━━━━━\n`;
+            msg += `✅ *طلب مؤكد من العميل*`;
+
+            const storePhone = '201033035681';
+            const waURL = `https://wa.me/${storePhone}?text=${encodeURIComponent(msg)}`;
+            window.open(waURL, '_blank');
         }
 
         function resetReviewUI() {
