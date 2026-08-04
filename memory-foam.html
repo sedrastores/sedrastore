@@ -462,7 +462,7 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
     <!-- ملخص السعر -->
     <div class="cart-summary">
       <div class="cs-row"><span>سعر المنتجات</span><span id="cs-price">—</span></div>
-      <div class="cs-row"><span>مصاريف الشحن</span><span>100 ج</span></div>
+      <div class="cs-row"><span>مصاريف الشحن</span><span>75 ج</span></div>
       <div class="cs-row total"><span>الإجمالي</span><span id="cs-total">—</span></div>
     </div>
 
@@ -553,10 +553,10 @@ function getCartTotals() {
     mat += q * p;
   });
   // bundle pricing (same as index.html)
-  if (qty === 2) mat = 850;
-  else if (qty === 3) mat = 1200;
-  else if (qty > 3) mat = 1200 + (qty - 3) * 400;
-  return { qty, mat, total: mat + 100 };
+  
+  
+  
+  return { qty, mat, total: mat + 75 };
 }
 
 /* ---- RENDER CART MODAL ---- */
@@ -576,7 +576,7 @@ function renderCartModal() {
         <img class="ci-img" src="${item.imageData || 'logo.png'}" alt="${item.name}" onclick="openLightbox(this.src,'${item.name.replace(/'/g,"\\'")}')">
         <div class="ci-info">
           <div class="ci-name">${item.name}</div>
-          <div class="ci-price">${item.price || 950} ج × ${item.quantity || 1}</div>
+          <div class="ci-price">${item.price || 975} ج × ${item.quantity || 1}</div>
         </div>
         <div class="ci-qty-ctrl">
           <button class="ci-qty-btn" onclick="changeItemQty(${i},-1)">−</button>
@@ -644,7 +644,7 @@ function openCart(product) {
     _localCart[existIdx].quantity = (_localCart[existIdx].quantity || 1) + 1;
     showToast('✅ زادت الكمية: "' + product.name + '"');
   } else {
-    _localCart.push({ name: product.name, price: product.price || 950, quantity: 1, imageData: product.imageData || null });
+    _localCart.push({ name: product.name, price: product.price || 975, quantity: 1, imageData: product.imageData || null });
     showToast('✅ أُضيف: "' + product.name + '"');
   }
   saveCart();
@@ -731,10 +731,10 @@ function renderGrid(products) {
       <div class="product-info">
         <div class="product-name">${p.name}</div>
         <div class="price-row-wrap">
-          <div class="product-price">${p.price || 950} ج</div>
+          <div class="product-price">${p.price || 975} ج</div>
           <span class="price-old">1,300 ج</span>
         </div>
-        <div class="price-note">+ 100 ج شحن لجميع المحافظات</div>
+        <div class="price-note">+ 75 ج شحن لجميع المحافظات</div>
         <button class="btn-order" ${p.outOfStock ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>${p.outOfStock ? 'نفذ المخزون' : 'أضف للعربة ←'}</button>
       </div>
     </div>`; }).join('');
