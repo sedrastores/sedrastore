@@ -318,6 +318,108 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
 .btn-continue{background:none;border:1px solid rgba(255,255,255,0.1);color:var(--text-muted);font-family:var(--font-ar);font-size:0.85rem;padding:10px;border-radius:50px;cursor:pointer;width:100%;transition:all 0.2s;}
 .btn-continue:hover{color:var(--white);}
 
+/* ====== WHATSAPP FLOAT ====== */
+.whatsapp-float{
+  position:fixed;bottom:160px;right:28px;z-index:3500;
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#c9a84c 0%,#f5e27a 50%,#a07c30 100%);
+  box-shadow:0 4px 20px rgba(201,168,76,0.55),0 0 0 3px rgba(201,168,76,0.18);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  text-decoration:none;animation:wa-pulse 2.8s ease-in-out infinite;
+}
+.whatsapp-float:hover{transform:scale(1.13) translateY(-3px);box-shadow:0 8px 32px rgba(201,168,76,0.75),0 0 0 5px rgba(201,168,76,0.22);}
+.whatsapp-float svg{width:30px;height:30px;fill:#0a0a0a;}
+.whatsapp-float-tooltip{
+  position:absolute;right:68px;top:50%;transform:translateY(-50%);
+  background:rgba(10,10,10,0.92);border:1px solid #c9a84c;color:#e8c96a;
+  font-family:'Cairo',sans-serif;font-size:0.72rem;font-weight:700;
+  padding:6px 12px;border-radius:8px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity 0.2s ease;backdrop-filter:blur(8px);
+}
+.whatsapp-float:hover .whatsapp-float-tooltip{opacity:1;}
+@keyframes wa-pulse{
+  0%,100%{box-shadow:0 4px 20px rgba(201,168,76,0.55),0 0 0 3px rgba(201,168,76,0.18);}
+  50%{box-shadow:0 4px 28px rgba(201,168,76,0.8),0 0 0 8px rgba(201,168,76,0.08);}
+}
+
+/* ====== CHATBOT ====== */
+#chatbot-btn{
+  position:fixed;bottom:80px;left:28px;z-index:900;
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,#a07c30,#e8c96a);
+  color:#0a0a0a;font-size:1.6rem;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 25px rgba(201,168,76,0.5);
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  cursor:pointer;animation:cb-float 3s ease-in-out infinite;border:none;
+}
+#chatbot-btn:hover{transform:scale(1.1);}
+@keyframes cb-float{
+  0%,100%{box-shadow:0 6px 25px rgba(201,168,76,0.5);}
+  50%{box-shadow:0 10px 35px rgba(201,168,76,0.7);}
+}
+.chatbot-badge{
+  position:absolute;top:-4px;right:-4px;width:18px;height:18px;
+  border-radius:50%;background:#e74c3c;color:#fff;
+  font-size:0.65rem;display:flex;align-items:center;justify-content:center;
+  font-weight:700;border:2px solid #111;
+}
+#chatbot-window{
+  position:fixed;bottom:100px;left:28px;z-index:900;
+  width:340px;max-height:520px;background:#111;
+  border:1px solid rgba(201,168,76,0.6);border-radius:20px;
+  box-shadow:0 0 50px rgba(201,168,76,0.3);
+  display:none;flex-direction:column;overflow:hidden;
+  animation:chat-in 0.3s ease;
+}
+#chatbot-window.open{display:flex;}
+@keyframes chat-in{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.chat-header{
+  background:linear-gradient(135deg,#1a1a1a,#222);
+  border-bottom:1px solid rgba(201,168,76,0.3);
+  padding:16px 18px;display:flex;align-items:center;justify-content:space-between;
+}
+.chat-header-info{display:flex;align-items:center;gap:12px;}
+.chat-avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,#a07c30,#e8c96a);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+}
+.chat-header-text h4{font-size:0.9rem;font-weight:700;color:#fff;}
+.chat-header-text p{font-size:0.72rem;color:#4caf50;}
+.chat-close{background:none;border:none;color:#888;font-size:1.2rem;cursor:pointer;transition:color 0.3s;}
+.chat-close:hover{color:#c9a84c;}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:0.85rem;line-height:1.5;}
+.chat-msg.bot{background:#1a1a1a;border:1px solid rgba(201,168,76,0.3);color:#f0ece0;align-self:flex-start;border-radius:14px 14px 14px 4px;}
+.chat-msg.user{background:linear-gradient(135deg,#a07c30,#e8c96a);color:#0a0a0a;align-self:flex-end;font-weight:600;border-radius:14px 14px 4px 14px;}
+.chat-quick-replies{padding:8px 12px 0;display:flex;flex-wrap:wrap;gap:6px;}
+.quick-reply{
+  background:#1a1a1a;border:1px solid rgba(201,168,76,0.3);color:#e8c96a;
+  font-size:0.75rem;padding:5px 12px;border-radius:50px;
+  cursor:pointer;transition:all 0.3s;font-family:'Cairo',sans-serif;
+}
+.quick-reply:hover{background:rgba(201,168,76,0.15);border-color:#c9a84c;}
+.chat-input-row{padding:12px 14px;border-top:1px solid rgba(201,168,76,0.3);display:flex;gap:8px;}
+.chat-input{
+  flex:1;background:#1a1a1a;border:1px solid rgba(201,168,76,0.3);
+  color:#fff;padding:10px 14px;border-radius:50px;font-size:0.85rem;
+  direction:rtl;font-family:'Cairo',sans-serif;
+}
+.chat-input:focus{outline:none;border-color:#c9a84c;}
+.chat-send{
+  background:linear-gradient(135deg,#a07c30,#e8c96a);color:#0a0a0a;
+  width:38px;height:38px;border-radius:50%;font-size:1rem;border:none;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.3s;
+}
+.chat-send:hover{transform:scale(1.1);}
+@media(max-width:480px){
+  #chatbot-window{width:calc(100vw - 40px);left:20px;}
+  .whatsapp-float{bottom:140px;right:20px;}
+  #chatbot-btn{bottom:76px;left:20px;}
+}
+
 /* ====== TOAST ====== */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a1a;border:1px solid var(--gold);color:var(--gold-light);padding:12px 24px;border-radius:50px;font-size:0.88rem;z-index:9999;opacity:0;transition:all 0.35s;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -872,7 +974,101 @@ document.addEventListener('DOMContentLoaded', function() {
   updateSavedBanner();
   updateCartIcon();
 });
+
+// ---- CHATBOT ----
+const CHAT_ANSWERS = {
+  timing: '⏰ عادةً الطلبات بتوصل خلال 2-4 أيام عمل حسب محافظتك. محافظات كبيرة زي القاهرة والإسكندرية بتاخد يوم أو يومين.',
+  price: '💰 سعر المصلاية 395 جنيه + 75 جنيه مصاريف شحن = 470 جنيه إجمالي. دا بيشمل المصلاية والشنطة الحافظة!',
+  specs: '📐 المواصفات:\n• المقاس: 68 × 120 سم\n• السماكة: 2.5 سم (سفنج + فايبر)\n• ظهر مانع للانزلاق\n• شنطة حافظة (وش مشمع + ظهر قماش)',
+  payment: '💳 عندنا طريقتين:\n1️⃣ الدفع عند الاستلام — كاش مع المندوب\n2️⃣ محفظة إلكترونية — تحويل على 01146164155',
+  return: '🔄 لو فيه مشكلة في المنتج بعد الاستلام، تواصل معنا خلال 48 ساعة وهنحل الموضوع فوراً. رضاك أهم حاجة عندنا!',
+  shipping: '🚚 بنوصل لجميع محافظات جمهورية مصر العربية! مصاريف الشحن ثابتة 75 جنيه لأي محافظة.',
+  other: '💬 للاستفسارات الأخرى، تواصل معنا على: 01033035681 أو ابعتلنا على الواتساب وهيرد معاك فريقنا!'
+};
+function toggleChat() {
+  const win = document.getElementById('chatbot-window');
+  win.classList.toggle('open');
+  document.querySelector('#chatbot-btn .chatbot-badge')?.remove();
+}
+function chatAnswer(key) {
+  const text = CHAT_ANSWERS[key] || CHAT_ANSWERS.other;
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const msgs = document.getElementById('chat-messages');
+  const uDiv = document.createElement('div');
+  uDiv.className = 'chat-msg user';
+  uDiv.textContent = text;
+  msgs.appendChild(uDiv);
+  msgs.scrollTop = msgs.scrollHeight;
+  input.value = '';
+  const lower = text.toLowerCase();
+  setTimeout(() => {
+    if (lower.includes('وصل') || lower.includes('توصيل') || lower.includes('امتى')) chatAnswer('timing');
+    else if (lower.includes('سعر') || lower.includes('بكام') || lower.includes('كام')) chatAnswer('price');
+    else if (lower.includes('مواصف') || lower.includes('مقاس') || lower.includes('سمك')) chatAnswer('specs');
+    else if (lower.includes('دفع') || lower.includes('فلوس') || lower.includes('محفظ')) chatAnswer('payment');
+    else if (lower.includes('ارجاع') || lower.includes('إرجاع') || lower.includes('استبدال')) chatAnswer('return');
+    else if (lower.includes('شحن') || lower.includes('محافظ') || lower.includes('توصل')) chatAnswer('shipping');
+    else chatAnswer('other');
+  }, 600);
+}
+window.toggleChat = toggleChat;
+window.chatAnswer = chatAnswer;
+window.sendChat = sendChat;
 </script>
+
+<!-- WHATSAPP FLOAT -->
+<a class="whatsapp-float"
+   href="https://wa.me/201033035681?text=%D8%A3%D9%87%D9%84%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B5%D9%84%D9%8A%D8%A7%D8%AA%20%D8%B3%D8%AF%D8%B1%D8%A9%20%D8%B3%D8%AA%D9%88%D8%B1"
+   target="_blank" rel="noopener noreferrer" aria-label="تواصل معنا على واتساب">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span class="whatsapp-float-tooltip">تواصل معنا 💬</span>
+</a>
+
+<!-- CHATBOT -->
+<div id="chatbot-btn" onclick="toggleChat()">
+  💬
+  <div class="chatbot-badge">1</div>
+</div>
+<div id="chatbot-window">
+  <div class="chat-header">
+    <div class="chat-header-info">
+      <div class="chat-avatar">🕌</div>
+      <div class="chat-header-text">
+        <h4>سدرة ستور</h4>
+        <p>● متاح الآن</p>
+      </div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-msg bot">أهلاً بك في سدرة ستور! 🌟<br>أنا هنا لمساعدتك. إيه اللي تحب تعرفه؟</div>
+  </div>
+  <div class="chat-quick-replies" id="quick-replies">
+    <button class="quick-reply" onclick="chatAnswer('timing')">⏰ امتى الطلب يوصل؟</button>
+    <button class="quick-reply" onclick="chatAnswer('price')">💰 ما هو السعر؟</button>
+    <button class="quick-reply" onclick="chatAnswer('specs')">📐 المواصفات؟</button>
+    <button class="quick-reply" onclick="chatAnswer('payment')">💳 طرق الدفع؟</button>
+    <button class="quick-reply" onclick="chatAnswer('return')">🔄 سياسة الإرجاع؟</button>
+    <button class="quick-reply" onclick="chatAnswer('shipping')">🚚 مناطق الشحن؟</button>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" placeholder="اكتب سؤالك هنا..."
+      onkeydown="if(event.key==='Enter') sendChat()">
+    <button class="chat-send" onclick="sendChat()">↑</button>
+  </div>
+</div>
 
 </body>
 </html>
