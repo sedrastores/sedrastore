@@ -493,16 +493,14 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
 <div class="top-promo-bar">
   <div class="top-promo-track">
     <span class="top-promo-item">🧽 مصليات إسفنج عالية الجودة <span class="top-promo-sep">◆</span></span>
-    <span class="top-promo-item">🔥 3 مصليات بـ 1000ج بدل 2250ج <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">🚚 توصيل لجميع محافظات مصر بـ 75ج <span class="top-promo-sep">◆</span></span>
-    <span class="top-promo-item">💛 مصلية واحدة بـ 395ج بدل 750ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">💛 السعر 450ج فقط <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">✓ سطح مانع للانزلاق <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">💳 الدفع عند الاستلام أو المحفظة <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">⭐ جودة مضمونة 100% <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">🧽 مصليات إسفنج عالية الجودة <span class="top-promo-sep">◆</span></span>
-    <span class="top-promo-item">🔥 3 مصليات بـ 1000ج بدل 2250ج <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">🚚 توصيل لجميع محافظات مصر بـ 75ج <span class="top-promo-sep">◆</span></span>
-    <span class="top-promo-item">💛 مصلية واحدة بـ 395ج بدل 750ج <span class="top-promo-sep">◆</span></span>
+    <span class="top-promo-item">💛 السعر 450ج فقط <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">✓ سطح مانع للانزلاق <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">💳 الدفع عند الاستلام أو المحفظة <span class="top-promo-sep">◆</span></span>
     <span class="top-promo-item">⭐ جودة مضمونة 100% <span class="top-promo-sep">◆</span></span>
@@ -536,6 +534,22 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
   </div>
 </div>
 
+<!-- VIDEO SECTION -->
+<div class="video-section" style="max-width:800px;margin:32px auto;padding:0 20px;">
+  <div class="video-wrap" style="position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(201,168,76,0.6);box-shadow:0 0 40px rgba(201,168,76,0.2);background:#111111;">
+    <video autoplay muted loop playsinline style="width:100%;display:block;max-height:500px;object-fit:cover;">
+      <source src="sponge_video.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,transparent 100%);padding:28px 24px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div style="font-size:0.95rem;font-weight:700;color:#fff;">
+        <strong style="color:#e8c96a;display:block;font-size:1.05rem;">مصليات الإسفنج — سدرة ستور</strong>
+        اطلبها دلوقتي وهتوصلك في أسرع وقت
+      </div>
+      <a href="#products" style="background:linear-gradient(135deg,#a07c30,#e8c96a);color:#0a0a0a;font-weight:900;font-size:0.85rem;padding:11px 22px;border-radius:50px;border:none;font-family:'Cairo',sans-serif;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block;">شوف التصاميم ←</a>
+    </div>
+  </div>
+</div>
+
 <!-- BREADCRUMB -->
 <div class="breadcrumb">
   <a href="index.html">الرئيسية</a>
@@ -562,60 +576,6 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
   </div>
 </div>
 
-<!-- DEALS SECTION -->
-<div class="deals-section">
-  <div class="deals-inner">
-    <div class="section-title">
-      🔥 عروض الكمية
-      <span class="section-title-badge">وفّر أكتر</span>
-    </div>
-    <div class="deals-grid">
-
-      <!-- Deal 1: واحدة -->
-      <div class="deal-card" onclick="scrollToProducts()">
-        <div class="deal-qty-badge">1</div>
-        <div class="deal-title">مصلية واحدة</div>
-        <div class="deal-desc">اختار أي تصميم يعجبك من التشكيلة</div>
-        <div class="deal-price-block">
-          <div class="deal-price-main">395 <span>ج</span></div>
-          <div class="deal-price-detail">+ 75 ج شحن = <strong>470 ج إجمالي</strong></div>
-          <div class="deal-price-old">سعر قديم: 750 ج</div>
-          <span class="deal-saving">💰 وفّرت 355 ج</span>
-        </div>
-        <button class="deal-btn" onclick="event.stopPropagation(); scrollToProducts()">اختار تصميمك ←</button>
-      </div>
-
-      <!-- Deal 2: اتنين -->
-      <div class="deal-card featured" onclick="applyDeal(2)">
-        <div class="deal-qty-badge">2</div>
-        <div class="deal-title">مصليتين معاً</div>
-        <div class="deal-desc">اختار أي تصميمين من التشكيلة</div>
-        <div class="deal-price-block">
-          <div class="deal-price-main">750 <span>ج</span></div>
-          <div class="deal-price-detail">+ 75 ج شحن = <strong>825 ج إجمالي</strong></div>
-          <div class="deal-price-old">بدل: 1500 ج</div>
-          <span class="deal-saving">💰 وفّرت 750 ج</span>
-        </div>
-        <button class="deal-btn" onclick="event.stopPropagation(); applyDeal(2)">اطلب العرض ←</button>
-      </div>
-
-      <!-- Deal 3: تلاتة -->
-      <div class="deal-card" onclick="applyDeal(3)">
-        <div class="deal-qty-badge">3</div>
-        <div class="deal-title">تلات مصليات</div>
-        <div class="deal-desc">أفضل قيمة — هدية أو للعيلة</div>
-        <div class="deal-price-block">
-          <div class="deal-price-main">1000 <span>ج</span></div>
-          <div class="deal-price-detail">+ 75 ج شحن = <strong>1075 ج إجمالي</strong></div>
-          <div class="deal-price-old">بدل: 2250 ج</div>
-          <span class="deal-saving">💰 وفّرت 1250 ج</span>
-        </div>
-        <button class="deal-btn" onclick="event.stopPropagation(); applyDeal(3)">اطلب العرض ←</button>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 <!-- PRODUCTS -->
 <section class="products-section" id="products">
@@ -643,7 +603,6 @@ body{background:var(--black);color:var(--white);font-family:var(--font-ar);min-h
   </div>
   <div class="cart-body">
     <div class="cart-items-list" id="cart-items-list"></div>
-    <div class="deal-applied-note" id="deal-note" style="display:none;"></div>
     <div class="cart-summary">
       <div class="cs-row"><span>سعر المنتجات</span><span id="cs-price">—</span></div>
       <div class="cs-row"><span>مصاريف الشحن</span><span>75 ج</span></div>
@@ -713,14 +672,11 @@ window._renderGrid(window._allProducts || []);
 // ============================================================
 // CART ENGINE — sponge.html
 // ============================================================
-const SPONGE_BASE_PRICE = 395;
+const SPONGE_BASE_PRICE = 450;
 const SHIPPING_FEE = 75;
 
-// Deal pricing
-const DEAL_PRICES = { 1: null, 2: 750, 3: 1000 };
-
 let currentFilter = 'all';
-let _activeDeal = null; // null | 2 | 3
+let _activeDeal = null;
 
 let _localCart = [];
 try { _localCart = JSON.parse(localStorage.getItem('sedra_pending_designs') || '[]'); } catch(e) { _localCart = []; }
@@ -751,13 +707,6 @@ function scrollToProducts() {
   document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ---- APPLY DEAL ----
-function applyDeal(qty) {
-  _activeDeal = qty;
-  showToast('🎉 عرض الـ' + qty + ' مصليات محفوظ — اختار تصاميمك!');
-  scrollToProducts();
-}
-
 // ---- SAVE CART ----
 function saveCart() {
   localStorage.setItem('sedra_pending_designs', JSON.stringify(_localCart));
@@ -771,11 +720,7 @@ function getCartTotals() {
     qty += q;
     mat += q * (item.price || SPONGE_BASE_PRICE);
   });
-  // Apply deal pricing if eligible
-  let dealApplied = null;
-  if (_activeDeal === 3 && qty >= 3) { mat = DEAL_PRICES[3] + (qty - 3) * SPONGE_BASE_PRICE; dealApplied = 3; }
-  else if (_activeDeal === 2 && qty >= 2) { mat = DEAL_PRICES[2] + (qty - 2) * SPONGE_BASE_PRICE; dealApplied = 2; }
-  return { qty, mat, total: mat + SHIPPING_FEE, dealApplied };
+  return { qty, mat, total: mat + SHIPPING_FEE, dealApplied: null };
 }
 
 // ---- RENDER CART ----
@@ -806,15 +751,6 @@ function renderCartModal() {
           <button class="ci-remove" onclick="removeItem(${i})" title="حذف">🗑</button>
         </div>
       </div>`).join('');
-  }
-
-  // Deal note
-  const dealNote = document.getElementById('deal-note');
-  if (dealApplied && dealNote) {
-    dealNote.style.display = 'block';
-    dealNote.textContent = '🎉 عرض الـ' + dealApplied + ' مصليات مطبّق — وفّرت فلوس!';
-  } else if (dealNote) {
-    dealNote.style.display = 'none';
   }
 
   const priceEl = document.getElementById('cs-price');
@@ -867,8 +803,6 @@ function closeCart() {
 
 function goCheckout() {
   if (!_localCart.length) { showToast('⚠ العربة فارغة!'); return; }
-  // Pass deal info to index
-  if (_activeDeal) localStorage.setItem('sedra_active_deal', JSON.stringify({ type: 'sponge', qty: _activeDeal, price: DEAL_PRICES[_activeDeal] }));
   saveCart();
   window.location.href = 'index.html#order';
 }
@@ -946,9 +880,7 @@ function renderGrid(products) {
         <div class="product-name">${p.name}</div>
         <div class="price-row-wrap">
           <div class="product-price">${price} ج</div>
-          <span class="price-old">750 ج</span>
         </div>
-        <div class="price-note">+ 75 ج شحن لجميع المحافظات</div>
         <button class="btn-add-cart" ${oos ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
           ${oos ? 'نفذ المخزون' : '+ أضف للعربة'}
         </button>
@@ -966,7 +898,6 @@ window.goCheckout = goCheckout;
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 window.scrollToProducts = scrollToProducts;
-window.applyDeal = applyDeal;
 window.changeItemQty = changeItemQty;
 window.removeItem = removeItem;
 
@@ -978,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ---- CHATBOT ----
 const CHAT_ANSWERS = {
   timing: '⏰ عادةً الطلبات بتوصل خلال 2-4 أيام عمل حسب محافظتك. محافظات كبيرة زي القاهرة والإسكندرية بتاخد يوم أو يومين.',
-  price: '💰 سعر المصلاية 395 جنيه + 75 جنيه مصاريف شحن = 470 جنيه إجمالي. دا بيشمل المصلاية والشنطة الحافظة!',
+  price: '💰 سعر المصلاية 450 جنيه. مصاريف الشحن 75 جنيه تُضاف عند إتمام الطلب. دا بيشمل المصلاية والشنطة الحافظة!',
   specs: '📐 المواصفات:\n• المقاس: 68 × 120 سم\n• السماكة: 2.5 سم (سفنج + فايبر)\n• ظهر مانع للانزلاق\n• شنطة حافظة (وش مشمع + ظهر قماش)',
   payment: '💳 عندنا طريقتين:\n1️⃣ الدفع عند الاستلام — كاش مع المندوب\n2️⃣ محفظة إلكترونية — تحويل على 01146164155',
   return: '🔄 لو فيه مشكلة في المنتج بعد الاستلام، تواصل معنا خلال 48 ساعة وهنحل الموضوع فوراً. رضاك أهم حاجة عندنا!',
