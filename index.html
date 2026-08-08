@@ -459,6 +459,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         }
         .hero-slide img {
             width: 100%;
+            height: 520px;
+            object-fit: cover;
+            object-position: center;
             display: block;
             border-radius: var(--radius-lg);
             box-shadow: 0 0 40px rgba(201,168,76,0.3);
@@ -514,13 +517,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             transform: translateY(-2px);
         }
 
-        /* nav dots */
-        .hero-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px 0 0;
-        }
+        /* nav dots — hidden */
+        .hero-dots { display: none; }
         .hero-dot {
             width: 10px; height: 10px;
             border-radius: 50%;
@@ -4130,6 +4128,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             }
 
             .hero-slider { padding: 0 2%; padding-bottom: 20px; }
+            .hero-slide img { height: 220px; }
             .hero-slide-overlay { padding: 18px 16px; }
             .hero-slide-desc { font-size: 0.88rem; }
             .hero-slide-cta { font-size: 0.82rem; padding: 10px 20px; }
@@ -4270,38 +4269,37 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <section id="hero">
         <div class="hero-slider" id="hero-slider-wrap">
 
-            <!-- Slide 1: صورة المصلاة (تظهر أولاً) — توجه لصفحة الإسفنج -->
+            <!-- Slide 1: صورة المصلاة (تظهر أولاً) -->
             <div class="hero-slide" id="slide-0">
                 <img src="banner-slide3.png" alt="سدرة ستور - مصلية فاخرة">
                 <div class="hero-slide-overlay">
                     <p class="hero-slide-desc">راحة حقيقية في كل سجدة — مصليات فاخرة تجمع بين الجمال والجودة</p>
-                    <button class="hero-slide-cta" onclick="window.location.href='sponge.html'">تسوق الآن ←</button>
+                    <button class="hero-slide-cta" onclick="showOffersModal()">تسوق الآن ←</button>
                 </div>
             </div>
 
-            <!-- Slide 2: إنفوجراف الميموري فوم — توجه لصفحة الميموري فوم -->
+            <!-- Slide 2: إنفوجراف الميموري فوم -->
             <div class="hero-slide" id="slide-1">
                 <img src="banner-slide2.png" alt="مصلية الركبة ميموري فوم">
                 <div class="hero-slide-overlay">
                     <p class="hero-slide-desc">مصلية الركبة بالميموري فوم — تحمي مفاصلك وتجعل صلاتك أكثر خشوعاً</p>
-                    <button class="hero-slide-cta" onclick="window.location.href='memory-foam.html'">تسوق الآن ←</button>
+                    <button class="hero-slide-cta" onclick="showOffersModal()">تسوق الآن ←</button>
                 </div>
             </div>
 
-            <!-- Slide 3: صورة رجل يصلي — توجه لصفحة الميموري فوم -->
+            <!-- Slide 3: صورة رجل يصلي -->
             <div class="hero-slide" id="slide-2">
                 <img src="banner-slide1.png" alt="سكينة السجود - سدرة ستور">
                 <div class="hero-slide-overlay">
                     <p class="hero-slide-desc">في سكينة السجود تقترب من الله أكثر — راحة في كل سجدة وخشوع في كل لحظة</p>
-                    <button class="hero-slide-cta" onclick="window.location.href='memory-foam.html'">تسوق الآن ←</button>
+                    <button class="hero-slide-cta" onclick="showOffersModal()">تسوق الآن ←</button>
                 </div>
             </div>
 
-            <!-- Slide 4: البانر الإعلاني — يسأل سؤال الاختيار -->
+            <!-- Slide 4: البانر الإعلاني -->
             <div class="hero-slide" id="slide-3">
                 <img src="banner.png" alt="سدرة ستور - عروض حصرية">
                 <div class="hero-slide-overlay" style="background:transparent;">
-                    <!-- الصورة فيها نص Shop Now بالفعل، بس بنضيف زر مخفي فوقها -->
                     <button class="hero-slide-cta" onclick="showOffersModal()" style="margin-bottom:24px; margin-right:auto;">تسوق الآن ←</button>
                 </div>
             </div>
@@ -4309,14 +4307,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <!-- arrows -->
             <button class="hero-arrow hero-arrow-prev" onclick="sliderMove(1)" aria-label="السابق">&#8250;</button>
             <button class="hero-arrow hero-arrow-next" onclick="sliderMove(-1)" aria-label="التالي">&#8249;</button>
-        </div>
-
-        <!-- dots -->
-        <div class="hero-dots" id="hero-dots">
-            <div class="hero-dot active" onclick="goSlide(0)"></div>
-            <div class="hero-dot" onclick="goSlide(1)"></div>
-            <div class="hero-dot" onclick="goSlide(2)"></div>
-            <div class="hero-dot" onclick="goSlide(3)"></div>
         </div>
     </section>
 
@@ -4453,7 +4443,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <!-- كاتيجوري 1: مصليات إسفنج -->
             <a href="sponge.html" style="text-decoration:none; display:block;" class="cat-link anim-right">
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
-                    <img src="choice-sponge.jpg" alt="مصليات إسفنج" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
+                    <img src="category-sponge.jpg" alt="مصليات إسفنج" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block;">
                     <div class="category-card-overlay" style="padding:24px;">
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">راحة ونعومة في كل سجدة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
@@ -4467,7 +4457,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <!-- كاتيجوري 2: مصلية الركبة الميموري فوم -->
             <a href="memory-foam.html" style="text-decoration:none; display:block;" class="cat-link anim-left">
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
-                    <img src="choice-memory.png" alt="مصلية الركبة الميموري فوم" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
+                    <img src="category-memory-foam.jpg" alt="مصلية الركبة الميموري فوم" style="width:100%; aspect-ratio:16/9; object-fit:cover; display:block;">
                     <div class="category-card-overlay" style="padding:24px;">
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">ميموري فوم طبي يحمي ركبتيك في كل سجدة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
