@@ -416,50 +416,147 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         }
 
         /* ========== HERO / BANNER ========== */
+        /* ========== HERO SLIDER ========== */
         #hero {
-            min-height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
             background: var(--black);
             padding-top: 136px;
-            padding-bottom: 20px;
+            padding-bottom: 0;
+            min-height: 0;
         }
 
-        #hero.hero-hidden {
-            display: none;
+        #hero.hero-hidden { display: none; }
+
+        /* keep old references alive but unused */
+        .hero-bg { display: none; }
+        .hero-banner-img { display: none; }
+
+        /* SLIDER WRAPPER */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 3%;
+            padding-bottom: 32px;
         }
 
-        .hero-bg {
+        /* each slide */
+        .hero-slide {
             position: absolute;
             inset: 0;
-            background-image: url('');
-            /* set via JS */
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
-            filter: blur(2px);
-        }
-
-        .hero-banner-img {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 16px 4%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
             border-radius: var(--radius-lg);
             overflow: hidden;
         }
-
-        .hero-banner-img img {
-            width: 100%;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 0 25px rgba(201, 168, 76, 0.35);
-            display: block;
+        .hero-slide.active {
+            position: relative;
+            opacity: 1;
+            pointer-events: all;
         }
+        .hero-slide img {
+            width: 100%;
+            display: block;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 0 40px rgba(201,168,76,0.3);
+        }
+
+        /* overlay content on each slide */
+        .hero-slide-overlay {
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.18) 55%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            padding: 32px 36px;
+            gap: 14px;
+        }
+
+        .hero-slide-desc {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            line-height: 1.5;
+            max-width: 520px;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.6);
+        }
+
+        .hero-slide-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(201, 168, 76, 0.22);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.95rem;
+            padding: 13px 32px;
+            border-radius: 10px;
+            border: 1.5px solid rgba(201, 168, 76, 0.65);
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 24px rgba(201,168,76,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+            transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s;
+            font-family: var(--font-ar);
+            letter-spacing: 0.3px;
+        }
+        .hero-slide-cta:hover {
+            background: rgba(201, 168, 76, 0.38);
+            border-color: rgba(201, 168, 76, 0.9);
+            box-shadow: 0 8px 32px rgba(201,168,76,0.32);
+            transform: translateY(-2px);
+        }
+
+        /* nav dots */
+        .hero-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 0 0;
+        }
+        .hero-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: rgba(201,168,76,0.25);
+            border: 1px solid rgba(201,168,76,0.4);
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .hero-dot.active {
+            background: var(--gold-light);
+            transform: scale(1.3);
+        }
+
+        /* arrow buttons */
+        .hero-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-60%);
+            z-index: 10;
+            background: rgba(10,10,10,0.55);
+            border: 1px solid rgba(201,168,76,0.4);
+            color: var(--gold-light);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background 0.25s, border-color 0.25s;
+            backdrop-filter: blur(4px);
+        }
+        .hero-arrow:hover {
+            background: rgba(201,168,76,0.2);
+            border-color: var(--gold);
+        }
+        .hero-arrow-prev { right: 10px; }
+        .hero-arrow-next { left: 10px; }
 
         /* =============================================
            MARQUEE (من الموقع القديم)
@@ -3546,17 +3643,48 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             }
         }
 
-        /* ========== FADE IN ANIMATION ========== */
+        /* ========== ENTRANCE ANIMATIONS ========== */
         .fade-in {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(40px);
+            transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
         }
-
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* slide from left */
+        .anim-left {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+        }
+        .anim-left.visible { opacity: 1; transform: translateX(0); }
+
+        /* slide from right */
+        .anim-right {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+        }
+        .anim-right.visible { opacity: 1; transform: translateX(0); }
+
+        /* scale up */
+        .anim-scale {
+            opacity: 0;
+            transform: scale(0.88);
+            transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+        }
+        .anim-scale.visible { opacity: 1; transform: scale(1); }
+
+        /* stagger delays — applied automatically by JS */
+        .anim-delay-1 { transition-delay: 0.08s !important; }
+        .anim-delay-2 { transition-delay: 0.18s !important; }
+        .anim-delay-3 { transition-delay: 0.28s !important; }
+        .anim-delay-4 { transition-delay: 0.38s !important; }
+        .anim-delay-5 { transition-delay: 0.48s !important; }
+        .anim-delay-6 { transition-delay: 0.58s !important; }
 
         /* ========== ABOUT IMAGE — ENHANCED 3-PHOTO LAYOUT ========== */
         .about-img-main-wrap {
@@ -3998,12 +4126,14 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         @media (max-width: 480px) {
             #hero {
                 padding-top: 118px;
-                padding-bottom: 10px;
+                padding-bottom: 0;
             }
 
-            .hero-banner-img {
-                padding: 10px 3%;
-            }
+            .hero-slider { padding: 0 2%; padding-bottom: 20px; }
+            .hero-slide-overlay { padding: 18px 16px; }
+            .hero-slide-desc { font-size: 0.88rem; }
+            .hero-slide-cta { font-size: 0.82rem; padding: 10px 20px; }
+            .hero-arrow { width: 32px; height: 32px; font-size: 0.9rem; }
 
             .countdown-boxes {
                 display: flex;
@@ -4136,13 +4266,57 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <!-- ADMIN LINK -->
     <a href="#" id="admin-link" onclick="openAdmin(); return false;" style="display:none;">⚙ لوحة التحكم</a>
 
-    <!-- HERO -->
+    <!-- HERO SLIDER -->
     <section id="hero">
-        <div class="hero-bg" id="hero-bg"></div>
-        <div class="hero-banner-img fade-in"
-            onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})" style="cursor:pointer;"
-            role="button" aria-label="تصفح المنتجات">
-            <img id="banner-img" src="" alt="سدرة ستور - مصليات مبطنة فاخرة">
+        <div class="hero-slider" id="hero-slider-wrap">
+
+            <!-- Slide 1: صورة المصلاة (تظهر أولاً) — توجه لصفحة الإسفنج -->
+            <div class="hero-slide" id="slide-0">
+                <img src="banner-slide3.png" alt="سدرة ستور - مصلية فاخرة">
+                <div class="hero-slide-overlay">
+                    <p class="hero-slide-desc">راحة حقيقية في كل سجدة — مصليات فاخرة تجمع بين الجمال والجودة</p>
+                    <button class="hero-slide-cta" onclick="window.location.href='sponge.html'">تسوق الآن ←</button>
+                </div>
+            </div>
+
+            <!-- Slide 2: إنفوجراف الميموري فوم — توجه لصفحة الميموري فوم -->
+            <div class="hero-slide" id="slide-1">
+                <img src="banner-slide2.png" alt="مصلية الركبة ميموري فوم">
+                <div class="hero-slide-overlay">
+                    <p class="hero-slide-desc">مصلية الركبة بالميموري فوم — تحمي مفاصلك وتجعل صلاتك أكثر خشوعاً</p>
+                    <button class="hero-slide-cta" onclick="window.location.href='memory-foam.html'">تسوق الآن ←</button>
+                </div>
+            </div>
+
+            <!-- Slide 3: صورة رجل يصلي — توجه لصفحة الميموري فوم -->
+            <div class="hero-slide" id="slide-2">
+                <img src="banner-slide1.png" alt="سكينة السجود - سدرة ستور">
+                <div class="hero-slide-overlay">
+                    <p class="hero-slide-desc">في سكينة السجود تقترب من الله أكثر — راحة في كل سجدة وخشوع في كل لحظة</p>
+                    <button class="hero-slide-cta" onclick="window.location.href='memory-foam.html'">تسوق الآن ←</button>
+                </div>
+            </div>
+
+            <!-- Slide 4: البانر الإعلاني — يسأل سؤال الاختيار -->
+            <div class="hero-slide" id="slide-3">
+                <img src="banner.png" alt="سدرة ستور - عروض حصرية">
+                <div class="hero-slide-overlay" style="background:transparent;">
+                    <!-- الصورة فيها نص Shop Now بالفعل، بس بنضيف زر مخفي فوقها -->
+                    <button class="hero-slide-cta" onclick="showOffersModal()" style="margin-bottom:24px; margin-right:auto;">تسوق الآن ←</button>
+                </div>
+            </div>
+
+            <!-- arrows -->
+            <button class="hero-arrow hero-arrow-prev" onclick="sliderMove(1)" aria-label="السابق">&#8250;</button>
+            <button class="hero-arrow hero-arrow-next" onclick="sliderMove(-1)" aria-label="التالي">&#8249;</button>
+        </div>
+
+        <!-- dots -->
+        <div class="hero-dots" id="hero-dots">
+            <div class="hero-dot active" onclick="goSlide(0)"></div>
+            <div class="hero-dot" onclick="goSlide(1)"></div>
+            <div class="hero-dot" onclick="goSlide(2)"></div>
+            <div class="hero-dot" onclick="goSlide(3)"></div>
         </div>
     </section>
 
@@ -4277,9 +4451,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px; max-width:1100px; margin:0 auto;" class="categories-grid-2">
 
             <!-- كاتيجوري 1: مصليات إسفنج -->
-            <a href="sponge.html" style="text-decoration:none; display:block;" class="cat-link fade-in">
+            <a href="sponge.html" style="text-decoration:none; display:block;" class="cat-link anim-right">
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
-                    <img src="category-sponge.jpg" alt="مصليات إسفنج" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
+                    <img src="choice-sponge.jpg" alt="مصليات إسفنج" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
                     <div class="category-card-overlay" style="padding:24px;">
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">راحة ونعومة في كل سجدة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
@@ -4291,9 +4465,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             </a>
 
             <!-- كاتيجوري 2: مصلية الركبة الميموري فوم -->
-            <a href="memory-foam.html" style="text-decoration:none; display:block;" class="cat-link fade-in">
+            <a href="memory-foam.html" style="text-decoration:none; display:block;" class="cat-link anim-left">
                 <div class="category-card" style="max-width:100%; cursor:pointer;">
-                    <img src="category-memory-foam.jpg" alt="مصلية الركبة الميموري فوم" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
+                    <img src="choice-memory.png" alt="مصلية الركبة الميموري فوم" style="width:100%; aspect-ratio:16/9; object-fit:cover;">
                     <div class="category-card-overlay" style="padding:24px;">
                         <p style="color:var(--gold-light); margin-top:6px; font-size:0.9rem;">ميموري فوم طبي يحمي ركبتيك في كل سجدة</p>
                         <div style="margin-top:14px; display:flex; align-items:center; gap:8px; color:var(--gold-light); font-size:0.85rem; font-weight:700;">
@@ -4353,34 +4527,33 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <img src="mat-mosque-horizon-rolled.jpg" alt="مصلاة أفق المسجد مطوية" />
 
         </div>
-        <div class="features-grid fade-in">
-            <div class="feature-card">
+        <div class="features-grid">
+            <div class="feature-card anim-scale">
                 <div class="feature-icon">🕌</div>
                 <h3>تصاميم إسلامية أصيلة</h3>
                 <p>كل تصميم مستلهم من جماليات العمارة الإسلامية والموروث الحضاري العريق</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card anim-scale anim-delay-1">
                 <div class="feature-icon">🛡️</div>
                 <h3>ظهر أسود مانع للانزلاق</h3>
-                <p>قاعدة مطاطية متطورة باللون الأسود تثبّت المصلاة على أي سطح، ولا يظهر عليها اتساخ الأرض بسرعة مثل
-                    الألوان الفاتحة</p>
+                <p>قاعدة مطاطية متطورة باللون الأسود تثبّت المصلاة على أي سطح، ولا يظهر عليها اتساخ الأرض بسرعة مثل الألوان الفاتحة</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card anim-scale anim-delay-2">
                 <div class="feature-icon">☁️</div>
                 <h3>بطانة سفنج + فايبر</h3>
                 <p>سماكة 2.5 سم من السفنج والفايبر لحماية ركبتيك وراحة أطول في الصلاة</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card anim-scale anim-delay-3">
                 <div class="feature-icon">👜</div>
                 <h3>شنطة حافظة فاخرة</h3>
                 <p>وش مشمع وظهر قماش، تحافظ على المصلاة نظيفة وأنيقة في كل الأوقات</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card anim-scale anim-delay-4">
                 <div class="feature-icon">🚀</div>
                 <h3>شحن سريع لكل مصر</h3>
                 <p>خدمة توصيل موثوقة لجميع محافظات ومدن الجمهورية بأسعار منافسة</p>
             </div>
-            <div class="feature-card">
+            <div class="feature-card anim-scale anim-delay-5">
                 <div class="feature-icon">✅</div>
                 <h3>منتج أصلي مضمون</h3>
                 <p>خامات عالية الجودة مختارة بعناية لتدوم معك وتبقى رائعة مع كل غسيل</p>
@@ -4391,7 +4564,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <!-- ABOUT -->
     <section id="about">
         <div class="about-inner">
-            <div class="about-img fade-in">
+            <div class="about-img anim-right">
                 <div class="about-img-main-wrap">
                     <img id="about-img" src="" alt="مصلاية سدرة ستور مطوية" onerror="this.src='padded.jpg'">
                 </div>
@@ -4408,7 +4581,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     </div>
                 </div>
             </div>
-            <div class="about-text fade-in">
+            <div class="about-text anim-left">
                 <div class="eyebrow">قصتنا</div>
                 <h2>نحن <span class="gold-text">سدرة ستور</span><br>حيث تلتقي الجودة بالروحانية</h2>
                 <p>
@@ -4454,8 +4627,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             <div class="eyebrow">ما قالوه</div>
             <h2>آراء <span>عملائنا</span></h2>
         </div>
-        <div class="testimonials-grid fade-in">
-            <div class="testimonial-card">
+        <div class="testimonials-grid">
+            <div class="testimonial-card fade-in">
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">«مصلاية جميلة جداً ومريحة، البطانة رائعة وضهرها ما بيزحزحش. وصلت في وقتها
                     وفي شنطة تحفة»</p>
@@ -4467,7 +4640,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card">
+            <div class="testimonial-card fade-in anim-delay-2">
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">«اشتريت للأهل هدية، واستقبلوها بسعادة كبيرة. الجودة أفضل من المتوقع وكان
                     الشحن سريع جداً»</p>
@@ -4479,7 +4652,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     </div>
                 </div>
             </div>
-            <div class="testimonial-card">
+            <div class="testimonial-card fade-in anim-delay-4">
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">«السمك كويس جداً ومريحة للركب. المصلاية عملت فرقاً حقيقياً في تجربتي مع
                     الصلاة. شكراً سدرة»</p>
@@ -4799,20 +4972,28 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     </div>
 
     <!-- CATEGORY CHOICE MODAL -->
-    <div id="category-modal" style="display:none; position:fixed; inset:0; z-index:4500; background:rgba(0,0,0,0.78); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px;">
-        <div style="background:var(--black-2); border:1px solid var(--border-gold-strong); border-radius:var(--radius-lg); padding:36px 28px; max-width:440px; width:100%; text-align:center; position:relative; box-shadow:0 0 60px rgba(201,168,76,0.25); animation:modal-in 0.3s cubic-bezier(0.4,0,0.2,1);">
+    <div id="category-modal" style="display:none; position:fixed; inset:0; z-index:4500; background:rgba(0,0,0,0.82); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeCategoryModal()">
+        <div style="background:var(--black-2); border:1px solid var(--border-gold-strong); border-radius:var(--radius-lg); padding:32px 24px 28px; max-width:480px; width:100%; text-align:center; position:relative; box-shadow:0 0 60px rgba(201,168,76,0.25); animation:modal-in 0.3s cubic-bezier(0.4,0,0.2,1);">
             <button onclick="closeCategoryModal()" style="position:absolute; top:14px; left:14px; background:var(--black-3); border:1px solid var(--border-gold); color:var(--gold-light); border-radius:50%; width:34px; height:34px; font-size:1.1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:var(--transition);">✕</button>
             <div style="font-size:0.75rem; letter-spacing:3px; color:var(--gold); margin-bottom:10px; font-weight:700; text-transform:uppercase;">اختر النوع</div>
-            <h3 style="font-size:1.3rem; font-weight:800; color:var(--white); margin-bottom:8px;">عايز تصاميم إيه؟</h3>
-            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:28px; line-height:1.6;">اختار نوع المصلاية وهنوريك التصاميم المتاحة</p>
-            <div style="display:flex; flex-direction:column; gap:14px;">
-                <a href="sponge.html" style="display:block; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); color:var(--black); font-weight:800; font-size:1rem; padding:16px 24px; border-radius:50px; text-decoration:none; transition:var(--transition);">
-                    🧽 مصليات الإسفنج
-                    <div style="font-size:0.75rem; font-weight:500; opacity:0.75; margin-top:3px;">راحة ونعومة — سماكة 2.5 سم</div>
+            <h3 style="font-size:1.3rem; font-weight:800; color:var(--white); margin-bottom:6px;">إسفنج ولا ميموري فوم؟</h3>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:22px; line-height:1.6;">اختار نوع المصلاية وهنوريك التصاميم المتاحة</p>
+            <div style="display:flex; flex-direction:column; gap:14px; text-align:right;">
+                <a href="sponge.html" style="display:flex;align-items:center;gap:0;border:1px solid var(--border-gold-strong);border-radius:14px;text-decoration:none;transition:all 0.25s;overflow:hidden;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border-gold-strong)'">
+                    <img src="choice-sponge.jpg" alt="إسفنج" style="width:100px;height:72px;object-fit:cover;flex-shrink:0;">
+                    <div style="padding:12px 14px;flex:1;">
+                        <div style="font-size:0.95rem;font-weight:800;color:var(--white);">🧽 مصليات الإسفنج</div>
+                        <div style="font-size:0.75rem;color:var(--gold-light);margin-top:3px;">راحة ونعومة — سماكة 2.5 سم</div>
+                    </div>
+                    <span style="padding:0 14px;color:var(--gold);font-size:1.2rem;">←</span>
                 </a>
-                <a href="memory-foam.html" style="display:block; background:var(--black-3); border:1px solid var(--border-gold-strong); color:var(--gold-light); font-weight:800; font-size:1rem; padding:16px 24px; border-radius:50px; text-decoration:none; transition:var(--transition);">
-                    🧠 مصلية الركبة الميموري فوم
-                    <div style="font-size:0.75rem; font-weight:500; opacity:0.7; margin-top:3px;">ميموري فوم طبي يحمي ركبتيك</div>
+                <a href="memory-foam.html" style="display:flex;align-items:center;gap:0;border:1px solid var(--gold);border-radius:14px;text-decoration:none;transition:all 0.25s;overflow:hidden;box-shadow:0 0 16px rgba(201,168,76,0.15);" onmouseover="this.style.boxShadow='0 0 28px rgba(201,168,76,0.35)'" onmouseout="this.style.boxShadow='0 0 16px rgba(201,168,76,0.15)'">
+                    <img src="choice-memory.png" alt="ميموري فوم" style="width:100px;height:72px;object-fit:cover;flex-shrink:0;">
+                    <div style="padding:12px 14px;flex:1;">
+                        <div style="font-size:0.95rem;font-weight:800;color:var(--white);">🧠 مصلية الركبة الميموري فوم</div>
+                        <div style="font-size:0.75rem;color:var(--gold-light);margin-top:3px;">ميموري فوم طبي يحمي ركبتيك</div>
+                    </div>
+                    <span style="padding:0 14px;color:var(--gold);font-size:1.2rem;">←</span>
                 </a>
             </div>
         </div>
@@ -4832,34 +5013,36 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         </div>
     </div>
 
-    <!-- OFFERS QUESTION MODAL: يظهر دايماً عند الضغط على "الحق عروض اليوم" -->
-    <div id="offers-question-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.80); z-index:9000; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeOffersModal()">
-        <div style="background:var(--black-2); border:1px solid var(--border-gold-strong); border-radius:24px; width:100%; max-width:440px; padding:32px 24px 28px; box-shadow:0 -10px 60px rgba(201,168,76,0.25); position:relative;">
+    <!-- OFFERS QUESTION MODAL: يظهر دايماً عند الضغط على أي زر -->
+    <div id="offers-question-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9000; align-items:center; justify-content:center; padding:20px;" onclick="if(event.target===this)closeOffersModal()">
+        <div style="background:var(--black-2); border:1px solid var(--border-gold-strong); border-radius:24px; width:100%; max-width:480px; padding:32px 24px 28px; box-shadow:0 -10px 60px rgba(201,168,76,0.25); position:relative;">
             <button onclick="closeOffersModal()" style="position:absolute;top:14px;left:14px;background:var(--black-3);border:1px solid var(--border-gold);color:var(--gold-light);border-radius:50%;width:34px;height:34px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</button>
             <div style="text-align:center;margin-bottom:20px;">
-                <div style="font-size:0.72rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px;">عروض اليوم</div>
-                <div style="font-size:1.2rem;font-weight:900;color:var(--white);margin-bottom:6px;">تحب تتصفح إيه؟</div>
-                <div style="font-size:0.85rem;color:var(--text-muted);">اختار نوع المصلاية وهنوريك أحدث العروض</div>
+                <div style="font-size:0.72rem;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:8px;">اختر نوع مصليتك</div>
+                <div style="font-size:1.2rem;font-weight:900;color:var(--white);margin-bottom:6px;">إسفنج ولا ميموري فوم؟</div>
+                <div style="font-size:0.85rem;color:var(--text-muted);">اختار النوع وهنوريك التصاميم المتاحة</div>
             </div>
-            <div style="display:flex;flex-direction:column;gap:14px;">
-                <a href="sponge.html" onclick="closeOffersModal()" style="display:flex;align-items:center;gap:16px;padding:18px 20px;background:rgba(201,168,76,0.08);border:1px solid var(--border-gold-strong);border-radius:16px;text-decoration:none;transition:all 0.25s;" onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.08)'">
-                    <span style="font-size:2.2rem;flex-shrink:0;">🧽</span>
-                    <div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+                <!-- إسفنج -->
+                <a href="sponge.html" onclick="closeOffersModal()" style="display:flex;align-items:center;gap:0;border:1px solid var(--border-gold-strong);border-radius:16px;text-decoration:none;transition:all 0.25s;overflow:hidden;" onmouseover="this.style.borderColor='var(--gold)';this.style.boxShadow='0 0 20px rgba(201,168,76,0.2)'" onmouseout="this.style.borderColor='var(--border-gold-strong)';this.style.boxShadow='none'">
+                    <img src="choice-sponge.jpg" alt="مصليات إسفنج" style="width:110px;height:80px;object-fit:cover;flex-shrink:0;">
+                    <div style="padding:14px 16px;flex:1;">
                         <div style="font-size:1rem;font-weight:800;color:var(--white);">مصليات الإسفنج</div>
                         <div style="font-size:0.78rem;color:var(--gold-light);margin-top:3px;">سماكة 2.5 سم — راحة في كل سجدة</div>
-                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:4px;">450 ج</div>
+                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:5px;">450 جنيه</div>
                     </div>
-                    <span style="margin-right:auto;color:var(--gold);font-size:1.2rem;">←</span>
+                    <span style="padding:0 16px;color:var(--gold);font-size:1.3rem;flex-shrink:0;">←</span>
                 </a>
-                <a href="memory-foam.html" onclick="closeOffersModal()" style="display:flex;align-items:center;gap:16px;padding:18px 20px;background:linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.05));border:1px solid var(--gold);border-radius:16px;text-decoration:none;transition:all 0.25s;position:relative;" onmouseover="this.style.background='linear-gradient(135deg,rgba(201,168,76,0.22),rgba(201,168,76,0.1))'" onmouseout="this.style.background='linear-gradient(135deg,rgba(201,168,76,0.12),rgba(201,168,76,0.05))'">
-                    <div style="position:absolute;top:-10px;right:16px;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.65rem;font-weight:900;padding:3px 10px;border-radius:50px;">الأكثر طلباً ⭐</div>
-                    <span style="font-size:2.2rem;flex-shrink:0;">🦵</span>
-                    <div>
+                <!-- ميموري فوم -->
+                <a href="memory-foam.html" onclick="closeOffersModal()" style="display:flex;align-items:center;gap:0;border:1px solid var(--gold);border-radius:16px;text-decoration:none;transition:all 0.25s;overflow:hidden;position:relative;box-shadow:0 0 20px rgba(201,168,76,0.15);" onmouseover="this.style.boxShadow='0 0 30px rgba(201,168,76,0.35)'" onmouseout="this.style.boxShadow='0 0 20px rgba(201,168,76,0.15)'">
+                    <div style="position:absolute;top:-10px;right:16px;background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.62rem;font-weight:900;padding:3px 10px;border-radius:50px;white-space:nowrap;">الأكثر طلباً ⭐</div>
+                    <img src="choice-memory.png" alt="مصلية ميموري فوم" style="width:110px;height:80px;object-fit:cover;flex-shrink:0;">
+                    <div style="padding:14px 16px;flex:1;">
                         <div style="font-size:1rem;font-weight:800;color:var(--white);">مصلية الركبة الميموري فوم</div>
                         <div style="font-size:0.78rem;color:var(--gold-light);margin-top:3px;">ميموري فوم طبي يحمي ركبتيك</div>
-                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:4px;">975 ج</div>
+                        <div style="font-size:0.82rem;font-weight:900;color:var(--gold);margin-top:5px;">975 جنيه</div>
                     </div>
-                    <span style="margin-right:auto;color:var(--gold);font-size:1.2rem;">←</span>
+                    <span style="padding:0 16px;color:var(--gold);font-size:1.3rem;flex-shrink:0;">←</span>
                 </a>
             </div>
         </div>
@@ -5352,38 +5535,12 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             setTimeout(hideLoader, MAX_LOADER_TIME);
 
             // Inject remaining images
-            setImg('banner-img', IMG_BANNER);
             setImg('category-img', IMG_CATEGORY);
             setImg('about-img', IMG_HALF);
             setImg('about-img-2', IMG_ROLLED);
-            setBg('hero-bg', IMG_BANNER);
 
-            // إخفاء الـ hero لو الصورة مش موجودة أو فشلت في التحميل
-            (function() {
-                const heroEl = document.getElementById('hero');
-                const bannerImg = document.getElementById('banner-img');
-                if (!heroEl || !bannerImg) return;
-                function checkHeroImage() {
-                    const src = bannerImg.getAttribute('src');
-                    if (!src || src === '' || src === 'undefined') {
-                        heroEl.classList.add('hero-hidden');
-                    } else {
-                        heroEl.classList.remove('hero-hidden');
-                    }
-                }
-                bannerImg.addEventListener('error', function() {
-                    heroEl.classList.add('hero-hidden');
-                });
-                bannerImg.addEventListener('load', function() {
-                    if (this.naturalWidth > 0) {
-                        heroEl.classList.remove('hero-hidden');
-                    } else {
-                        heroEl.classList.add('hero-hidden');
-                    }
-                });
-                checkHeroImage();
-                setTimeout(checkHeroImage, 500);
-            })();
+            // ---- HERO SLIDER INIT ----
+            initHeroSlider();
 
             // Init everything
             buildProductGrid();
@@ -6851,13 +7008,83 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             document.body.style.overflow = '';
         }
 
-        // ---- FADE IN ----
+        // ---- HERO SLIDER ----
+        let _sliderIdx = 0;
+        let _sliderTimer = null;
+        const SLIDER_INTERVAL = 5000;
+
+        function initHeroSlider() {
+            goSlide(0); // start at slide 0 (which is banner-slide3 = صورة المصلاة)
+            _sliderTimer = setInterval(() => sliderMove(1), SLIDER_INTERVAL);
+
+            // pause on hover
+            const wrap = document.getElementById('hero-slider-wrap');
+            if (wrap) {
+                wrap.addEventListener('mouseenter', () => clearInterval(_sliderTimer));
+                wrap.addEventListener('mouseleave', () => {
+                    _sliderTimer = setInterval(() => sliderMove(1), SLIDER_INTERVAL);
+                });
+            }
+
+            // touch swipe support
+            let _tx = 0;
+            const heroEl = document.getElementById('hero');
+            if (heroEl) {
+                heroEl.addEventListener('touchstart', e => { _tx = e.touches[0].clientX; }, { passive: true });
+                heroEl.addEventListener('touchend', e => {
+                    const dx = e.changedTouches[0].clientX - _tx;
+                    if (Math.abs(dx) > 40) sliderMove(dx > 0 ? -1 : 1);
+                }, { passive: true });
+            }
+        }
+
+        function goSlide(idx) {
+            const slides = document.querySelectorAll('.hero-slide');
+            const dots = document.querySelectorAll('.hero-dot');
+            slides.forEach((s, i) => {
+                if (i === idx) {
+                    // first remove active from old, add to new with tiny delay for crossfade
+                    setTimeout(() => s.classList.add('active'), 10);
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+            dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+            _sliderIdx = idx;
+        }
+
+        function sliderMove(dir) {
+            const total = document.querySelectorAll('.hero-slide').length;
+            const next = (_sliderIdx + dir + total) % total;
+            goSlide(next);
+        }
+
+        // ---- ENHANCED FADE IN + ANIMATIONS ----
         function initFadeIn() {
-            const els = document.querySelectorAll('.fade-in:not(.visible)');
+            const selectors = '.fade-in:not(.visible), .anim-left:not(.visible), .anim-right:not(.visible), .anim-scale:not(.visible)';
+            const els = document.querySelectorAll(selectors);
             const obs = new IntersectionObserver(entries => {
-                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-            }, { threshold: 0.1 });
-            els.forEach(el => obs.observe(el));
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+            // apply stagger to siblings in same parent container
+            const parents = new Set();
+            els.forEach(el => {
+                const p = el.parentElement;
+                if (!parents.has(p)) {
+                    parents.add(p);
+                    const sibs = p.querySelectorAll('.fade-in:not(.visible), .anim-left:not(.visible), .anim-right:not(.visible), .anim-scale:not(.visible)');
+                    sibs.forEach((s, i) => {
+                        if (i > 0 && i < 7) s.classList.add('anim-delay-' + i);
+                    });
+                }
+                obs.observe(el);
+            });
         }
 
         // ---- CHATBOT ----
