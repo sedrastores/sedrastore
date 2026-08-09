@@ -441,7 +441,16 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             margin: 0 auto;
             padding: 0 3%;
             padding-bottom: 32px;
-            overflow: hidden; /* prevent inactive slides from causing horizontal overflow */
+            overflow: hidden;
+        }
+
+        /* Slide container: all slides stacked, only active one visible */
+        .hero-slides-stack {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(201,168,76,0.3);
         }
 
         /* each slide */
@@ -449,15 +458,16 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             position: absolute;
             inset: 0;
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 0.9s ease;
             pointer-events: none;
-            border-radius: var(--radius-lg);
             overflow: hidden;
+            z-index: 1;
         }
         .hero-slide.active {
             position: relative;
             opacity: 1;
             pointer-events: all;
+            z-index: 2;
         }
         .hero-slide img {
             width: 100%;
@@ -465,8 +475,6 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             object-fit: cover;
             object-position: center;
             display: block;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 0 40px rgba(201,168,76,0.3);
         }
 
         /* overlay content on each slide */
@@ -534,12 +542,12 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             transform: scale(1.3);
         }
 
-        /* arrow buttons */
+        /* arrow buttons — positioned over the stack */
         .hero-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-60%);
-            z-index: 10;
+            z-index: 20;
             background: rgba(10,10,10,0.55);
             border: 1px solid rgba(201,168,76,0.4);
             color: var(--gold-light);
@@ -555,8 +563,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             background: rgba(201,168,76,0.2);
             border-color: var(--gold);
         }
-        .hero-arrow-prev { right: 10px; }
-        .hero-arrow-next { left: 10px; }
+        /* RTL: prev = right side, next = left side */
+        .hero-arrow-prev { right: 14px; }
+        .hero-arrow-next { left: 14px; }
 
         /* =============================================
            MARQUEE (من الموقع القديم)
@@ -4153,6 +4162,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 max-width: 100%;
             }
 
+            .hero-slides-stack {
+                border-radius: 0;
+                overflow: hidden;
+            }
+
             .hero-slide {
                 border-radius: 0;
                 overflow: hidden;
@@ -4368,6 +4382,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     <!-- HERO SLIDER -->
     <section id="hero">
         <div class="hero-slider" id="hero-slider-wrap">
+            <div class="hero-slides-stack" id="hero-slides-stack">
 
             <!-- Slide 1: صورة المصلاة (تظهر أولاً) -->
             <div class="hero-slide" id="slide-0">
@@ -4403,6 +4418,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     <button class="hero-slide-cta" onclick="showOffersModal()" style="margin-bottom:24px; margin-right:auto;">تسوق الآن ←</button>
                 </div>
             </div>
+
+            </div><!-- end hero-slides-stack -->
 
             <!-- arrows -->
             <button class="hero-arrow hero-arrow-prev" onclick="sliderMove(1)" aria-label="السابق">&#8250;</button>
@@ -7133,8 +7150,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const dots = document.querySelectorAll('.hero-dot');
             slides.forEach((s, i) => {
                 if (i === idx) {
-                    // first remove active from old, add to new with tiny delay for crossfade
-                    setTimeout(() => s.classList.add('active'), 10);
+                    // Make new slide active: relative positioning gives the stack its height
+                    s.classList.add('active');
                 } else {
                     s.classList.remove('active');
                 }
