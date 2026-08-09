@@ -4233,6 +4233,46 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 font-size: 0.85rem;
                 padding: 8px 16px;
             }
+
+            /* ===== OFFER CARDS MOBILE ===== */
+            .offer-card {
+                padding: 20px 16px;
+                text-align: right;
+            }
+
+            .offer-card h3 {
+                font-size: 1rem;
+            }
+
+            .offer-card p {
+                font-size: 0.82rem;
+                line-height: 1.65;
+            }
+
+            /* ===== CATEGORIES GRID MOBILE ===== */
+            .categories-grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+
+
+        }
+
+        /* ===== EXTRA SMALL (360px and below) ===== */
+        @media (max-width: 360px) {
+            .offers-grid {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+
+            .offer-card {
+                padding: 16px 14px;
+            }
+
+            .offer-card-btn {
+                font-size: 0.78rem;
+                padding: 10px 12px;
+            }
         }
 </style>
     <!-- EmailJS SDK -->
@@ -4416,7 +4456,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
     <!-- OFFERS -->
     <section id="offers" style="padding: 20px 5% 40px;">
-        <div class="offers-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 900px; margin: 0 auto;">
+        <div class="offers-grid" style="max-width: 900px; margin: 0 auto;">
 
             <!-- كارت الإسفنج -->
             <a href="sponge.html" style="text-decoration:none;">
