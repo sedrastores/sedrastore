@@ -195,7 +195,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             }
 
             100% {
-                transform: translateX(50%);
+                transform: translateX(-50%);
             }
         }
 
@@ -220,7 +220,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         #navbar {
             position: fixed;
-            top: 32px;
+            top: 36px;
             left: 0;
             right: 0;
             z-index: 1000;
@@ -421,7 +421,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             position: relative;
             overflow: hidden;
             background: var(--black);
-            padding-top: 136px;
+            padding-top: 110px;
             padding-bottom: 0;
             min-height: 0;
         }
@@ -633,7 +633,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             }
 
             to {
-                transform: translateX(50%)
+                transform: translateX(-50%)
             }
         }
 
@@ -3435,6 +3435,14 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 display: flex;
             }
 
+            .nav-inner {
+                height: 58px;
+            }
+
+            .nav-logo img {
+                height: 40px;
+            }
+
             section {
                 padding: 60px 4%;
             }
@@ -3471,6 +3479,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
             .about-stats {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            #hero {
+                padding-top: 96px;
             }
 
             .countdown-boxes {
@@ -4123,12 +4135,12 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         /* ========== MOBILE FIXES ========== */
         @media (max-width: 480px) {
             #hero {
-                padding-top: 118px;
+                padding-top: 96px;
                 padding-bottom: 0;
             }
 
             .hero-slider { padding: 0 2%; padding-bottom: 20px; }
-            .hero-slide img { height: 220px; }
+            .hero-slide img { height: 280px; }
             .hero-slide-overlay { padding: 18px 16px; }
             .hero-slide-desc { font-size: 0.88rem; }
             .hero-slide-cta { font-size: 0.82rem; padding: 10px 20px; }
@@ -8223,13 +8235,3 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
