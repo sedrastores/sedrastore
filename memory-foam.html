@@ -699,7 +699,7 @@ function getCartTotals() {
   let qty = 0, mat = 0;
   _localCart.forEach(item => {
     const q = item.quantity || 1;
-    const p = item.price || 450;
+    const p = item.price || 975;
     qty += q;
     mat += q * p;
   });
@@ -890,7 +890,16 @@ function renderGrid(products) {
       </div>
     </div>`; }).join('');
 }
-window._renderGrid = renderGrid;
+window._renderGrid = function(products) {
+  // Force correct price for memory foam products
+  products = products.map(p => {
+    if (p.category === 'memory_foam' && (p.price !== 975)) {
+      return { ...p, price: 975 };
+    }
+    return p;
+  });
+  renderGrid(products);
+};
 
 // تحديث البانر والأيكون عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
