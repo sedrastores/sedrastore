@@ -155,7 +155,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         .top-promo-track {
             display: flex;
             gap: 0;
-            animation: promo-scroll 55s linear infinite;
+            animation: promo-scroll 55s linear infinite reverse;
             white-space: nowrap;
             will-change: transform;
         }
@@ -191,11 +191,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         @keyframes promo-scroll {
             0% {
-                transform: translateX(-50%);
+                transform: translateX(0);
             }
 
             100% {
-                transform: translateX(0);
+                transform: translateX(50%);
             }
         }
 
@@ -570,7 +570,7 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         .marquee-track {
             display: flex;
             gap: 60px;
-            animation: marquee 45s linear infinite;
+            animation: marquee 45s linear infinite reverse;
             width: max-content;
         }
 
@@ -629,11 +629,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
 
         @keyframes marquee {
             from {
-                transform: translateX(-50%)
+                transform: translateX(0)
             }
 
             to {
-                transform: translateX(0)
+                transform: translateX(50%)
             }
         }
 
