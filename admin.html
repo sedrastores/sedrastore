@@ -1037,7 +1037,8 @@ function handleImage(input) {
 
 async function addProduct() {
   const name = document.getElementById('new-name').value.trim();
-  const price = parseInt(document.getElementById('new-price').value) || 450;
+  const priceRaw = document.getElementById('new-price').value.trim();
+  const price = priceRaw !== '' ? (parseInt(priceRaw) || 450) : 450;
   const desc = document.getElementById('new-desc').value.trim();
   const badge = document.getElementById('new-badge').value.trim();
   const category = document.getElementById('new-category').value || 'sponge';
@@ -1057,7 +1058,8 @@ async function addProduct() {
 async function updateProduct() {
   const id = parseInt(document.getElementById('edit-product-id').value);
   const name = document.getElementById('new-name').value.trim();
-  const price = parseInt(document.getElementById('new-price').value) || 450;
+  const priceRaw = document.getElementById('new-price').value.trim();
+  const price = priceRaw !== '' ? (parseInt(priceRaw) || 450) : 450;
   const desc = document.getElementById('new-desc').value.trim();
   const badge = document.getElementById('new-badge').value.trim();
   const category = document.getElementById('new-category').value || 'sponge';
@@ -1377,3 +1379,12 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
