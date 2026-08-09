@@ -867,7 +867,7 @@ function renderGrid(products) {
   }
 
   grid.innerHTML = filtered.map(p => {
-    const safeP = JSON.stringify({name:p.name,price:p.price||950,imageData:p.imageData||null}).replace(/"/g,'&quot;');
+    const safeP = JSON.stringify({name:p.name,price:p.price||975,imageData:p.imageData||null}).replace(/"/g,'&quot;');
     return `
     <div class="product-card" onclick="${p.outOfStock ? '' : 'openCart(' + safeP + ')'}">
       ${p.outOfStock ? '<div class="oos-overlay"><span class="oos-badge">نفذ المخزون</span></div>' : ''}
