@@ -4080,6 +4080,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         body.has-cart-bar #scroll-top { bottom: 148px; }
         body.has-cart-bar .whatsapp-float { bottom: 210px; }
 
+        @media (max-width: 480px) {
+            body.has-cart-bar .whatsapp-float { bottom: 80px; right: 16px; }
+        }
+
         @media (max-width: 600px) {
             #floating-cart-bar {
                 padding: 10px 4%;
@@ -4139,12 +4143,44 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 padding-bottom: 0;
             }
 
-            .hero-slider { padding: 0 2%; padding-bottom: 20px; }
-            .hero-slide img { height: 280px; }
-            .hero-slide-overlay { padding: 18px 16px; }
-            .hero-slide-desc { font-size: 0.88rem; }
+            .hero-slider {
+                padding: 0;
+                padding-bottom: 20px;
+            }
+
+            .hero-slide {
+                border-radius: 0;
+            }
+
+            .hero-slide img {
+                height: 320px;
+                border-radius: 0;
+            }
+
+            .hero-slide-overlay {
+                padding: 18px 16px;
+            }
+
+            .hero-slide-desc {
+                font-size: 0.88rem;
+                max-width: 100%;
+            }
+
             .hero-slide-cta { font-size: 0.82rem; padding: 10px 20px; }
             .hero-arrow { width: 32px; height: 32px; font-size: 0.9rem; }
+
+            /* WhatsApp - نحطه تحت بعيد عن الـ countdown */
+            .whatsapp-float {
+                bottom: 24px;
+                right: 16px;
+                width: 50px;
+                height: 50px;
+            }
+
+            .whatsapp-float svg {
+                width: 26px;
+                height: 26px;
+            }
 
             .countdown-boxes {
                 display: flex;
