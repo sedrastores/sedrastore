@@ -5716,11 +5716,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     if (Array.isArray(parsed) && parsed.length > 0) {
                         // Price migration: if version changed or any price < 450, reset prices
                         if (storedVersion !== PRODUCTS_VERSION) {
-                            // Version mismatch - merge with DEFAULT_PRODUCTS prices
-                            // ✅ CRITICAL: preserve outOfStock — only update price
+                            // Version mismatch - merge with DEFAULT_PRODUCTS
+                            // ✅ CRITICAL: preserve outOfStock AND price — لا نغير سعر أي منتج
                             PRODUCTS = parsed.map(p => {
                                 const def = DEFAULT_PRODUCTS.find(d => d.id === p.id || d.name === p.name);
-                                return { ...p, price: 450, outOfStock: p.outOfStock || false };
+                                return { ...p, price: p.price || 450, outOfStock: p.outOfStock || false };
                             });
                             localStorage.setItem('sedra_products', JSON.stringify(PRODUCTS));
                             localStorage.setItem('sedra_products_version', PRODUCTS_VERSION);
@@ -5757,11 +5757,8 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     const migratedProducts = fbProducts.map(p => {
                         let updated = { ...p };
                         // ✅ IMPORTANT: outOfStock is always read directly from Firestore — never overwritten
-                        // Price migration only: fix old prices without touching outOfStock
-                        if (updated.price && updated.price !== 450) {
-                            needsSync = true;
-                            updated.price = 450;
-                        }
+                        // Price migration only: fix products with no price (set default 450)
+                        // لا نغير السعر لو هو موجود — كل منتج له سعره الخاص (مصليات عادية 450، ميموري فوم 975)
                         if (!updated.price) {
                             needsSync = true;
                             updated.price = 450;
@@ -6154,10 +6151,11 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             return selectedDesigns.reduce((sum, design) => {
                 const name = typeof design === 'string' ? design : design.name;
                 const qty = typeof design === 'string' ? 1 : (design.quantity || 1);
-                // ✅ FIX: استخدم السعر المخزّن في design لو المنتج مش في getProducts (زي ميموري فوم)
+                // ✅ FIX: الأولوية للسعر المخزّن في design (القادم من صفحة ميموري فوم = 975)
+                // لأن getProducts يعيد سعر 450 للكل بسبب migration قديم
                 const storedPrice = typeof design === 'string' ? null : (design.price || null);
                 const product = products.find(p => p.name === name);
-                const unitPrice = product ? product.price : (storedPrice || BASE_PRICE);
+                const unitPrice = storedPrice || (product ? product.price : BASE_PRICE);
                 return sum + (unitPrice * qty);
             }, 0);
         }
@@ -6880,11 +6878,12 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const selectedProductsMeta = selectedDesigns.map(design => {
                 const designName = typeof design === 'string' ? design : design.name;
                 const designQty = typeof design === 'string' ? 1 : (design.quantity || 1);
-                // ✅ FIX: السعر المخزّن في selectedDesigns (قادم من صفحة ميموري فوم مثلاً)
+                // ✅ FIX: الأولوية للسعر المخزّن في selectedDesigns (قادم من صفحة ميموري فوم = 975)
+                // لأن getProducts يعيد سعر 450 للكل بسبب migration قديم
                 const storedPrice = typeof design === 'string' ? null : (design.price || null);
                 const product = getProducts().find(p => p.name === designName);
-                // الأولوية: (1) سعر المنتج من getProducts لو موجود، (2) السعر المخزّن في design، (3) BASE_PRICE
-                const resolvedPrice = product ? product.price : (storedPrice || BASE_PRICE);
+                // الأولوية: (1) السعر المخزّن في design، (2) سعر المنتج من getProducts، (3) BASE_PRICE
+                const resolvedPrice = storedPrice || (product ? product.price : BASE_PRICE);
                 return {
                     name: designName,
                     quantity: designQty,
@@ -7716,9 +7715,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 customer_phone: order.phone,
                 order_id: order.id,
                 product_name: order.product,
-                product_price: order.price || 450,
-                shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 100) + ' جنيه'),
-                total_price: order.total || order.price || 450,
+                product_price: order.price || order.unitPrice || 0,
+                shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 75) + ' جنيه'),
+                total_price: order.total || order.price || 0,
                 governorate: order.gov,
                 city: order.city,
                 address: order.address,
@@ -7746,9 +7745,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                 customer_phone: order.phone,
                 order_id: order.id,
                 product_name: order.product,
-                product_price: order.price || 450,
-                shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 100) + ' جنيه'),
-                total_price: order.total || order.price || 450,
+                product_price: order.price || order.unitPrice || 0,
+                shipping_price: (order.shippingFee === 0) ? 'مجاني' : ((order.shippingFee ?? 75) + ' جنيه'),
+                total_price: order.total || order.price || 0,
                 governorate: order.gov,
                 city: order.city,
                 address: order.address,
