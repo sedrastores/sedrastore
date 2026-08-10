@@ -6154,8 +6154,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             return selectedDesigns.reduce((sum, design) => {
                 const name = typeof design === 'string' ? design : design.name;
                 const qty = typeof design === 'string' ? 1 : (design.quantity || 1);
+                // ✅ FIX: استخدم السعر المخزّن في design لو المنتج مش في getProducts (زي ميموري فوم)
+                const storedPrice = typeof design === 'string' ? null : (design.price || null);
                 const product = products.find(p => p.name === name);
-                const unitPrice = product ? product.price : BASE_PRICE;
+                const unitPrice = product ? product.price : (storedPrice || BASE_PRICE);
                 return sum + (unitPrice * qty);
             }, 0);
         }
@@ -6483,15 +6485,20 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             newDesigns.forEach(p => {
                 if (!p || !p.name) return;
                 const qty = p.quantity || 1;
+                // ✅ FIX: احتفظ بالسعر القادم من صفحة الميموري فوم (أو أي صفحة تانية)
+                const incomingPrice = p.price || null;
                 const existingIndex = selectedDesigns.findIndex(d =>
                     (typeof d === 'string' ? d : d.name) === p.name
                 );
                 if (existingIndex !== -1) {
                     const existing = selectedDesigns[existingIndex];
                     const curQty = typeof existing === 'string' ? 1 : (existing.quantity || 1);
-                    selectedDesigns[existingIndex] = { name: p.name, quantity: curQty + qty };
+                    const existingPrice = typeof existing === 'string' ? null : (existing.price || null);
+                    selectedDesigns[existingIndex] = { name: p.name, quantity: curQty + qty, price: incomingPrice || existingPrice };
                 } else {
-                    selectedDesigns.push({ name: p.name, quantity: qty });
+                    const entry = { name: p.name, quantity: qty };
+                    if (incomingPrice) entry.price = incomingPrice;
+                    selectedDesigns.push(entry);
                 }
                 addedNames.push(p.name);
             });
@@ -6873,11 +6880,15 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             const selectedProductsMeta = selectedDesigns.map(design => {
                 const designName = typeof design === 'string' ? design : design.name;
                 const designQty = typeof design === 'string' ? 1 : (design.quantity || 1);
+                // ✅ FIX: السعر المخزّن في selectedDesigns (قادم من صفحة ميموري فوم مثلاً)
+                const storedPrice = typeof design === 'string' ? null : (design.price || null);
                 const product = getProducts().find(p => p.name === designName);
+                // الأولوية: (1) سعر المنتج من getProducts لو موجود، (2) السعر المخزّن في design، (3) BASE_PRICE
+                const resolvedPrice = product ? product.price : (storedPrice || BASE_PRICE);
                 return {
                     name: designName,
                     quantity: designQty,
-                    price: product ? product.price : BASE_PRICE,
+                    price: resolvedPrice,
                     imageData: product ? product.imageData || getProductImageForDisplay(product) : null
                 };
             });
