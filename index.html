@@ -5718,9 +5718,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                         if (storedVersion !== PRODUCTS_VERSION) {
                             // Version mismatch - merge with DEFAULT_PRODUCTS
                             // ✅ CRITICAL: preserve outOfStock AND price — لا نغير سعر أي منتج
+                            // ✅ FIX: use === true to preserve outOfStock exactly — never coerce undefined→false via || false
                             PRODUCTS = parsed.map(p => {
                                 const def = DEFAULT_PRODUCTS.find(d => d.id === p.id || d.name === p.name);
-                                return { ...p, price: p.price || 450, outOfStock: p.outOfStock || false };
+                                return { ...p, price: p.price || 450, outOfStock: p.outOfStock === true };
                             });
                             localStorage.setItem('sedra_products', JSON.stringify(PRODUCTS));
                             localStorage.setItem('sedra_products_version', PRODUCTS_VERSION);
@@ -5771,9 +5772,13 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                     if (typeof renderAdminProducts === 'function') renderAdminProducts();
                     return true;
                 }
-                if (force || !Array.isArray(PRODUCTS) || PRODUCTS.length === 0) {
+                // ✅ FIX: NEVER push local/fallback products to Firebase when snap is empty.
+                // An empty Firestore snap may be temporary (network issue, cold start).
+                // Writing local products to Firebase here would OVERWRITE the correct outOfStock state.
+                // Only initialize PRODUCTS in memory if completely unloaded — do NOT sync to Firebase.
+                if (!Array.isArray(PRODUCTS) || PRODUCTS.length === 0) {
                     const fallbackProducts = getProducts();
-                    saveProducts(fallbackProducts, { syncToFirebase: true });
+                    PRODUCTS = fallbackProducts; // keep in memory only, do NOT sync to Firebase
                 }
                 return false;
             } catch (e) {
