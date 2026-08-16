@@ -6938,10 +6938,13 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         content_ids: selectedProducts,
         contents: selectedProductsMeta.map(item => ({ id: item.name, quantity: item.quantity, item_price: item.price })),
         num_items: productCount
-    }, {
-        eventID: orderId   // ← ده اللي بيمنع التكرار - orderId جاهز فوق
-    });
-}
+ }, {
+    eventID: orderId,
+    em: email ? email.toLowerCase().trim() : undefined,
+    ph: phone ? phone.replace(/\D/g, '') : undefined,
+    fn: name ? name.trim().split(' ')[0].toLowerCase() : undefined,
+    ln: name ? name.trim().split(' ').slice(-1)[0].toLowerCase() : undefined
+});}
 
             // Send Telegram notification
             sendTelegramNotification(order);
