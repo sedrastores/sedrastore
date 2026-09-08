@@ -4498,6 +4498,9 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     .sg-slider-outer::before, .sg-slider-outer::after { content:''; position:absolute; top:0; bottom:0; width:60px; z-index:2; pointer-events:none; }
     .sg-slider-outer::before { left:0; background:linear-gradient(to right,var(--black),transparent); }
     .sg-slider-outer::after  { right:0; background:linear-gradient(to left,var(--black),transparent); }
+    .sg-nav { display:flex; justify-content:center; gap:12px; margin-top:14px; }
+    .sg-nav-btn { width:34px; height:34px; border-radius:50%; background:transparent; border:1px solid var(--border-gold-strong); color:var(--gold-light); font-size:1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background 0.2s, border-color 0.2s; }
+    .sg-nav-btn:hover { background:rgba(201,168,76,0.15); border-color:var(--gold); }
     .sg-track {
       display:flex; gap:14px;
       overflow-x:auto; scroll-behavior:smooth;
@@ -4597,6 +4600,10 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
                       <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
                     </div>
                   </div>
+                </div>
+                <div class="sg-nav">
+                  <button class="sg-nav-btn" onclick="sgScrollRight()" aria-label="يمين">&#8250;</button>
+                  <button class="sg-nav-btn" onclick="sgScrollLeft()" aria-label="يسار">&#8249;</button>
                 </div>
                 <div class="sg-cta">
                   <a href="sponge.html">🛒 تصفح مصليات الإسفنج كلها ←</a>
@@ -8445,13 +8452,24 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
     function sgNav(d){ _sgI=(_sgI+d+_sgImgs.length)%_sgImgs.length; sgUpdate(); }
     function sgUpdate(){ document.getElementById('sgLbImg').src=_sgImgs[_sgI]; }
     document.addEventListener('keydown',function(e){ var lb=document.getElementById('sgLb'); if(!lb.classList.contains('open'))return; if(e.key==='Escape')sgClose(); if(e.key==='ArrowRight')sgNav(-1); if(e.key==='ArrowLeft')sgNav(1); });
-    // Drag-to-scroll
+    // Arrow nav
+    function sgScrollRight(){ var t=document.getElementById('sgTrack'); if(t) t.scrollBy({left:-220,behavior:'smooth'}); }
+    function sgScrollLeft(){ var t=document.getElementById('sgTrack'); if(t) t.scrollBy({left:220,behavior:'smooth'}); }
+    // Auto-scroll
     (function(){
       var t=document.getElementById('sgTrack'); if(!t)return;
-      var down=false,sx=0,sl=0;
-      t.addEventListener('mousedown',function(e){down=true;sx=e.pageX;sl=t.scrollLeft;t.classList.add('dragging');});
-      window.addEventListener('mousemove',function(e){if(!down)return;t.scrollLeft=sl-(e.pageX-sx);});
-      window.addEventListener('mouseup',function(){down=false;t.classList.remove('dragging');});
+      var paused=false, dir=1;
+      t.addEventListener('mouseenter',function(){ paused=true; });
+      t.addEventListener('mouseleave',function(){ paused=false; });
+      t.addEventListener('touchstart',function(){ paused=true; },{ passive:true });
+      t.addEventListener('touchend',function(){ setTimeout(function(){ paused=false; },2000); },{ passive:true });
+      setInterval(function(){
+        if(paused) return;
+        var maxScroll = t.scrollWidth - t.clientWidth;
+        if(t.scrollLeft <= 0) dir=1;
+        if(t.scrollLeft >= maxScroll - 2) dir=-1;
+        t.scrollLeft += dir * 1.2;
+      }, 20);
     })();
     </script>
 
