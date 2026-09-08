@@ -4483,66 +4483,128 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
         </div>
     </section>
 
+    <!-- SPONGE SLIDER CSS -->
+    <style>
+    /* ===== Sponge Horizontal Slider ===== */
+    .sg-wrap { padding: 32px 0 28px; border-top:1px solid var(--border-gold); background:var(--black); }
+    .sg-head { text-align:center; padding:0 5%; margin-bottom:20px; }
+    .sg-head .eyebrow { font-size:0.72rem; letter-spacing:4px; color:var(--gold); text-transform:uppercase; font-weight:600; display:block; margin-bottom:8px; }
+    .sg-head h2 { font-size:clamp(1.4rem,3vw,2rem); font-weight:800; color:var(--white); }
+    .sg-head h2 span { background:linear-gradient(135deg,var(--gold-dark),var(--gold-light),var(--gold-shine)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .sg-head p { margin-top:8px; color:var(--text-muted); font-size:0.85rem; }
+    .sg-divider { width:50px; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:10px auto 18px; }
+    /* Slider track */
+    .sg-slider-outer { position:relative; }
+    .sg-slider-outer::before, .sg-slider-outer::after { content:''; position:absolute; top:0; bottom:0; width:60px; z-index:2; pointer-events:none; }
+    .sg-slider-outer::before { left:0; background:linear-gradient(to right,var(--black),transparent); }
+    .sg-slider-outer::after  { right:0; background:linear-gradient(to left,var(--black),transparent); }
+    .sg-track {
+      display:flex; gap:14px;
+      overflow-x:auto; scroll-behavior:smooth;
+      padding:8px 5% 14px;
+      scrollbar-width:none; -ms-overflow-style:none;
+      cursor:grab;
+    }
+    .sg-track::-webkit-scrollbar { display:none; }
+    .sg-track.dragging { cursor:grabbing; scroll-behavior:auto; user-select:none; }
+    /* Each card */
+    .sg-item {
+      flex:0 0 auto;
+      width:200px;
+      border-radius:14px; overflow:hidden;
+      position:relative; cursor:pointer;
+      border:1px solid var(--border-gold);
+      background:var(--black-2);
+      transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+    }
+    @media(max-width:600px){ .sg-item{ width:155px; border-radius:11px; } }
+    .sg-item:hover { transform:translateY(-5px); box-shadow:0 0 30px rgba(201,168,76,0.3); border-color:var(--gold); }
+    .sg-item img { width:100%; aspect-ratio:3/4; object-fit:cover; display:block; transition:transform 0.4s ease; }
+    .sg-item:hover img { transform:scale(1.06); }
+    /* Overlay */
+    .sg-item-ov { position:absolute; inset:0; background:linear-gradient(to top,rgba(0,0,0,0.82) 0%,transparent 50%); opacity:0; transition:opacity 0.3s; display:flex; align-items:flex-end; padding:10px; }
+    .sg-item:hover .sg-item-ov { opacity:1; }
+    @media(hover:none){ .sg-item-ov{ opacity:1; } }
+    .sg-item-ov a { display:block; width:100%; text-align:center; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); color:var(--black); font-family:var(--font-ar); font-weight:800; font-size:0.72rem; padding:7px 10px; border-radius:50px; text-decoration:none; }
+    /* Badge */
+    .sg-item-badge { position:absolute; top:8px; right:8px; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); color:var(--black); font-size:0.58rem; font-weight:800; padding:3px 8px; border-radius:50px; z-index:3; }
+    /* CTA */
+    .sg-cta { text-align:center; padding:0 5%; margin-top:18px; }
+    .sg-cta a { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); color:var(--black); font-family:var(--font-ar); font-weight:800; font-size:0.9rem; padding:11px 32px; border-radius:50px; text-decoration:none; box-shadow:0 4px 18px rgba(201,168,76,0.3); transition:all 0.3s; }
+    .sg-cta a:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,168,76,0.5); }
+    /* Lightbox */
+    .sg-lb { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.92); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:16px; }
+    .sg-lb.open { display:flex; }
+    .sg-lb-box { position:relative; max-width:400px; width:100%; background:var(--black-2); border:1px solid var(--border-gold-strong); border-radius:18px; overflow:hidden; animation:sglb-in 0.26s ease; }
+    @keyframes sglb-in { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
+    .sg-lb-img { width:100%; display:block; max-height:58vh; object-fit:contain; background:var(--black-3); }
+    .sg-lb-info { padding:14px 16px 18px; text-align:center; }
+    .sg-lb-price { font-size:1.25rem; font-weight:900; background:linear-gradient(135deg,var(--gold-dark),var(--gold-shine)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; display:block; margin-bottom:12px; }
+    .sg-lb-btn { display:block; width:100%; background:linear-gradient(135deg,var(--gold-dark),var(--gold-light)); color:var(--black); font-family:var(--font-ar); font-weight:800; font-size:0.88rem; padding:10px; border-radius:50px; text-align:center; text-decoration:none; }
+    .sg-lb-close { position:absolute; top:10px; left:10px; width:28px; height:28px; border-radius:50%; background:rgba(0,0,0,0.65); border:1px solid var(--border-gold); color:var(--gold-light); font-size:0.8rem; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:2; }
+    .sg-lb-arr { position:absolute; top:42%; width:30px; height:30px; border-radius:50%; background:rgba(0,0,0,0.65); border:1px solid var(--border-gold); color:var(--gold-light); font-size:1rem; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:2; }
+    .sg-lb-arr.r { right:8px; } .sg-lb-arr.l { left:8px; }
+    </style>
+
     <!-- OFFERS -->
     <section id="offers" style="padding: 20px 5% 40px;">
         <div class="offers-grid" style="max-width: 900px; margin: 0 auto;">
 
-            <!-- كارت الإسفنج -->
-            <a href="sponge.html" style="text-decoration:none;">
-                <div class="offer-card" style="height:100%; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 0 30px rgba(201,168,76,0.25)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-                    <div>
-                        <div class="offer-card-icon">🧽</div>
-                        <h3 style="margin-bottom:12px;">مصليات الإسفنج</h3>
-                        <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin-bottom:16px;">
-                            هل تحس بعدم الراحة على المصلاية العادية؟<br>
-                            مصليات الإسفنج بتاعتنا <strong style="color:var(--gold-light);">بسماكة 2.5 سم</strong> من السفنج والفايبر — خفيفة، ناعمة، وبتخلي الصلاة تجربة مريحة من أول سجدة لآخر سجدة.
-                        </p>
-                        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
-                                <span style="color:var(--gold-light);">✓</span> سفنج عالي الكثافة — مريح ودايم
-                            </div>
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
-                                <span style="color:var(--gold-light);">✓</span> خفيفة وسهلة الحمل في أي مكان
-                            </div>
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
-                                <span style="color:var(--gold-light);">✓</span> تصاميم إسلامية حصرية بخامات فاخرة
-                            </div>
-                        </div>
-                        <div style="font-size:1.3rem; font-weight:800; color:var(--gold-light); margin-bottom:4px;">450 جنيه</div>
-                        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">+ 75ج شحن لجميع المحافظات</div>
-                    </div>
-                    <button class="offer-card-btn" style="width:100%;">تصفح مصليات الإسفنج ←</button>
+            <!-- كارت الإسفنج — Horizontal Slider -->
+            <div style="grid-column: 1 / -1; margin: 0 -5%;">
+              <div class="sg-wrap">
+                <div class="sg-head">
+                  <span class="eyebrow">✦ تشكيلتنا الحصرية</span>
+                  <h2>مصليات <span>الإسفنج</span> الفاخرة</h2>
+                  <p>راحة ونعومة في كل سجدة — تصاميم إسلامية حصرية بخامات فاخرة</p>
                 </div>
-            </a>
+                <div class="sg-divider"></div>
+                <div class="sg-slider-outer">
+                  <div class="sg-track" id="sgTrack">
+                    <div class="sg-item" onclick="sgOpen(0)">
+                      <span class="sg-item-badge">الأكثر طلباً ⭐</span>
+                      <img src="sponge-1.png" alt="مصلية إسفنج 1" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                    <div class="sg-item" onclick="sgOpen(1)">
+                      <img src="sponge-2.png" alt="مصلية إسفنج 2" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                    <div class="sg-item" onclick="sgOpen(2)">
+                      <span class="sg-item-badge">جديد ✨</span>
+                      <img src="sponge-3.png" alt="مصلية إسفنج 3" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                    <div class="sg-item" onclick="sgOpen(3)">
+                      <img src="sponge-4.png" alt="مصلية إسفنج 4" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                    <div class="sg-item" onclick="sgOpen(4)">
+                      <img src="sponge-5.png" alt="مصلية إسفنج 5" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                    <div class="sg-item" onclick="sgOpen(5)">
+                      <span class="sg-item-badge">مميزة 🌟</span>
+                      <img src="sponge-6.png" alt="مصلية إسفنج 6" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                    <div class="sg-item" onclick="sgOpen(6)">
+                      <img src="sponge-7.png" alt="مصلية إسفنج 7" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                    <div class="sg-item" onclick="sgOpen(7)">
+                      <img src="sponge-8.png" alt="مصلية إسفنج 8" loading="lazy">
+                      <div class="sg-item-ov"><a href="sponge.html" onclick="event.stopPropagation()">تصفح المجموعة ←</a></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sg-cta">
+                  <a href="sponge.html">🛒 تصفح مصليات الإسفنج كلها ←</a>
+                </div>
+              </div>
+            </div>
+            <!-- نهاية كارت الإسفنج -->
 
-            <!-- كارت الميموري فوم -->
-            <a href="memory-foam.html" style="text-decoration:none;">
-                <div class="offer-card" style="height:100%; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer; border-color:var(--gold); box-shadow:0 0 30px rgba(201,168,76,0.2); position:relative; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 0 40px rgba(201,168,76,0.4)'" onmouseout="this.style.transform='';this.style.boxShadow='0 0 30px rgba(201,168,76,0.2)'">
-                    <div style="position:absolute;top:-12px;right:50%;transform:translateX(50%);background:linear-gradient(135deg,var(--gold-dark),var(--gold-light));color:var(--black);font-size:0.7rem;font-weight:800;padding:4px 14px;border-radius:50px;white-space:nowrap;">الأكثر طلباً ⭐</div>
-                    <div>
-                        <div class="offer-card-icon">🦵</div>
-                        <h3 style="margin-bottom:12px;">مصلية الركبة الميموري فوم</h3>
-                        <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.7; margin-bottom:16px;">
-                            بتعاني من آلام الركبة أثناء الصلاة؟<br>
-                            مصليتنا مش بس مصلية — فيها <strong style="color:var(--gold-light);">طبقة ميموري فوم طبية في منطقة الركبة تحديداً</strong> — بتوزع الضغط وبتحمي مفاصلك، عشان تصلي براحة تامة بدون أي ألم.
-                        </p>
-                        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:20px;">
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
-                                <span style="color:var(--gold-light);">✓</span> ميموري فوم طبي في منطقة الركبة فقط
-                            </div>
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
-                                <span style="color:var(--gold-light);">✓</span> يقلل الضغط على المفاصل أثناء السجود
-                            </div>
-                            <div style="display:flex; align-items:center; gap:8px; font-size:0.82rem; color:var(--text-muted);">
-                                <span style="color:var(--gold-light);">✓</span> خامات فاخرة تدوم طويلاً
-                            </div>
-                        </div>
-                        <div style="font-size:1.3rem; font-weight:800; color:var(--gold-light); margin-bottom:4px;">975 جنيه</div>
-                        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:16px;">+ 75ج شحن لجميع المحافظات</div>
-                    </div>
-                    <button class="offer-card-btn" style="width:100%;">اطلب مصلية الركبة الميموري فوم ←</button>
-                </div>
-            </a>
 
         </div>
     </section>
@@ -8359,6 +8421,39 @@ src="https://www.facebook.com/tr?id=1047018947705729&ev=PageView&noscript=1"
             </div>
         </div>
     </div>
+
+    <!-- SPONGE GALLERY LIGHTBOX -->
+    <div class="sg-lb" id="sgLb" onclick="if(event.target===this)sgClose()">
+      <div class="sg-lb-box">
+        <button class="sg-lb-close" onclick="sgClose()">✕</button>
+        <button class="sg-lb-arr r" onclick="sgNav(-1)">›</button>
+        <button class="sg-lb-arr l" onclick="sgNav(1)">‹</button>
+        <img src="" alt="مصلية إسفنج" class="sg-lb-img" id="sgLbImg">
+        <div class="sg-lb-info">
+          <span class="sg-lb-price">450 جنيه + 75ج شحن</span>
+          <a href="sponge.html" class="sg-lb-btn">🛒 تصفح المجموعة كاملة ←</a>
+        </div>
+      </div>
+    </div>
+    <script>
+    // === Sponge Slider ===
+    var _sgImgs = ['sponge-1.png','sponge-2.png','sponge-3.png','sponge-4.png','sponge-5.png','sponge-6.png','sponge-7.png','sponge-8.png'];
+    var _sgI = 0;
+    // Lightbox
+    function sgOpen(i){ _sgI=i; sgUpdate(); document.getElementById('sgLb').classList.add('open'); document.body.style.overflow='hidden'; }
+    function sgClose(){ document.getElementById('sgLb').classList.remove('open'); document.body.style.overflow=''; }
+    function sgNav(d){ _sgI=(_sgI+d+_sgImgs.length)%_sgImgs.length; sgUpdate(); }
+    function sgUpdate(){ document.getElementById('sgLbImg').src=_sgImgs[_sgI]; }
+    document.addEventListener('keydown',function(e){ var lb=document.getElementById('sgLb'); if(!lb.classList.contains('open'))return; if(e.key==='Escape')sgClose(); if(e.key==='ArrowRight')sgNav(-1); if(e.key==='ArrowLeft')sgNav(1); });
+    // Drag-to-scroll
+    (function(){
+      var t=document.getElementById('sgTrack'); if(!t)return;
+      var down=false,sx=0,sl=0;
+      t.addEventListener('mousedown',function(e){down=true;sx=e.pageX;sl=t.scrollLeft;t.classList.add('dragging');});
+      window.addEventListener('mousemove',function(e){if(!down)return;t.scrollLeft=sl-(e.pageX-sx);});
+      window.addEventListener('mouseup',function(){down=false;t.classList.remove('dragging');});
+    })();
+    </script>
 
 </body>
 
